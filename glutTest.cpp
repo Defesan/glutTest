@@ -20,13 +20,19 @@ int main(int argc, char* argv[])
 
 void render()
 {
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
 	Rect* rect = new Rect(0.0f, 0.0f, 50.0f);
+	rect->translate(20.0f, 30.0f, 0.0f);
 	rect->setColorToGLColor();
 	rect->render();
-	//glRectf(-25.0f, 25.0f, 25.0f, -25.0f);
+
+	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+	Rect* rect2 = new Rect(0.0f, 0.0f, 50.0f);
+	rect2->translate(-20.0f, -30.0f, 0.0f);
+	rect2->setColorToGLColor();
+	rect2->render();
 	
 	glutSwapBuffers();
 	glFlush();
@@ -59,7 +65,7 @@ void resize(GLsizei w, GLsizei h)
 	}
 	else
 	{
-		glOrtho(-100.0f * aspectRatio, 100.0f * aspectRatio, -100.0f, 100.0f, -1.0f, 1.0f);
+		glOrtho(-100.0f * aspectRatio, 100.0f * aspectRatio, -100.0f, 100.0f, -100.0f, 100.0f);
 	}
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

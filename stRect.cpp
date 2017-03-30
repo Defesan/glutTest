@@ -1,6 +1,6 @@
 #include "stRect.h"
 
-Rect::Rect(GLfloat originX, GLfloat originY, GLfloat width, GLfloat height)
+Rect::Rect(GLfloat originX, GLfloat originY, GLfloat originZ, GLfloat width, GLfloat height)
 {
 	//We need four vertices.
 	//this->verts = new GLfloat[12];
@@ -16,6 +16,7 @@ Rect::Rect(GLfloat originX, GLfloat originY, GLfloat width, GLfloat height)
 	
 	this->originX = originX;
 	this->originY = originY;
+	this->originZ = originZ;
 	this->width = width;
 	this->height = height;
 	
@@ -29,7 +30,7 @@ Rect::Rect(GLfloat originX, GLfloat originY, GLfloat width, GLfloat height)
 		this->colors.push_back(50 * i);
 		this->colors.push_back(255);
 	}
-
+	//this->render();
 }
 
 Rect::~Rect()
@@ -41,20 +42,21 @@ void Rect::genVerts()
 {
 	GLfloat offsetX = this->width / 2;
 	GLfloat offsetY = this->height / 2; 
-	this->verts.push_back(this->originX - offsetX);
-	this->verts.push_back(this->originY + offsetY);
+	this->verts.push_back(-offsetX);
+	this->verts.push_back(offsetY);
 	this->verts.push_back(0.0f);
-	this->verts.push_back(this->originX + offsetX);
-	this->verts.push_back(this->originY + offsetY);
+	this->verts.push_back(offsetX);
+	this->verts.push_back(offsetY);
 	this->verts.push_back(0.0f);
-	this->verts.push_back(this->originX - offsetX);
-	this->verts.push_back(this->originY - offsetY);
+	this->verts.push_back(-offsetX);
+	this->verts.push_back(-offsetY);
 	this->verts.push_back(0.0f);
-	this->verts.push_back(this->originX + offsetX);
-	this->verts.push_back(this->originY - offsetY);
+	this->verts.push_back(offsetX);
+	this->verts.push_back(-offsetY);
 	this->verts.push_back(0.0f);
 	
-	
+	this->translate(this->originX, this->originY, this->originZ);
+
 }
 
 void Rect::genIndices()
@@ -103,7 +105,7 @@ void Rect::setColorToGLColor()
 	{
 		this->colors.push_back(ubColors[i % 4]);
 	}
-	
+	//this->render();
 }
 
 void Rect::render()
@@ -114,3 +116,53 @@ void Rect::render()
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glDrawElements(GL_TRIANGLES, this->indices.size(), GL_UNSIGNED_SHORT, this->indices.data());
 }
+
+void Rect::update()
+{
+	this->render();
+
+}
+
+void Rect::translate(GLfloat x, GLfloat y, GLfloat z)
+{
+
+	for(int i = 0; i < 4; i++)
+	{
+		int startPos = i * 3;
+		this->verts[startPos] += x;
+		this->verts[startPos + 1] += y;
+		this->verts[startPos + 2] += z;
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
