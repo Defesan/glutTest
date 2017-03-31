@@ -7,10 +7,12 @@ int main(int argc, char* argv[])
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
+	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	glutCreateWindow("GLUT Playground");
 	glutDisplayFunc(render);
 	glutReshapeFunc(resize);
 	glutKeyboardFunc(handleKeys);
+	glutTimerFunc(1000 / SCREEN_FPS, runLoop, 0);
 	initGL();
 	
 	glutMainLoop();
@@ -18,21 +20,27 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
+void runLoop(int val)
+{
+	update();
+	render();
+	
+	glutPostRedisplay();
+	glutTimerFunc(1000 / SCREEN_FPS, runLoop, val);
+}
+
 void render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
-	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
-	Rect* rect = new Rect(0.0f, 0.0f, 50.0f);
-	rect->translate(20.0f, 30.0f, 0.0f);
-	rect->setColorToGLColor();
+	if(!generated)
+	{
+		rect = new Rect(0.0f, 0.0f, 50.0f);
+		glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+		rect->setColorToGLColor();
+		generated = true;
+	}
 	rect->render();
-
-	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
-	Rect* rect2 = new Rect(0.0f, 0.0f, 50.0f);
-	rect2->translate(-20.0f, -30.0f, 0.0f);
-	rect2->setColorToGLColor();
-	rect2->render();
 	
 	glutSwapBuffers();
 	glFlush();
@@ -40,8 +48,26 @@ void render()
 
 void update()
 {
+	//I have an idea for how to do this better, but it'll be a bit more work, and I want to get this working.
+	GLfloat offsetX = rect->getWidth() / 2;
+	GLfloat offsetY = rect->getHeight() / 2;
 	
-
+	GLfloat posXBoundary = rect->getOriginX() + offsetX + xStep;
+	GLfloat posYBoundary = rect->getOriginY() + offsetY + yStep;
+	GLfloat negXBoundary = rect->getOriginX() - offsetX + xStep;
+	GLfloat negYBoundary = rect->getOriginY() - offsetY + yStep;
+	
+	if(posXBoundary > PROJECTION_WIDTH || negXBoundary < -PROJECTION_WIDTH)
+	{
+		xStep *= -1;
+	}
+	if(posYBoundary > PROJECTION_HEIGHT || negYBoundary < -PROJECTION_HEIGHT)
+	{
+		yStep *= -1;
+	}
+	
+	rect->translate(xStep, yStep, 0.0f);
+	
 }
 
 void resize(GLsizei w, GLsizei h)
@@ -61,11 +87,11 @@ void resize(GLsizei w, GLsizei h)
 	aspectRatio = (GLfloat)w / (GLfloat)h;
 	if(w <= h)
 	{
-		glOrtho(-100.0f, 100.0f, -100.0f / aspectRatio, 100.0f / aspectRatio, -1.0f, 1.0f);
+		glOrtho(-PROJECTION_WIDTH, PROJECTION_WIDTH, -PROJECTION_HEIGHT / aspectRatio, PROJECTION_HEIGHT / aspectRatio, -PROJECTION_DEPTH, PROJECTION_DEPTH);
 	}
 	else
 	{
-		glOrtho(-100.0f * aspectRatio, 100.0f * aspectRatio, -100.0f, 100.0f, -100.0f, 100.0f);
+		glOrtho(-PROJECTION_WIDTH * aspectRatio, PROJECTION_WIDTH * aspectRatio, -PROJECTION_HEIGHT, PROJECTION_HEIGHT, -PROJECTION_DEPTH, PROJECTION_DEPTH);
 	}
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

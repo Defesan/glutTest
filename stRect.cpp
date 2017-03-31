@@ -116,7 +116,7 @@ void Rect::render()
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glDrawElements(GL_TRIANGLES, this->indices.size(), GL_UNSIGNED_SHORT, this->indices.data());
 }
-
+//I don't really need this function right now...
 void Rect::update()
 {
 	this->render();
@@ -125,7 +125,12 @@ void Rect::update()
 
 void Rect::translate(GLfloat x, GLfloat y, GLfloat z)
 {
-
+	//Update the origin
+	this->originX += x;
+	this->originY += y;
+	this->originZ += z;
+	
+	//...and the verts
 	for(int i = 0; i < 4; i++)
 	{
 		int startPos = i * 3;
@@ -135,34 +140,3 @@ void Rect::translate(GLfloat x, GLfloat y, GLfloat z)
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

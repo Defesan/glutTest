@@ -23,13 +23,20 @@ public:
 	GLubyte* getColors() override {return this->colors.data();};
 	GLushort* getIndices() override {return this->indices.data();};
 	
+	GLfloat getOriginX() override {return this->originX;};
+	GLfloat getOriginY() override {return this->originY;};
+	GLfloat getOriginZ() override {return this->originZ;};
+	
+	GLfloat getWidth() {return this->width;};
+	GLfloat getHeight() {return this->height;};
+	
 	void genVerts() override;
 	void genIndices() override;
 	bool setColors(GLubyte** colors) override;
-	void setColorToGLColor();
-	void render();
-	void update();
-	void translate(GLfloat x, GLfloat y, GLfloat z);
+	void setColorToGLColor() override;
+	void render() override;
+	void update() override;
+	void translate(GLfloat x, GLfloat y, GLfloat z) override;
 };
 
 
