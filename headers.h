@@ -8,6 +8,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <typeinfo>
 
 
 #endif //__HEADERS_H__

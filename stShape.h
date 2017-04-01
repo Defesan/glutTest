@@ -43,14 +43,11 @@ protected:
 	virtual void genIndices() = 0;
 	
 public:
-	//Putting the constructor aside, what will we always need to do?
 	
-	//This class can't really come up with a color scheme on its own yet, so we still have to send that in.
 	virtual bool setColors(GLubyte** colors) = 0;
 	
 	virtual void setColorToGLColor() = 0;
 	
-	//We need the getters so that we can actually display the shape. Maybe make this class able to display itself in the future?
 	virtual GLubyte* getColors() = 0;
 	virtual GLfloat* getVerts() = 0;
 	virtual GLushort* getIndices() = 0;
@@ -65,7 +62,6 @@ public:
 	virtual void translate(GLfloat x, GLfloat y, GLfloat z) = 0;
 	
 
-	//Finally, the destructor.
 	virtual ~Shape() {};
 };
 

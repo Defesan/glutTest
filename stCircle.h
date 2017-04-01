@@ -1,22 +1,23 @@
-#ifndef __ST_RECT_H__
-#define __ST_RECT_H__
+#ifndef __ST_CIRCLE_H__
+#define __ST_CIRCLE_H__
 
 #include "stShape.h"
 
-class Rect : public Shape
+
+
+class Circle : public Shape
 {
 private:
 	GLfloat originX;
 	GLfloat originY;
 	GLfloat originZ;
-	GLfloat width;
-	GLfloat height;
-	
+	GLfloat radius;
+	GLushort numSlices;
 public:
-	Rect(GLfloat originX, GLfloat originY, GLfloat originZ, GLfloat width, GLfloat height);
-	Rect(GLfloat originX, GLfloat originY, GLfloat width, GLfloat height) : Rect(originX, originY, 0.0f, width, height) {};
-	Rect(GLfloat originX, GLfloat originY, GLfloat edge) : Rect(originX, originY, 0.0f, edge, edge) {};
-	~Rect() override;
+	
+	Circle(GLfloat originX, GLfloat originY, GLfloat originZ, GLfloat radius, GLushort numVerts);
+	Circle(GLfloat originX, GLfloat originY, GLfloat radius) : Circle(originX, originY, 0.0f, radius, 12) {};
+	~Circle() override;
 	
 	GLfloat* getVerts() override {return this->verts.data();};
 	GLubyte* getColors() override {return this->colors.data();};
@@ -26,8 +27,7 @@ public:
 	GLfloat getOriginY() override {return this->originY;};
 	GLfloat getOriginZ() override {return this->originZ;};
 	
-	GLfloat getWidth() {return this->width;};
-	GLfloat getHeight() {return this->height;};
+	GLfloat getRadius() {return this->radius;};
 	
 	void genVerts() override;
 	void genIndices() override;
@@ -37,7 +37,6 @@ public:
 	void update() override;
 	void translate(GLfloat x, GLfloat y, GLfloat z) override;
 };
-
 
 
 #endif

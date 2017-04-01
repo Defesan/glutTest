@@ -1,5 +1,6 @@
 #include "headers.h"
 #include "stRect.h"
+#include "stCircle.h"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -11,7 +12,8 @@ const int MIN_WIDTH = 50;
 const int MIN_HEIGHT = 50;
 
 //Ugh...globals. But they'll do for now.
-Rect* rect;
+std::vector<Shape*> geometry;
+//Rect* rect;
 bool generated = false;
 GLfloat xStep = 1.0f;
 GLfloat yStep = 0.8f;

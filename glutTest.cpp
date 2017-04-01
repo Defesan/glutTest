@@ -35,12 +35,27 @@ void render()
 	
 	if(!generated)
 	{
-		rect = new Rect(0.0f, 0.0f, 50.0f);
+		geometry.push_back(new Rect(0.0f, 0.0f, 50.0f));
 		glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
-		rect->setColorToGLColor();
+		geometry[0]->setColorToGLColor();
+		geometry.push_back(new Circle(-30.0f, 20.0f, 10.0f));
+		glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
+		geometry[1]->setColorToGLColor();
+		geometry.push_back(new Rect(0.0f, 0.0f, 20.0f));
+		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+		geometry[2]->setColorToGLColor();
+		
 		generated = true;
+		std::cout << "Name of first element in geometry vector: " << typeid(*geometry[0]).name() << "\n";
+		std::cout << "Name of second element in geometry vector: " << typeid(*geometry[1]).name() << "\n";
+		std::cout << "Name of third element in geometry vector: " << typeid(*geometry[2]).name() << std::endl;
 	}
-	rect->render();
+	for(unsigned int i = 0; i < geometry.size(); i++)
+	{
+		geometry[i]->render();
+	}
+	
+	
 	
 	glutSwapBuffers();
 	glFlush();
@@ -49,6 +64,10 @@ void render()
 void update()
 {
 	//I have an idea for how to do this better, but it'll be a bit more work, and I want to get this working.
+	
+	//Or I *had* an idea on how to do it better, but it won't work.
+	
+	/*
 	GLfloat offsetX = rect->getWidth() / 2;
 	GLfloat offsetY = rect->getHeight() / 2;
 	
@@ -66,7 +85,7 @@ void update()
 		yStep *= -1;
 	}
 	
-	rect->translate(xStep, yStep, 0.0f);
+	rect->translate(xStep, yStep, 0.0f);*/
 	
 }
 

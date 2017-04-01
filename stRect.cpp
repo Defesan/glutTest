@@ -101,7 +101,7 @@ void Rect::setColorToGLColor()
 		ubColors[i] = (GLubyte)(colors[i] * 255);		//should work?
 	}
 	this->colors.clear();
-	for(int i = 0; i < 16; i++)
+	for(unsigned int i = 0; i < 16; i++)
 	{
 		this->colors.push_back(ubColors[i % 4]);
 	}
@@ -131,7 +131,7 @@ void Rect::translate(GLfloat x, GLfloat y, GLfloat z)
 	this->originZ += z;
 	
 	//...and the verts
-	for(int i = 0; i < 4; i++)
+	for(unsigned int i = 0; i < (this->verts.size() / 3); i++)
 	{
 		int startPos = i * 3;
 		this->verts[startPos] += x;
