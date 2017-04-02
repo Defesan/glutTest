@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
 void runLoop(int val)
 {
 	update();
-	render();
+	//render();
 	
 	glutPostRedisplay();
 	glutTimerFunc(1000 / SCREEN_FPS, runLoop, val);
@@ -38,17 +38,17 @@ void render()
 		geometry.push_back(new Rect(0.0f, 0.0f, 50.0f));
 		glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
 		geometry[0]->setColorToGLColor();
-		geometry.push_back(new Circle(-30.0f, 20.0f, 10.0f));
-		glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
-		geometry[1]->setColorToGLColor();
+		geometry[0]->setVelocity(0.15f, 0.1f, 0.0f);
+		//geometry.push_back(new Circle(-30.0f, 20.0f, 10.0f));
+		//glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
+		//geometry[1]->setColorToGLColor();
 		geometry.push_back(new Rect(0.0f, 0.0f, 20.0f));
 		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
-		geometry[2]->setColorToGLColor();
+		geometry[1]->setColorToGLColor();
+		geometry[1]->setVelocity(-0.2f, 0.05f, 0.0f);
+		
 		
 		generated = true;
-		std::cout << "Name of first element in geometry vector: " << typeid(*geometry[0]).name() << "\n";
-		std::cout << "Name of second element in geometry vector: " << typeid(*geometry[1]).name() << "\n";
-		std::cout << "Name of third element in geometry vector: " << typeid(*geometry[2]).name() << std::endl;
 	}
 	for(unsigned int i = 0; i < geometry.size(); i++)
 	{
@@ -63,30 +63,19 @@ void render()
 
 void update()
 {
-	//I have an idea for how to do this better, but it'll be a bit more work, and I want to get this working.
-	
-	//Or I *had* an idea on how to do it better, but it won't work.
-	
-	/*
-	GLfloat offsetX = rect->getWidth() / 2;
-	GLfloat offsetY = rect->getHeight() / 2;
-	
-	GLfloat posXBoundary = rect->getOriginX() + offsetX + xStep;
-	GLfloat posYBoundary = rect->getOriginY() + offsetY + yStep;
-	GLfloat negXBoundary = rect->getOriginX() - offsetX + xStep;
-	GLfloat negYBoundary = rect->getOriginY() - offsetY + yStep;
-	
-	if(posXBoundary > PROJECTION_WIDTH || negXBoundary < -PROJECTION_WIDTH)
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//More best practices practice.
+	std::vector<Shape*>::iterator iter;
+	int i = 0;
+	for(iter = geometry.begin(); iter != geometry.end(); iter++)
 	{
-		xStep *= -1;
+		(*iter)->update(); //Update calls render.
+		std::cout << "Object " << i << " z-value = " << (*iter)->getOriginZ() << "\n";
+		i++;
 	}
-	if(posYBoundary > PROJECTION_HEIGHT || negYBoundary < -PROJECTION_HEIGHT)
-	{
-		yStep *= -1;
-	}
-	
-	rect->translate(xStep, yStep, 0.0f);*/
-	
+	std::cout << std::endl;
+	glutSwapBuffers();
+	glFlush();
 }
 
 void resize(GLsizei w, GLsizei h)

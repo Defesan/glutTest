@@ -17,8 +17,20 @@ Rect::Rect(GLfloat originX, GLfloat originY, GLfloat originZ, GLfloat width, GLf
 	this->originX = originX;
 	this->originY = originY;
 	this->originZ = originZ;
+	this->velX = 0.0f;
+	this->velY = 0.0f;
+	this->velZ = 0.0f;
 	this->width = width;
 	this->height = height;
+	
+	//Since I know what I'm working with, I can set some sane defaults. They do have to change with the aspect ratio, though.
+	this->boundXPos = 100.0f;
+	this->boundYPos = 100.0f;
+	this->boundZPos = 100.0f;
+	//That could lead to slowdowns, but then, this is a bit of a hack. Honestly, collision detection IS in the planning stages.
+	this->boundXNeg = -100.0f;
+	this->boundYNeg = -100.0f;
+	this->boundZNeg = -100.0f;
 	
 	this->genVerts();
 	this->genIndices();
@@ -30,7 +42,6 @@ Rect::Rect(GLfloat originX, GLfloat originY, GLfloat originZ, GLfloat width, GLf
 		this->colors.push_back(50 * i);
 		this->colors.push_back(255);
 	}
-	//this->render();
 }
 
 Rect::~Rect()
@@ -101,11 +112,10 @@ void Rect::setColorToGLColor()
 		ubColors[i] = (GLubyte)(colors[i] * 255);		//should work?
 	}
 	this->colors.clear();
-	for(unsigned int i = 0; i < 16; i++)
+	for(int i = 0; i < 16; i++)
 	{
 		this->colors.push_back(ubColors[i % 4]);
 	}
-	//this->render();
 }
 
 void Rect::render()
@@ -116,27 +126,75 @@ void Rect::render()
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glDrawElements(GL_TRIANGLES, this->indices.size(), GL_UNSIGNED_SHORT, this->indices.data());
 }
-//I don't really need this function right now...
+
+
 void Rect::update()
 {
+	GLfloat offsetX = this->width / 2;
+	GLfloat offsetY = this->height / 2;
+	
+	if(((this->originX + offsetX + this->velX) > this->boundXPos) || ((this->originX - offsetX + this->velX) < this->boundXNeg))
+	{
+		this->velX *= -1;
+	}
+	if(((this->originY + offsetY + this->velY) > this->boundYPos) || ((this->originY - offsetY + this->velY) < this->boundYNeg))
+	{
+		this->velY *= -1;
+	}
+	if(((this->originZ + this->velZ) > this->boundZPos) || ((this->originZ + this->velZ) < this->boundZNeg))
+	{
+		this->velZ *= -1;
+	}
+	
+	this->translate(this->velX, this->velY, this->velZ);
 	this->render();
 
 }
 
+void Rect::setVelocity(GLfloat velX, GLfloat velY, GLfloat velZ)
+{
+	this->velX = velX;
+	this->velY = velY;
+	this->velZ = velZ;
+}
+
+void Rect::accelerate(GLfloat accX, GLfloat accY, GLfloat accZ)
+{
+	this->velX += accX;
+	this->velY += accY;
+	this->velZ += accZ;
+}
+
+
 void Rect::translate(GLfloat x, GLfloat y, GLfloat z)
 {
+	std::vector<GLfloat>::iterator iter;
+
 	//Update the origin
 	this->originX += x;
 	this->originY += y;
 	this->originZ += z;
 	
 	//...and the verts
-	for(unsigned int i = 0; i < (this->verts.size() / 3); i++)
+	for(iter = this->verts.begin(); iter != this->verts.end(); iter++)
 	{
-		int startPos = i * 3;
-		this->verts[startPos] += x;
-		this->verts[startPos + 1] += y;
-		this->verts[startPos + 2] += z;
+		//I think this works?
+		*iter += x;
+		iter++;
+		*iter += y;
+		iter++;
+		*iter += z;
 	}
 	
+}
+
+void Rect::setBounds(GLfloat xPos, GLfloat xNeg, GLfloat yPos, GLfloat yNeg, GLfloat zPos, GLfloat zNeg)
+{
+	this->boundXPos = xPos;
+	this->boundXNeg = xNeg;
+	this->boundYPos = yPos;
+	this->boundYNeg = yNeg;
+	this->boundZPos = zPos;
+	this->boundZNeg = zNeg;
+
 }

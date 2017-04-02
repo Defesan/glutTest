@@ -35,6 +35,19 @@ protected:
 	GLfloat originX;
 	GLfloat originY;
 	GLfloat originZ;
+	
+	GLfloat velX;
+	GLfloat velY;
+	GLfloat velZ;
+	
+	//Honestly, these are just here for the current project. I need to keep things from just...leaving until I have proper collision detection.
+	GLfloat boundXPos;
+	GLfloat boundYPos;
+	GLfloat boundZPos;
+	//Boy is it ugly, though... Must find a better way.
+	GLfloat boundXNeg;
+	GLfloat boundYNeg;
+	GLfloat boundZNeg;
 		
 	//Generate the vertices of the object.
 	virtual void genVerts() = 0;
@@ -56,8 +69,21 @@ public:
 	virtual GLfloat getOriginY() = 0;
 	virtual GLfloat getOriginZ() = 0;
 	
+	//I'm starting to think I want to use vec3fs for these.
+	virtual GLfloat getVelX() = 0;
+	virtual GLfloat getVelY() = 0;
+	virtual GLfloat getVelZ() = 0;
+	
+	virtual void setBounds(GLfloat xPos, GLfloat xNeg, GLfloat yPos, GLfloat yNeg, GLfloat zPos, GLfloat zNeg) = 0;
+	
 	virtual void render() = 0;
 	virtual void update() = 0;
+	
+	//Normally, these objects won't have a velocity -- they just sit there.
+	//When you want to set the velocity in one go, use setVelocity,
+	//but if you want to ADD to the velocity, use accelerate.
+	virtual void setVelocity(GLfloat velX, GLfloat velY, GLfloat velZ) = 0;
+	virtual void accelerate(GLfloat accX, GLfloat accY, GLfloat accZ) = 0;
 	
 	virtual void translate(GLfloat x, GLfloat y, GLfloat z) = 0;
 	
