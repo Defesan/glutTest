@@ -50,6 +50,8 @@ protected:
 	//Take the vertices and try and piece them together in such a way that it generates a shape.
 	virtual void genIndices() = 0;
 	
+	virtual void genColors() = 0;
+	
 public:
 	
 	virtual bool setColors(GLubyte** colors) = 0;

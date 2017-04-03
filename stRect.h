@@ -9,17 +9,15 @@ private:
 	GLfloat width;
 	GLfloat height;
 	
-	
+	void genVerts() override;
+	void genIndices() override;
+	void genColors() override;
 	
 public:
 	Rect(GLfloat originX, GLfloat originY, GLfloat originZ, GLfloat width, GLfloat height);
 	Rect(GLfloat originX, GLfloat originY, GLfloat width, GLfloat height) : Rect(originX, originY, 0.0f, width, height) {};
 	Rect(GLfloat originX, GLfloat originY, GLfloat edge) : Rect(originX, originY, 0.0f, edge, edge) {};
 	~Rect() override;
-	
-
-	void genVerts() override;
-	void genIndices() override;
 	
 	GLfloat* getVerts() override {return this->verts.data();};
 	GLubyte* getColors() override {return this->colors.data();};

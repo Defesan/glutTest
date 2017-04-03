@@ -3,21 +3,68 @@
 Circle::Circle(GLfloat originX, GLfloat originY, GLfloat originZ, GLfloat radius, GLushort numVerts)
 {
 
-	this->originX = originX;
-	this->originY = originY;
-	this->originZ = originZ;
+	this->origin = new STVec3f(originX, originY, originZ);
 	this->radius = radius;
 	this->numSlices = numVerts;
-	
+
 	this->verts.reserve(3 * (this->numSlices + 1));
 	this->colors.reserve(4 * (this->numSlices + 1));
 	this->indices.reserve(3 * this->numSlices);
+	
+	this->velocity = new STVec3f(0.0f, 0.0f, 0.0f);
+	
+	this->boundPos = new STVec3f(100.0f, 100.0f, 100.0f);
+	this->boundNeg = new STVec3f(-100.0f, -100.0f, -100.0f);
 
 	this->genVerts();
 	
 	this->genIndices();
 
+	this->genColors();
+}
+
+Circle::~Circle()
+{
+
+}
+
+void Circle::genVerts()
+{
+	GLfloat sliceAngle = (2 * PI) / (GLfloat)this->numSlices; 
+
+	this->verts.push_back(0.0f);
+	this->verts.push_back(0.0f);
+	this->verts.push_back(0.0f);
 	
+	
+	for(int i = 1; i < (this->numSlices + 1); i++)
+	{
+		GLfloat currentAngle = sliceAngle * (i - 1);
+		
+		this->verts.push_back(sin(currentAngle) * this->radius);
+		this->verts.push_back(cos(currentAngle) * this->radius);
+		this->verts.push_back(0.0f);
+	}
+	this->translate(this->origin->getX(), this->origin->getY(), this->origin->getZ());
+}
+
+void Circle::genIndices()
+{
+	
+	for(int i = 0; i < (this->numSlices - 1); i++)
+	{
+		this->indices.push_back(0);
+		this->indices.push_back(i + 1);
+		this->indices.push_back(i + 2);
+	}
+	
+	this->indices.push_back(0);
+	this->indices.push_back(this->numSlices);
+	this->indices.push_back(1);
+}
+
+void Circle::genColors()
+{
 	GLubyte red = 0;
 	GLubyte green = 0;
 	GLubyte blue = 0;
@@ -88,46 +135,6 @@ Circle::Circle(GLfloat originX, GLfloat originY, GLfloat originZ, GLfloat radius
 
 }
 
-Circle::~Circle()
-{
-
-}
-
-void Circle::genVerts()
-{
-	GLfloat sliceAngle = (2 * PI) / (GLfloat)this->numSlices; 
-
-	this->verts.push_back(0.0f);
-	this->verts.push_back(0.0f);
-	this->verts.push_back(0.0f);
-	
-	
-	for(int i = 1; i < (this->numSlices + 1); i++)
-	{
-		GLfloat currentAngle = sliceAngle * (i - 1);
-		
-		this->verts.push_back(sin(currentAngle) * this->radius);
-		this->verts.push_back(cos(currentAngle) * this->radius);
-		this->verts.push_back(0.0f);
-	}
-	this->translate(this->originX, this->originY, this->originZ);
-}
-
-void Circle::genIndices()
-{
-	
-	for(int i = 0; i < (this->numSlices - 1); i++)
-	{
-		this->indices.push_back(0);
-		this->indices.push_back(i + 1);
-		this->indices.push_back(i + 2);
-	}
-	
-	this->indices.push_back(0);
-	this->indices.push_back(this->numSlices);
-	this->indices.push_back(1);
-}
-
 bool Circle::setColors(GLubyte** colors)
 {
 	return false;
@@ -163,24 +170,69 @@ void Circle::render()
 
 void Circle::update()
 {
-	//Still wondering if this will come in handy...
+	//This acts as a sort of default behavior, really, but external calls can modify it considerably. Still only 'bout as smart as a Roomba...
+	
+	if(((this->origin->getX() + this->radius + this->velocity->getX()) > this->boundPos->getX()) || ((this->origin->getX() - this->radius + this->velocity->getX()) < this->boundNeg->getX()))
+	{
+		this->velocity->mulX(-1);
+	}
+	if(((this->origin->getY() + this->radius + this->velocity->getY()) > this->boundPos->getY()) || ((this->origin->getY() - this->radius + this->velocity->getY()) < this->boundNeg->getY()))
+	{
+		this->velocity->mulY(-1);
+	}
+	if(((this->origin->getZ() + this->velocity->getZ()) > this->boundPos->getZ()) || ((this->origin->getZ() + this->velocity->getZ()) < this->boundNeg->getZ()))
+	{
+		this->velocity->mulZ(-1);
+	}
+	
+	this->translate(this->velocity->getX(), this->velocity->getY(), this->velocity->getZ());
 	this->render();
 }
 
+void Circle::setVelocity(GLfloat velX, GLfloat velY, GLfloat velZ)
+{
+	this->velocity->setX(velX);
+	this->velocity->setY(velY);
+	this->velocity->setZ(velZ);
+}
+
+void Circle::accelerate(GLfloat accX, GLfloat accY, GLfloat accZ)
+{
+	this->velocity->addX(accX);
+	this->velocity->addY(accY);
+	this->velocity->addZ(accZ);
+}
+
+
 void Circle::translate(GLfloat x, GLfloat y, GLfloat z)
 {
+	std::vector<GLfloat>::iterator iter;
+
 	//Update the origin
-	this->originX += x;
-	this->originY += y;
-	this->originZ += z;
+	this->origin->addX(x);
+	this->origin->addY(y);
+	this->origin->addZ(z);
 	
 	//...and the verts
-	for(unsigned int i = 0; i < (this->verts.size() / 3); i++)
+	for(iter = this->verts.begin(); iter != this->verts.end(); iter++)
 	{
-		int startPos = i * 3;
-		this->verts[startPos] += x;
-		this->verts[startPos + 1] += y;
-		this->verts[startPos + 2] += z;
+		*iter += x;
+		iter++;
+		*iter += y;
+		iter++;
+		*iter += z;
 	}
 	
+}
+
+void Circle::setBounds(GLfloat xPos, GLfloat xNeg, GLfloat yPos, GLfloat yNeg, GLfloat zPos, GLfloat zNeg)
+{
+	this->boundPos->setX(xPos);
+	this->boundPos->setY(yPos);
+	this->boundPos->setZ(zPos);
+	
+	this->boundNeg->setX(xNeg);
+	this->boundNeg->setY(yNeg);
+	this->boundNeg->setZ(zNeg);
+
 }

@@ -2,36 +2,24 @@
 
 Rect::Rect(GLfloat originX, GLfloat originY, GLfloat originZ, GLfloat width, GLfloat height)
 {
-	//We need four vertices.
-	//this->verts = new GLfloat[12];
-	//this->colors = new GLubyte[12];
-	//this->indices = new GLushort[6];
 	
 	//Let's just make sure there's no need for reallocation.
 	this->verts.reserve(12);
 	this->colors.reserve(16);
 	this->indices.reserve(6);
 	
-	
-	
 	this->origin = new STVec3f(originX, originY, originZ);
-	this->velocity = new STVec3f(0.0f, 0.0f, 0.0f);
 	this->width = width;
 	this->height = height;
+	
+	this->velocity = new STVec3f(0.0f, 0.0f, 0.0f);
 	
 	this->boundPos = new STVec3f(100.0f, 100.0f, 100.0f);
 	this->boundNeg = new STVec3f(-100.0f, -100.0f, -100.0f);
 	
 	this->genVerts();
 	this->genIndices();
-	
-	for(int i = 0; i < 4; i++)
-	{
-		this->colors.push_back(20 * i);
-		this->colors.push_back(30 * i);
-		this->colors.push_back(50 * i);
-		this->colors.push_back(255);
-	}
+	this->genColors();
 }
 
 Rect::~Rect()
@@ -69,6 +57,17 @@ void Rect::genIndices()
 	this->indices.push_back(1);
 	this->indices.push_back(3);
 	
+}
+
+void Rect::genColors()
+{
+	for(int i = 0; i < 4; i++)
+	{
+		this->colors.push_back(20 * i);
+		this->colors.push_back(30 * i);
+		this->colors.push_back(50 * i);
+		this->colors.push_back(255);
+	}
 }
 
 bool Rect::setColors(GLubyte** colors)
@@ -120,6 +119,7 @@ void Rect::render()
 
 void Rect::update()
 {
+	//This acts as a sort of default behavior, really, but external calls can modify it considerably. Still only 'bout as smart as a Roomba...
 	GLfloat offsetX = this->width / 2;
 	GLfloat offsetY = this->height / 2;
 	

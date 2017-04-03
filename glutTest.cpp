@@ -39,13 +39,14 @@ void render()
 		glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
 		geometry[0]->setColorToGLColor();
 		geometry[0]->setVelocity(0.15f, 0.1f, 0.0f);
-		//geometry.push_back(new Circle(-30.0f, 20.0f, 10.0f));
-		//glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
-		//geometry[1]->setColorToGLColor();
+		geometry.push_back(new Circle(-30.0f, 20.0f, 10.0f));
+		glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
+		geometry[1]->setColorToGLColor();
+		geometry[1]->setVelocity(0.05f, 0.3f, 0.0f);
 		geometry.push_back(new Rect(0.0f, 0.0f, 20.0f));
 		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
-		geometry[1]->setColorToGLColor();
-		geometry[1]->setVelocity(-0.2f, 0.05f, 0.0f);
+		geometry[2]->setColorToGLColor();
+		geometry[2]->setVelocity(-0.2f, 0.05f, 0.0f);
 		
 		
 		generated = true;
