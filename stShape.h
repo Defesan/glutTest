@@ -5,6 +5,8 @@
 #include <iostream>
 #include <vector>
 
+#include "stVec3f.h"
+
 #if defined(__IPHONEOS__) || defined(__ANDROID__)
 #define USING_OPENGLES
 #endif
@@ -32,22 +34,15 @@ protected:
 	std::vector<GLushort> indices;
 	
 	//To be honest, EVERY shape will have these!
-	GLfloat originX;
-	GLfloat originY;
-	GLfloat originZ;
+	STVec3f* origin;
 	
-	GLfloat velX;
-	GLfloat velY;
-	GLfloat velZ;
+	
+	STVec3f* velocity;
 	
 	//Honestly, these are just here for the current project. I need to keep things from just...leaving until I have proper collision detection.
-	GLfloat boundXPos;
-	GLfloat boundYPos;
-	GLfloat boundZPos;
+	STVec3f* boundPos;
 	//Boy is it ugly, though... Must find a better way.
-	GLfloat boundXNeg;
-	GLfloat boundYNeg;
-	GLfloat boundZNeg;
+	STVec3f* boundNeg;
 		
 	//Generate the vertices of the object.
 	virtual void genVerts() = 0;

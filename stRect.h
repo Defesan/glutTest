@@ -25,13 +25,13 @@ public:
 	GLubyte* getColors() override {return this->colors.data();};
 	GLushort* getIndices() override {return this->indices.data();};
 	
-	GLfloat getOriginX() override {return this->originX;};
-	GLfloat getOriginY() override {return this->originY;};
-	GLfloat getOriginZ() override {return this->originZ;};
+	GLfloat getOriginX() override {return this->origin->getX();};
+	GLfloat getOriginY() override {return this->origin->getY();};
+	GLfloat getOriginZ() override {return this->origin->getZ();};
 	
-	GLfloat getVelX() override {return this->velX;};
-	GLfloat getVelY() override {return this->velY;};
-	GLfloat getVelZ() override {return this->velZ;};
+	GLfloat getVelX() override {return this->velocity->getX();};
+	GLfloat getVelY() override {return this->velocity->getY();};
+	GLfloat getVelZ() override {return this->velocity->getZ();};
 	
 	GLfloat getWidth() {return this->width;};
 	GLfloat getHeight() {return this->height;};

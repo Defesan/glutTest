@@ -14,23 +14,13 @@ Rect::Rect(GLfloat originX, GLfloat originY, GLfloat originZ, GLfloat width, GLf
 	
 	
 	
-	this->originX = originX;
-	this->originY = originY;
-	this->originZ = originZ;
-	this->velX = 0.0f;
-	this->velY = 0.0f;
-	this->velZ = 0.0f;
+	this->origin = new STVec3f(originX, originY, originZ);
+	this->velocity = new STVec3f(0.0f, 0.0f, 0.0f);
 	this->width = width;
 	this->height = height;
 	
-	//Since I know what I'm working with, I can set some sane defaults. They do have to change with the aspect ratio, though.
-	this->boundXPos = 100.0f;
-	this->boundYPos = 100.0f;
-	this->boundZPos = 100.0f;
-	//That could lead to slowdowns, but then, this is a bit of a hack. Honestly, collision detection IS in the planning stages.
-	this->boundXNeg = -100.0f;
-	this->boundYNeg = -100.0f;
-	this->boundZNeg = -100.0f;
+	this->boundPos = new STVec3f(100.0f, 100.0f, 100.0f);
+	this->boundNeg = new STVec3f(-100.0f, -100.0f, -100.0f);
 	
 	this->genVerts();
 	this->genIndices();
@@ -66,7 +56,7 @@ void Rect::genVerts()
 	this->verts.push_back(-offsetY);
 	this->verts.push_back(0.0f);
 	
-	this->translate(this->originX, this->originY, this->originZ);
+	this->translate(this->origin->getX(), this->origin->getY(), this->origin->getZ());
 
 }
 
@@ -133,36 +123,36 @@ void Rect::update()
 	GLfloat offsetX = this->width / 2;
 	GLfloat offsetY = this->height / 2;
 	
-	if(((this->originX + offsetX + this->velX) > this->boundXPos) || ((this->originX - offsetX + this->velX) < this->boundXNeg))
+	if(((this->origin->getX() + offsetX + this->velocity->getX()) > this->boundPos->getX()) || ((this->origin->getX() - offsetX + this->velocity->getX()) < this->boundNeg->getX()))
 	{
-		this->velX *= -1;
+		this->velocity->mulX(-1);
 	}
-	if(((this->originY + offsetY + this->velY) > this->boundYPos) || ((this->originY - offsetY + this->velY) < this->boundYNeg))
+	if(((this->origin->getY() + offsetY + this->velocity->getY()) > this->boundPos->getY()) || ((this->origin->getY() - offsetY + this->velocity->getY()) < this->boundNeg->getY()))
 	{
-		this->velY *= -1;
+		this->velocity->mulY(-1);
 	}
-	if(((this->originZ + this->velZ) > this->boundZPos) || ((this->originZ + this->velZ) < this->boundZNeg))
+	if(((this->origin->getZ() + this->velocity->getZ()) > this->boundPos->getZ()) || ((this->origin->getZ() + this->velocity->getZ()) < this->boundNeg->getZ()))
 	{
-		this->velZ *= -1;
+		this->velocity->mulZ(-1);
 	}
 	
-	this->translate(this->velX, this->velY, this->velZ);
+	this->translate(this->velocity->getX(), this->velocity->getY(), this->velocity->getZ());
 	this->render();
 
 }
 
 void Rect::setVelocity(GLfloat velX, GLfloat velY, GLfloat velZ)
 {
-	this->velX = velX;
-	this->velY = velY;
-	this->velZ = velZ;
+	this->velocity->setX(velX);
+	this->velocity->setY(velY);
+	this->velocity->setZ(velZ);
 }
 
 void Rect::accelerate(GLfloat accX, GLfloat accY, GLfloat accZ)
 {
-	this->velX += accX;
-	this->velY += accY;
-	this->velZ += accZ;
+	this->velocity->addX(accX);
+	this->velocity->addY(accY);
+	this->velocity->addZ(accZ);
 }
 
 
@@ -171,14 +161,13 @@ void Rect::translate(GLfloat x, GLfloat y, GLfloat z)
 	std::vector<GLfloat>::iterator iter;
 
 	//Update the origin
-	this->originX += x;
-	this->originY += y;
-	this->originZ += z;
+	this->origin->addX(x);
+	this->origin->addY(y);
+	this->origin->addZ(z);
 	
 	//...and the verts
 	for(iter = this->verts.begin(); iter != this->verts.end(); iter++)
 	{
-		//I think this works?
 		*iter += x;
 		iter++;
 		*iter += y;
@@ -190,11 +179,12 @@ void Rect::translate(GLfloat x, GLfloat y, GLfloat z)
 
 void Rect::setBounds(GLfloat xPos, GLfloat xNeg, GLfloat yPos, GLfloat yNeg, GLfloat zPos, GLfloat zNeg)
 {
-	this->boundXPos = xPos;
-	this->boundXNeg = xNeg;
-	this->boundYPos = yPos;
-	this->boundYNeg = yNeg;
-	this->boundZPos = zPos;
-	this->boundZNeg = zNeg;
+	this->boundPos->setX(xPos);
+	this->boundPos->setY(yPos);
+	this->boundPos->setZ(zPos);
+	
+	this->boundNeg->setX(xNeg);
+	this->boundNeg->setY(yNeg);
+	this->boundNeg->setZ(zNeg);
 
 }

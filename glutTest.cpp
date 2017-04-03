@@ -66,14 +66,12 @@ void update()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//More best practices practice.
 	std::vector<Shape*>::iterator iter;
-	int i = 0;
+
 	for(iter = geometry.begin(); iter != geometry.end(); iter++)
 	{
 		(*iter)->update(); //Update calls render.
-		std::cout << "Object " << i << " z-value = " << (*iter)->getOriginZ() << "\n";
-		i++;
 	}
-	std::cout << std::endl;
+	
 	glutSwapBuffers();
 	glFlush();
 }
