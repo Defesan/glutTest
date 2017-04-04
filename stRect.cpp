@@ -1,18 +1,12 @@
 #include "stRect.h"
 
 Rect::Rect(GLfloat originX, GLfloat originY, GLfloat originZ, GLfloat width, GLfloat height)
-{
-	
-	//Let's just make sure there's no need for reallocation.
-	this->verts.reserve(12);
-	this->colors.reserve(16);
-	this->indices.reserve(6);
-	
-	this->origin = new STVec3f(0.0f, 0.0f, 0.0f);
+{	
+	this->origin = new STVec3f();
 	this->width = width;
 	this->height = height;
 	
-	this->velocity = new STVec3f(0.0f, 0.0f, 0.0f);
+	this->velocity = new STVec3f();
 	
 	this->boundPos = new STVec3f(100.0f, 100.0f, 100.0f);
 	this->boundNeg = new STVec3f(-100.0f, -100.0f, -100.0f);

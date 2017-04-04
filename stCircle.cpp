@@ -3,16 +3,12 @@
 Circle::Circle(GLfloat originX, GLfloat originY, GLfloat originZ, GLfloat radius, GLushort numVerts)
 {
 
-	this->origin = new STVec3f(0.0f, 0.0f, 0.0f);
+	this->origin = new STVec3f();
 	
 	this->radius = radius;
 	this->numSlices = numVerts;
-
-	this->verts.reserve(3 * (this->numSlices + 1));
-	this->colors.reserve(4 * (this->numSlices + 1));
-	this->indices.reserve(3 * this->numSlices);
 	
-	this->velocity = new STVec3f(0.0f, 0.0f, 0.0f);
+	this->velocity = new STVec3f();
 	
 	this->boundPos = new STVec3f(100.0f, 100.0f, 100.0f);
 	this->boundNeg = new STVec3f(-100.0f, -100.0f, -100.0f);

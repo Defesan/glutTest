@@ -1,6 +1,7 @@
 #include "headers.h"
 #include "stRect.h"
 #include "stCircle.h"
+#include "stSphere.h"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -15,8 +16,7 @@ const int MIN_HEIGHT = 50;
 std::vector<Shape*> geometry;
 //Rect* rect;
 bool generated = false;
-GLfloat xStep = 1.0f;
-GLfloat yStep = 0.8f;
+
 
 void render();
 void update();

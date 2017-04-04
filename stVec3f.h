@@ -12,6 +12,8 @@ private:
 	float z;
 public:
 	STVec3f(float x, float y, float z);
+	STVec3f() : STVec3f(0.0f, 0.0f, 0.0f) {};
+	
 	float getX() {return this->x;};
 	float getY() {return this->y;};
 	float getZ() {return this->z;};

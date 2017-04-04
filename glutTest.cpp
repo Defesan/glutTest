@@ -47,7 +47,8 @@ void render()
 		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
 		geometry[2]->setColorToGLColor();
 		geometry[2]->setVelocity(-0.2f, 0.05f, 0.0f);
-		
+		geometry.push_back(new Sphere(0.0f, 10.0f, 0.0f, 15.0f));
+		geometry[3]->setVelocity(0.3f, 0.1f, 0.0f);
 		generated = true;
 	}
 	for(unsigned int i = 0; i < geometry.size(); i++)
