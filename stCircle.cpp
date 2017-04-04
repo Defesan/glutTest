@@ -3,7 +3,8 @@
 Circle::Circle(GLfloat originX, GLfloat originY, GLfloat originZ, GLfloat radius, GLushort numVerts)
 {
 
-	this->origin = new STVec3f(originX, originY, originZ);
+	this->origin = new STVec3f(0.0f, 0.0f, 0.0f);
+	
 	this->radius = radius;
 	this->numSlices = numVerts;
 
@@ -17,10 +18,10 @@ Circle::Circle(GLfloat originX, GLfloat originY, GLfloat originZ, GLfloat radius
 	this->boundNeg = new STVec3f(-100.0f, -100.0f, -100.0f);
 
 	this->genVerts();
-	
 	this->genIndices();
-
 	this->genColors();
+	
+	this->translate(originX, originY, originZ);	
 }
 
 Circle::~Circle()
@@ -36,7 +37,6 @@ void Circle::genVerts()
 	this->verts.push_back(0.0f);
 	this->verts.push_back(0.0f);
 	
-	
 	for(int i = 1; i < (this->numSlices + 1); i++)
 	{
 		GLfloat currentAngle = sliceAngle * (i - 1);
@@ -45,7 +45,6 @@ void Circle::genVerts()
 		this->verts.push_back(cos(currentAngle) * this->radius);
 		this->verts.push_back(0.0f);
 	}
-	this->translate(this->origin->getX(), this->origin->getY(), this->origin->getZ());
 }
 
 void Circle::genIndices()
@@ -132,7 +131,6 @@ void Circle::genColors()
 			std::cout << "Edge case... But this shouldn't happen. All the colors got filled up." << std::endl;
 		}
 	}
-
 }
 
 bool Circle::setColors(GLubyte** colors)
@@ -145,6 +143,7 @@ void Circle::setColorToGLColor()
 	GLfloat colors[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 	GLubyte ubColors[4] = {0, 0, 0, 0};
 	glGetFloatv(GL_CURRENT_COLOR, colors);
+	int colorSize = this->colors.size();
 	
 	//Convert from float to ubyte
 	for(int i = 0; i < 4; i++)
@@ -152,7 +151,7 @@ void Circle::setColorToGLColor()
 		ubColors[i] = (GLubyte)(colors[i] * 255);		
 	}
 	this->colors.clear();
-	for(unsigned int i = 0; i < this->verts.size(); i++)
+	for(int i = 0; i < colorSize; i++)
 	{
 		this->colors.push_back(ubColors[i % 4]);
 	}

@@ -8,7 +8,7 @@ Rect::Rect(GLfloat originX, GLfloat originY, GLfloat originZ, GLfloat width, GLf
 	this->colors.reserve(16);
 	this->indices.reserve(6);
 	
-	this->origin = new STVec3f(originX, originY, originZ);
+	this->origin = new STVec3f(0.0f, 0.0f, 0.0f);
 	this->width = width;
 	this->height = height;
 	
@@ -20,6 +20,8 @@ Rect::Rect(GLfloat originX, GLfloat originY, GLfloat originZ, GLfloat width, GLf
 	this->genVerts();
 	this->genIndices();
 	this->genColors();
+	
+	this->translate(originX, originY, originZ);
 }
 
 Rect::~Rect()
@@ -43,8 +45,6 @@ void Rect::genVerts()
 	this->verts.push_back(offsetX);
 	this->verts.push_back(-offsetY);
 	this->verts.push_back(0.0f);
-	
-	this->translate(this->origin->getX(), this->origin->getY(), this->origin->getZ());
 
 }
 
