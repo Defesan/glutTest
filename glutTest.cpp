@@ -35,20 +35,20 @@ void render()
 	
 	if(!generated)
 	{
-		geometry.push_back(new Rect(0.0f, 0.0f, 50.0f));
+		geometry.push_back(new Rect(0.0f, 0.0f, -90.0f, 30.0f, 50.0f));
 		glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
 		geometry[0]->setColorToGLColor();
-		geometry[0]->setVelocity(0.15f, 0.1f, 0.0f);
-		geometry.push_back(new Circle(25.0f, 0.0f, 10.0f));
+		geometry[0]->setVelocity(0.15f, 0.1f, 0.04f);
+		geometry.push_back(new Circle(25.0f, 0.0f, -30.0f, 10.0f, 40));
 		glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
 		geometry[1]->setColorToGLColor();
-		geometry[1]->setVelocity(0.05f, 0.3f, 0.0f);
-		geometry.push_back(new Rect(0.0f, 0.0f, 20.0f));
+		geometry[1]->setVelocity(0.05f, 0.3f, -2.0f);
+		geometry.push_back(new Rect(0.0f, 0.0f, -100.0f, 20.0f, 20.0f));
 		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
 		geometry[2]->setColorToGLColor();
-		geometry[2]->setVelocity(-0.2f, 0.05f, 0.0f);
-		geometry.push_back(new Sphere(0.0f, 10.0f, 0.0f, 15.0f));
-		geometry[3]->setVelocity(0.3f, 0.1f, 0.0f);
+		geometry[2]->setVelocity(-0.2f, 0.05f, -0.3f);
+		geometry.push_back(new Sphere(0.0f, 10.0f, -20.0f, 15.0f));
+		geometry[3]->setVelocity(0.3f, 0.1f, -0.1f);
 		generated = true;
 	}
 	for(unsigned int i = 0; i < geometry.size(); i++)
@@ -92,14 +92,16 @@ void resize(GLsizei w, GLsizei h)
 	glLoadIdentity();
 
 	aspectRatio = (GLfloat)w / (GLfloat)h;
-	if(w <= h)
+	/*if(w <= h)
 	{
 		glOrtho(-PROJECTION_WIDTH, PROJECTION_WIDTH, -PROJECTION_HEIGHT / aspectRatio, PROJECTION_HEIGHT / aspectRatio, -PROJECTION_DEPTH, PROJECTION_DEPTH);
 	}
 	else
 	{
 		glOrtho(-PROJECTION_WIDTH * aspectRatio, PROJECTION_WIDTH * aspectRatio, -PROJECTION_HEIGHT, PROJECTION_HEIGHT, -PROJECTION_DEPTH, PROJECTION_DEPTH);
-	}
+	}*/
+	
+	gluPerspective(90.0f, aspectRatio, 1.0f, 400.0f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
