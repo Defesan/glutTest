@@ -122,12 +122,12 @@ void Sphere::genIndices()
 		{
 			//The first two indices in each group of six are always the jth vertex after firstVert and belowFirst, respectively.
 			this->indices.push_back(firstVert + j);
-			this->indices.push_back(belowFirst + j);
-
+			
 			//Again, the circular nature of the strips requires a branch.
 			if(j != (this->numSlices - 1))		//For all but the last vertex in the strip,
 			{
 				this->indices.push_back(belowFirst + (j + 1));	//v(j + M + 1)
+				this->indices.push_back(belowFirst + j);
 				this->indices.push_back(firstVert + j);			//v(j)
 				this->indices.push_back(firstVert + (j + 1));	//v(j + 1)
 				this->indices.push_back(belowFirst + (j + 1));  //v(j + M + 1)
@@ -135,6 +135,7 @@ void Sphere::genIndices()
 			else	//Otherwise, we have to substitute the starting vertices of both layers for the 'next' vertices.
 			{
 				this->indices.push_back(belowFirst);
+				this->indices.push_back(belowFirst + j);
 				this->indices.push_back(firstVert + j);
 				this->indices.push_back(firstVert);
 				this->indices.push_back(belowFirst);
@@ -182,9 +183,9 @@ void Sphere::genColors()
 		this->colors.push_back(blue);
 		this->colors.push_back(alpha);
 		
-		red += 5;
-		green += 5;
-		blue += 5;
+		red += 1;
+		green += 2;
+		blue += 3;
 		
 	}
 

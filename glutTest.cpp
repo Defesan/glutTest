@@ -47,8 +47,8 @@ void render()
 		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
 		geometry[2]->setColorToGLColor();
 		geometry[2]->setVelocity(-0.2f, 0.05f, -0.3f);
-		geometry.push_back(new Sphere(0.0f, 10.0f, -20.0f, 15.0f));
-		geometry[3]->setVelocity(0.3f, 0.1f, -0.1f);
+		geometry.push_back(new Sphere(0.0f, 0.0f, -20.0f, 40.0f, 12, 24));
+		geometry[3]->setVelocity(0.0f, 0.0f, 0.0f);
 		generated = true;
 	}
 	for(unsigned int i = 0; i < geometry.size(); i++)
@@ -64,6 +64,7 @@ void render()
 
 void update()
 {
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//More best practices practice.
 	std::vector<Shape*>::iterator iter;
@@ -72,7 +73,9 @@ void update()
 	{
 		(*iter)->update(); //Update calls render.
 	}
-	
+	glTranslatef(0.0f, 0.0f, -20.0f);
+	glRotatef(0.5f, 0.0f, 1.0f, 0.0f);
+	glTranslatef(0.0f, 0.0f, 20.0f);
 	glutSwapBuffers();
 	glFlush();
 }
@@ -92,16 +95,16 @@ void resize(GLsizei w, GLsizei h)
 	glLoadIdentity();
 
 	aspectRatio = (GLfloat)w / (GLfloat)h;
-	/*if(w <= h)
+	if(w <= h)
 	{
 		glOrtho(-PROJECTION_WIDTH, PROJECTION_WIDTH, -PROJECTION_HEIGHT / aspectRatio, PROJECTION_HEIGHT / aspectRatio, -PROJECTION_DEPTH, PROJECTION_DEPTH);
 	}
 	else
 	{
 		glOrtho(-PROJECTION_WIDTH * aspectRatio, PROJECTION_WIDTH * aspectRatio, -PROJECTION_HEIGHT, PROJECTION_HEIGHT, -PROJECTION_DEPTH, PROJECTION_DEPTH);
-	}*/
+	}
 	
-	gluPerspective(90.0f, aspectRatio, 1.0f, 400.0f);
+	//gluPerspective(45.0f, aspectRatio, 1.0f, 200.0f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
