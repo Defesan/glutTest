@@ -134,11 +134,11 @@ void Sphere::genIndices()
 			}
 			else	//Otherwise, we have to substitute the starting vertices of both layers for the 'next' vertices.
 			{
-				this->indices.push_back(belowFirst);
 				this->indices.push_back(belowFirst + j);
-				this->indices.push_back(firstVert + j);
-				this->indices.push_back(firstVert);
 				this->indices.push_back(belowFirst);
+				this->indices.push_back(firstVert + j);
+				this->indices.push_back(belowFirst);
+				this->indices.push_back(firstVert);
 			}
 		}
 	}
@@ -183,9 +183,9 @@ void Sphere::genColors()
 		this->colors.push_back(blue);
 		this->colors.push_back(alpha);
 		
-		red += 1;
-		green += 2;
-		blue += 3;
+		red += 30;
+		green += 30;
+		blue += 30;
 		
 	}
 

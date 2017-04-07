@@ -8,10 +8,13 @@ int main(int argc, char* argv[])
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	glPolygonMode(GL_BACK, GL_LINE);
 	glutCreateWindow("GLUT Playground");
 	glutDisplayFunc(render);
 	glutReshapeFunc(resize);
 	glutKeyboardFunc(handleKeys);
+	glutSpecialFunc(specialKeys);
+	glutSpecialUpFunc(specialKeysUp);
 	glutTimerFunc(1000 / SCREEN_FPS, runLoop, 0);
 	initGL();
 	
@@ -47,7 +50,7 @@ void render()
 		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
 		geometry[2]->setColorToGLColor();
 		geometry[2]->setVelocity(-0.2f, 0.05f, -0.3f);
-		geometry.push_back(new Sphere(0.0f, 0.0f, -20.0f, 40.0f, 12, 24));
+		geometry.push_back(new Sphere(0.0f, 0.0f, -100.0f, 20.0f, 1, 4));
 		geometry[3]->setVelocity(0.0f, 0.0f, 0.0f);
 		generated = true;
 	}
@@ -73,9 +76,10 @@ void update()
 	{
 		(*iter)->update(); //Update calls render.
 	}
-	glTranslatef(0.0f, 0.0f, -20.0f);
+	glTranslatef(xVel, yVel, 0.0f);
+	glTranslatef(0.0f, 0.0f, -100.0f);
 	glRotatef(0.5f, 0.0f, 1.0f, 0.0f);
-	glTranslatef(0.0f, 0.0f, 20.0f);
+	glTranslatef(0.0f, 0.0f, 100.0f);
 	glutSwapBuffers();
 	glFlush();
 }
@@ -95,16 +99,16 @@ void resize(GLsizei w, GLsizei h)
 	glLoadIdentity();
 
 	aspectRatio = (GLfloat)w / (GLfloat)h;
-	if(w <= h)
-	{
-		glOrtho(-PROJECTION_WIDTH, PROJECTION_WIDTH, -PROJECTION_HEIGHT / aspectRatio, PROJECTION_HEIGHT / aspectRatio, -PROJECTION_DEPTH, PROJECTION_DEPTH);
-	}
-	else
-	{
-		glOrtho(-PROJECTION_WIDTH * aspectRatio, PROJECTION_WIDTH * aspectRatio, -PROJECTION_HEIGHT, PROJECTION_HEIGHT, -PROJECTION_DEPTH, PROJECTION_DEPTH);
-	}
+	//if(w <= h)
+	//{
+	//	glOrtho(-PROJECTION_WIDTH, PROJECTION_WIDTH, -PROJECTION_HEIGHT / aspectRatio, PROJECTION_HEIGHT / aspectRatio, -PROJECTION_DEPTH, PROJECTION_DEPTH);
+	//}
+	//else
+	//{
+	//	glOrtho(-PROJECTION_WIDTH * aspectRatio, PROJECTION_WIDTH * aspectRatio, -PROJECTION_HEIGHT, PROJECTION_HEIGHT, -PROJECTION_DEPTH, PROJECTION_DEPTH);
+	//}
 	
-	//gluPerspective(45.0f, aspectRatio, 1.0f, 200.0f);
+	gluPerspective(45.0f, aspectRatio, 1.0f, 200.0f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
@@ -117,7 +121,7 @@ void resize(GLsizei w, GLsizei h)
 
 void initGL()
 {
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f); //So sue me, I like to start a window off like a blank canvas.
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 }
 
@@ -132,4 +136,43 @@ void handleKeys(unsigned char key, int x, int y)
 		default:
 			break;
 	}
+}
+
+void specialKeys(int key, int x, int y)
+{
+	switch(key)
+	{
+		case GLUT_KEY_UP:
+			yVel = 0.1f;
+			break;
+		case GLUT_KEY_DOWN:
+			yVel = -0.1f;
+			break;
+		case GLUT_KEY_LEFT:
+			xVel = -0.1f;
+			break;
+		case GLUT_KEY_RIGHT:
+			xVel = 0.1f;
+			break;
+		default:
+			break;
+	}
+}
+
+void specialKeysUp(int key, int x, int y)
+{
+	switch(key)
+	{
+		case GLUT_KEY_UP:
+		case GLUT_KEY_DOWN:
+			yVel = 0.0f;
+			break;
+		case GLUT_KEY_LEFT:
+		case GLUT_KEY_RIGHT:
+			xVel = 0.0f;
+			break;
+		default:
+			break;
+	}
+
 }

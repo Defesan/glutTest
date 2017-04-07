@@ -16,11 +16,14 @@ const int MIN_HEIGHT = 50;
 std::vector<Shape*> geometry;
 //Rect* rect;
 bool generated = false;
-
+GLfloat xVel = 0.0f;
+GLfloat yVel = 0.0f;
 
 void render();
 void update();
 void resize(GLsizei w, GLsizei h);
 void initGL();
 void handleKeys(unsigned char key, int x, int y);
+void specialKeys(int key, int x, int y);
+void specialKeysUp(int key, int x, int y);
 void runLoop(int val);
