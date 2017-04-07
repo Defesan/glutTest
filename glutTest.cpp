@@ -8,7 +8,6 @@ int main(int argc, char* argv[])
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-	glPolygonMode(GL_BACK, GL_LINE);
 	glutCreateWindow("GLUT Playground");
 	glutDisplayFunc(render);
 	glutReshapeFunc(resize);
@@ -26,7 +25,6 @@ int main(int argc, char* argv[])
 void runLoop(int val)
 {
 	update();
-	//render();
 	
 	glutPostRedisplay();
 	glutTimerFunc(1000 / SCREEN_FPS, runLoop, val);
@@ -50,7 +48,7 @@ void render()
 		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
 		geometry[2]->setColorToGLColor();
 		geometry[2]->setVelocity(-0.2f, 0.05f, -0.3f);
-		geometry.push_back(new Sphere(0.0f, 0.0f, -100.0f, 20.0f, 1, 4));
+		geometry.push_back(new Sphere(0.0f, 0.0f, -100.0f, 20.0f, 2, 6));
 		geometry[3]->setVelocity(0.0f, 0.0f, 0.0f);
 		generated = true;
 	}
@@ -122,6 +120,12 @@ void resize(GLsizei w, GLsizei h)
 void initGL()
 {
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	
+	glPolygonMode(GL_BACK, GL_LINE);
+	//glDisable(GL_CULL_FACE);
+	glFrontFace(GL_CW);
+	glShadeModel(GL_FLAT);
+	glEnable(GL_DEPTH_TEST);
 
 }
 

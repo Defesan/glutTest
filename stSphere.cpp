@@ -134,11 +134,11 @@ void Sphere::genIndices()
 			}
 			else	//Otherwise, we have to substitute the starting vertices of both layers for the 'next' vertices.
 			{
+				this->indices.push_back(belowFirst);
 				this->indices.push_back(belowFirst + j);
-				this->indices.push_back(belowFirst);
 				this->indices.push_back(firstVert + j);
-				this->indices.push_back(belowFirst);
 				this->indices.push_back(firstVert);
+				this->indices.push_back(belowFirst);
 			}
 		}
 	}
