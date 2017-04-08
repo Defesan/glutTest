@@ -19,6 +19,11 @@ bool generated = false;
 GLfloat xVel = 0.0f;
 GLfloat yVel = 0.0f;
 
+bool cwWinding = false;
+bool backfaceCull = true;
+bool depthTest = false;
+bool backfaceLines = false;
+
 void render();
 void update();
 void resize(GLsizei w, GLsizei h);
@@ -27,3 +32,4 @@ void handleKeys(unsigned char key, int x, int y);
 void specialKeys(int key, int x, int y);
 void specialKeysUp(int key, int x, int y);
 void runLoop(int val);
+void processMenu(int value);

@@ -14,6 +14,15 @@ int main(int argc, char* argv[])
 	glutKeyboardFunc(handleKeys);
 	glutSpecialFunc(specialKeys);
 	glutSpecialUpFunc(specialKeysUp);
+	
+	glutCreateMenu(processMenu);
+	glutAddMenuEntry("Switch Winding Direction", 1);
+	glutAddMenuEntry("Toggle Backface Culling", 2);
+	glutAddMenuEntry("Toggle Depth Testing", 3);
+	glutAddMenuEntry("Toggle Backface Line Mode", 4);
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
+	
+	
 	glutTimerFunc(1000 / SCREEN_FPS, runLoop, 0);
 	initGL();
 	
@@ -48,7 +57,7 @@ void render()
 		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
 		geometry[2]->setColorToGLColor();
 		geometry[2]->setVelocity(-0.2f, 0.05f, -0.3f);
-		geometry.push_back(new Sphere(0.0f, 0.0f, -100.0f, 20.0f, 2, 6));
+		geometry.push_back(new Sphere(0.0f, 0.0f, -100.0f, 20.0f, 12, 40));
 		geometry[3]->setVelocity(0.0f, 0.0f, 0.0f);
 		generated = true;
 	}
@@ -67,6 +76,47 @@ void update()
 {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
+	if(depthTest)
+	{
+		glEnable(GL_DEPTH_TEST);
+	}
+	else
+	{
+		glDisable(GL_DEPTH_TEST);
+	}
+	
+	if(backfaceCull)
+	{
+		glEnable(GL_CULL_FACE);
+	}
+	else
+	{
+		glDisable(GL_CULL_FACE);
+	}
+	
+	if(backfaceLines)
+	{
+		glPolygonMode(GL_BACK, GL_LINE);
+	}
+	else
+	{
+		glPolygonMode(GL_BACK, GL_FILL);
+	}
+	
+	if(cwWinding)
+	{
+		glFrontFace(GL_CW);
+	}
+	else
+	{
+		glFrontFace(GL_CCW);
+	}	
+	GLenum error = glGetError();
+	if(error != GL_NO_ERROR)
+	{
+		std::cout << "Error: " << gluErrorString(error);
+	}
 	//More best practices practice.
 	std::vector<Shape*>::iterator iter;
 
@@ -120,12 +170,66 @@ void resize(GLsizei w, GLsizei h)
 void initGL()
 {
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-	
-	glPolygonMode(GL_BACK, GL_LINE);
-	//glDisable(GL_CULL_FACE);
-	glFrontFace(GL_CW);
+	glEnable(GL_CULL_FACE);
 	glShadeModel(GL_FLAT);
-	glEnable(GL_DEPTH_TEST);
+}
+
+void processMenu(int value)
+{
+	switch(value)
+	{
+		case 1:
+			//clockwise winding
+			cwWinding = !cwWinding;
+			if(cwWinding)
+			{
+				std::cout << "Clockwise Winding." << std::endl;
+			}
+			else
+			{
+				std::cout << "Counterclockwise Winding." << std::endl;
+			}
+			break;
+		case 2:
+			//backface culling
+			backfaceCull = !backfaceCull;
+			if(backfaceCull)
+			{
+				std::cout << "Culling Backfaces." << std::endl;
+			}
+			else
+			{
+				std::cout << "Not culling." << std::endl;
+			}
+			break;
+		case 3:
+			//depth testing
+			depthTest = !depthTest;
+			if(depthTest)
+			{
+				std::cout << "Depth test enabled." << std::endl;
+			}
+			else
+			{
+				std::cout << "Depth test disabled." << std::endl;
+			}
+			break;
+		case 4:
+			//backface face/line drawing
+			backfaceLines = !backfaceLines;
+			if(backfaceLines)
+			{
+				std::cout << "Wireframe backfaces." << std::endl;
+			}
+			else
+			{
+				std::cout << "Filled backfaces." << std::endl;
+			}
+			break;
+		default:
+			break;
+	
+	}
 
 }
 

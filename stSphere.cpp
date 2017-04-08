@@ -126,19 +126,20 @@ void Sphere::genIndices()
 			//Again, the circular nature of the strips requires a branch.
 			if(j != (this->numSlices - 1))		//For all but the last vertex in the strip,
 			{
-				this->indices.push_back(belowFirst + (j + 1));	//v(j + M + 1)
 				this->indices.push_back(belowFirst + j);
+				this->indices.push_back(belowFirst + (j + 1));	//v(j + M + 1)
 				this->indices.push_back(firstVert + j);			//v(j)
-				this->indices.push_back(firstVert + (j + 1));	//v(j + 1)
 				this->indices.push_back(belowFirst + (j + 1));  //v(j + M + 1)
+				this->indices.push_back(firstVert + (j + 1));	//v(j + 1)
 			}
 			else	//Otherwise, we have to substitute the starting vertices of both layers for the 'next' vertices.
 			{
-				this->indices.push_back(belowFirst);
 				this->indices.push_back(belowFirst + j);
-				this->indices.push_back(firstVert + j);
-				this->indices.push_back(firstVert);
 				this->indices.push_back(belowFirst);
+				this->indices.push_back(firstVert + j);
+				this->indices.push_back(belowFirst);
+				this->indices.push_back(firstVert);
+				
 			}
 		}
 	}
@@ -154,7 +155,7 @@ void Sphere::genIndices()
 	for(int i = 0; i < this->numSlices; i++)
 	{
 		this->indices.push_back(lastVert);
-		this->indices.push_back(i + startOfLastRing);
+		
 		if(i != (this->numSlices - 1))
 		{
 			this->indices.push_back(i + (startOfLastRing + 1));
@@ -163,6 +164,8 @@ void Sphere::genIndices()
 		{
 			this->indices.push_back(startOfLastRing);
 		}
+		
+		this->indices.push_back(i + startOfLastRing);
 	}
 }
 
