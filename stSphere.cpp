@@ -186,9 +186,9 @@ void Sphere::genColors()
 		this->colors.push_back(blue);
 		this->colors.push_back(alpha);
 		
-		red += 30;
-		green += 30;
-		blue += 30;
+		red += 1;
+		green += 2;
+		blue += 3;
 		
 	}
 

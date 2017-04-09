@@ -124,7 +124,7 @@ void update()
 	{
 		(*iter)->update(); //Update calls render.
 	}
-	glTranslatef(xVel, yVel, 0.0f);
+	glTranslatef(xVel, yVel, zVel);
 	glTranslatef(0.0f, 0.0f, -100.0f);
 	glRotatef(0.5f, 0.0f, 1.0f, 0.0f);
 	glTranslatef(0.0f, 0.0f, 100.0f);
@@ -251,10 +251,24 @@ void specialKeys(int key, int x, int y)
 	switch(key)
 	{
 		case GLUT_KEY_UP:
-			yVel = 0.1f;
+			if(glutGetModifiers() == GLUT_ACTIVE_SHIFT)
+			{
+				yVel = 0.1f;
+			}
+			else
+			{
+				zVel = 0.1f;
+			}
 			break;
 		case GLUT_KEY_DOWN:
-			yVel = -0.1f;
+			if(glutGetModifiers() == GLUT_ACTIVE_SHIFT)
+			{
+				yVel = -0.1f;
+			}
+			else
+			{
+				zVel = -0.1f;
+			}
 			break;
 		case GLUT_KEY_LEFT:
 			xVel = -0.1f;
@@ -274,6 +288,7 @@ void specialKeysUp(int key, int x, int y)
 		case GLUT_KEY_UP:
 		case GLUT_KEY_DOWN:
 			yVel = 0.0f;
+			zVel = 0.0f;
 			break;
 		case GLUT_KEY_LEFT:
 		case GLUT_KEY_RIGHT:

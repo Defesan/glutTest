@@ -18,6 +18,7 @@ std::vector<Shape*> geometry;
 bool generated = false;
 GLfloat xVel = 0.0f;
 GLfloat yVel = 0.0f;
+GLfloat zVel = 0.0f;
 
 bool cwWinding = false;
 bool backfaceCull = true;
