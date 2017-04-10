@@ -20,6 +20,10 @@ GLfloat xVel = 0.0f;
 GLfloat yVel = 0.0f;
 GLfloat zVel = 0.0f;
 
+GLfloat xRot = 0.0f;
+GLfloat yRot = 0.0f;
+GLfloat zRot = 0.0f;
+
 bool cwWinding = false;
 bool backfaceCull = true;
 bool depthTest = false;
@@ -34,3 +38,8 @@ void specialKeys(int key, int x, int y);
 void specialKeysUp(int key, int x, int y);
 void runLoop(int val);
 void processMenu(int value);
+void setSettings();
+
+//Honestly, these are just convenience functions.
+bool shiftDown();
+bool controlDown();

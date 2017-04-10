@@ -77,46 +77,8 @@ void update()
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
-	if(depthTest)
-	{
-		glEnable(GL_DEPTH_TEST);
-	}
-	else
-	{
-		glDisable(GL_DEPTH_TEST);
-	}
-	
-	if(backfaceCull)
-	{
-		glEnable(GL_CULL_FACE);
-	}
-	else
-	{
-		glDisable(GL_CULL_FACE);
-	}
-	
-	if(backfaceLines)
-	{
-		glPolygonMode(GL_BACK, GL_LINE);
-	}
-	else
-	{
-		glPolygonMode(GL_BACK, GL_FILL);
-	}
-	
-	if(cwWinding)
-	{
-		glFrontFace(GL_CW);
-	}
-	else
-	{
-		glFrontFace(GL_CCW);
-	}	
-	GLenum error = glGetError();
-	if(error != GL_NO_ERROR)
-	{
-		std::cout << "Error: " << gluErrorString(error);
-	}
+	setSettings();
+
 	//More best practices practice.
 	std::vector<Shape*>::iterator iter;
 
@@ -125,9 +87,11 @@ void update()
 		(*iter)->update(); //Update calls render.
 	}
 	glTranslatef(xVel, yVel, zVel);
-	glTranslatef(0.0f, 0.0f, -100.0f);
-	glRotatef(0.5f, 0.0f, 1.0f, 0.0f);
-	glTranslatef(0.0f, 0.0f, 100.0f);
+	//glTranslatef(0.0f, 0.0f, 100.0f);
+	glRotatef(xRot, 0.0f, 1.0f, 0.0f);
+	glRotatef(yRot, 1.0f, 0.0f, 0.0f);
+	glRotatef(zRot, 0.0f, 0.0f, 1.0f);
+	//glTranslatef(0.0f, 0.0f, -100.0f);
 	glutSwapBuffers();
 	glFlush();
 }
@@ -233,6 +197,24 @@ void processMenu(int value)
 
 }
 
+bool shiftDown()
+{
+	if(glutGetModifiers() & GLUT_ACTIVE_SHIFT)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool controlDown()
+{
+	if(glutGetModifiers() & GLUT_ACTIVE_CTRL)
+	{
+		return true;
+	}
+	return false;
+}
+
 void handleKeys(unsigned char key, int x, int y)
 {
 	switch(key)
@@ -251,30 +233,72 @@ void specialKeys(int key, int x, int y)
 	switch(key)
 	{
 		case GLUT_KEY_UP:
-			if(glutGetModifiers() == GLUT_ACTIVE_SHIFT)
+			if(controlDown())	//handle rotations
 			{
-				yVel = 0.1f;
+				if(shiftDown())	//Y/Z switch
+				{
+					zRot = 0.1f;
+				}
+				else
+				{
+					yRot = 0.1f;
+				}
 			}
-			else
+			else				//handle translations
 			{
-				zVel = 0.1f;
+				if(shiftDown())
+				{
+					zVel = 0.1f;
+				}
+				else
+				{
+					yVel = 0.1f;
+				}
 			}
 			break;
 		case GLUT_KEY_DOWN:
-			if(glutGetModifiers() == GLUT_ACTIVE_SHIFT)
+			if(controlDown())	//handle rotations
 			{
-				yVel = -0.1f;
+				if(shiftDown())	//Y/Z switch
+				{
+					zRot = -0.1f;
+				}
+				else
+				{
+					yRot = -0.1f;
+				}
 			}
-			else
+			else				//handle translations
 			{
-				zVel = -0.1f;
+				if(shiftDown())
+				{
+					zVel = -0.1f;
+				}
+				else
+				{
+					yVel = -0.1f;
+				}
 			}
 			break;
 		case GLUT_KEY_LEFT:
-			xVel = -0.1f;
+			if(controlDown())
+			{
+				xRot = -0.1f;
+			}
+			else
+			{
+				xVel = -0.1f;
+			}
 			break;
 		case GLUT_KEY_RIGHT:
-			xVel = 0.1f;
+			if(controlDown())
+			{
+				xRot = 0.1f;
+			}
+			else
+			{
+				xVel = 0.1f;
+			}
 			break;
 		default:
 			break;
@@ -289,13 +313,57 @@ void specialKeysUp(int key, int x, int y)
 		case GLUT_KEY_DOWN:
 			yVel = 0.0f;
 			zVel = 0.0f;
+			yRot = 0.0f;
+			zRot = 0.0f;
 			break;
 		case GLUT_KEY_LEFT:
 		case GLUT_KEY_RIGHT:
 			xVel = 0.0f;
+			xRot = 0.0f;
 			break;
 		default:
 			break;
 	}
+
+}
+
+
+void setSettings()
+{
+	if(depthTest)
+	{
+		glEnable(GL_DEPTH_TEST);
+	}
+	else
+	{
+		glDisable(GL_DEPTH_TEST);
+	}
+	
+	if(backfaceCull)
+	{
+		glEnable(GL_CULL_FACE);
+	}
+	else
+	{
+		glDisable(GL_CULL_FACE);
+	}
+	
+	if(backfaceLines)
+	{
+		glPolygonMode(GL_BACK, GL_LINE);
+	}
+	else
+	{
+		glPolygonMode(GL_BACK, GL_FILL);
+	}
+	
+	if(cwWinding)
+	{
+		glFrontFace(GL_CW);
+	}
+	else
+	{
+		glFrontFace(GL_CCW);
+	}	
 
 }
