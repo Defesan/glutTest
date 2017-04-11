@@ -45,20 +45,15 @@ void render()
 	
 	if(!generated)
 	{
-		geometry.push_back(new Rect(0.0f, 0.0f, -90.0f, 30.0f, 50.0f));
-		glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
-		geometry[0]->setColorToGLColor();
-		geometry[0]->setVelocity(0.15f, 0.1f, 0.04f);
-		geometry.push_back(new Circle(25.0f, 0.0f, -30.0f, 10.0f, 40));
-		glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
-		geometry[1]->setColorToGLColor();
-		geometry[1]->setVelocity(0.05f, 0.3f, -2.0f);
-		geometry.push_back(new Rect(0.0f, 0.0f, -100.0f, 20.0f, 20.0f));
-		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
-		geometry[2]->setColorToGLColor();
-		geometry[2]->setVelocity(-0.2f, 0.05f, -0.3f);
+		int i = 0;
 		geometry.push_back(new Sphere(0.0f, 0.0f, -100.0f, 20.0f, 12, 40));
-		geometry[3]->setVelocity(0.0f, 0.0f, 0.0f);
+		geometry[i]->setVelocity(0.0f, 0.0f, 0.0f);
+		i++;
+		geometry.push_back(new Sphere(0.0f, -40.0f, -100.0f, 20.0f, 12, 40));
+		geometry[i]->setVelocity(0.0f, 0.0f, 0.0f);
+		i++;
+		geometry.push_back(new Sphere(0.0f, 40.0f, -100.0f, 20.0f, 12, 40));
+		geometry[i]->setVelocity(0.0f, 0.0f, 0.0f);
 		generated = true;
 	}
 	for(unsigned int i = 0; i < geometry.size(); i++)
@@ -81,17 +76,15 @@ void update()
 
 	//More best practices practice.
 	std::vector<Shape*>::iterator iter;
+	geometry[0]->accelerate(0.1f, 0.0f, 0.0f);
+	geometry[1]->accelerate(0.0f, -0.1f, 0.0f);
+	geometry[2]->accelerate(0.0f, 0.0f, 0.1f);
 
 	for(iter = geometry.begin(); iter != geometry.end(); iter++)
 	{
 		(*iter)->update(); //Update calls render.
 	}
-	glTranslatef(xVel, yVel, zVel);
-	//glTranslatef(0.0f, 0.0f, 100.0f);
-	glRotatef(xRot, 0.0f, 1.0f, 0.0f);
-	glRotatef(yRot, 1.0f, 0.0f, 0.0f);
-	glRotatef(zRot, 0.0f, 0.0f, 1.0f);
-	//glTranslatef(0.0f, 0.0f, -100.0f);
+	
 	glutSwapBuffers();
 	glFlush();
 }
