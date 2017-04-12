@@ -6,7 +6,10 @@
 #include <vector>
 
 #include "stVec3f.h"
-
+#include <GL/freeglut.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+/*
 #if defined(__IPHONEOS__) || defined(__ANDROID__)
 #define USING_OPENGLES
 #endif
@@ -16,7 +19,7 @@
 #else
 #include "SDL2/SDL_opengl.h"
 #endif
-
+*/
 #define PI 3.1415926
 
 //Ah, the prototypical abstract class. But... I am making shapes here, so I need one.

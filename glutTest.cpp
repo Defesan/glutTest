@@ -46,13 +46,7 @@ void render()
 	if(!generated)
 	{
 		int i = 0;
-		geometry.push_back(new Sphere(0.0f, 0.0f, -100.0f, 20.0f, 12, 40));
-		geometry[i]->setVelocity(0.0f, 0.0f, 0.0f);
-		i++;
-		geometry.push_back(new Sphere(0.0f, -40.0f, -100.0f, 20.0f, 12, 40));
-		geometry[i]->setVelocity(0.0f, 0.0f, 0.0f);
-		i++;
-		geometry.push_back(new Sphere(0.0f, 40.0f, -100.0f, 20.0f, 12, 40));
+		geometry.push_back(new Sphere(0.0f, 0.0f, -200.0f, 20.0f, 12, 40));
 		geometry[i]->setVelocity(0.0f, 0.0f, 0.0f);
 		generated = true;
 	}
@@ -76,9 +70,16 @@ void update()
 
 	//More best practices practice.
 	std::vector<Shape*>::iterator iter;
-	geometry[0]->accelerate(0.1f, 0.0f, 0.0f);
-	geometry[1]->accelerate(0.0f, -0.1f, 0.0f);
-	geometry[2]->accelerate(0.0f, 0.0f, 0.1f);
+	geometry[0]->accelerate(0.0f, -0.1f, 0.0f);
+	
+	//static int counter = 0;
+
+	//if(counter == 1)
+	//{
+	//	counter = 0;
+		std::cout << "Velocity X: " << geometry[0]->getVelX() << "   Y: " << geometry[0]->getVelY() << "   Z: " << geometry[0]->getVelZ() << std::endl;
+	//}
+	//counter++;
 
 	for(iter = geometry.begin(); iter != geometry.end(); iter++)
 	{

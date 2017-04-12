@@ -235,15 +235,15 @@ void Sphere::update()
 	
 	if(((this->origin->getX() + this->radius + this->velocity->getX()) > this->boundPos->getX()) || ((this->origin->getX() - this->radius + this->velocity->getX()) < this->boundNeg->getX()))
 	{
-		this->velocity->mulX(-1);
+		this->velocity->mulX(-1.0f);
 	}
 	if(((this->origin->getY() + this->radius + this->velocity->getY()) > this->boundPos->getY()) || ((this->origin->getY() - this->radius + this->velocity->getY()) < this->boundNeg->getY()))
 	{
-		this->velocity->mulY(-1);
+		this->velocity->mulY(-1.0f);
 	}
 	if(((this->origin->getZ() + this->radius + this->velocity->getZ()) > this->boundPos->getZ()) || ((this->origin->getZ() - this->radius + this->velocity->getZ()) < this->boundNeg->getZ()))
 	{
-		this->velocity->mulZ(-1);
+		this->velocity->mulZ(-1.0f);
 	}
 	
 	this->translate(this->velocity->getX(), this->velocity->getY(), this->velocity->getZ());
