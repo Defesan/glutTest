@@ -50,10 +50,7 @@ void render()
 		geometry[i]->setVelocity(0.0f, 0.0f, 0.0f);
 		generated = true;
 	}
-	for(unsigned int i = 0; i < geometry.size(); i++)
-	{
-		geometry[i]->render();
-	}
+	update();
 	
 	
 	
@@ -70,14 +67,14 @@ void update()
 
 	//More best practices practice.
 	std::vector<Shape*>::iterator iter;
-	geometry[0]->accelerate(0.0f, -0.1f, 0.0f);
+	
 	
 	//static int counter = 0;
 
 	//if(counter == 1)
 	//{
 	//	counter = 0;
-		std::cout << "Velocity X: " << geometry[0]->getVelX() << "   Y: " << geometry[0]->getVelY() << "   Z: " << geometry[0]->getVelZ() << std::endl;
+		//std::cout << "Velocity X: " << geometry[0]->getVelX() << "   Y: " << geometry[0]->getVelY() << "   Z: " << geometry[0]->getVelZ() << std::endl;
 	//}
 	//counter++;
 
@@ -85,6 +82,7 @@ void update()
 	{
 		(*iter)->update(); //Update calls render.
 	}
+	geometry[0]->accelerate(0.0f, -0.1f, 0.0f);
 	
 	glutSwapBuffers();
 	glFlush();
@@ -130,6 +128,11 @@ void initGL()
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glEnable(GL_CULL_FACE);
 	glShadeModel(GL_FLAT);
+	int nMajor = 0;
+	int nMinor = 0;
+	glGetIntegerv(GL_MAJOR_VERSION, &nMajor);
+    glGetIntegerv(GL_MINOR_VERSION, &nMinor);
+    std::cout << "GL Version: " << nMajor << "." << nMinor << std::endl;
 }
 
 void processMenu(int value)

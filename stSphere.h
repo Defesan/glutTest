@@ -11,6 +11,8 @@ private:
 	GLushort numLayers;
 	GLushort numSlices;
 	
+	int frame;
+	
 	void genVerts() override;
 	void genIndices() override;
 	void genColors() override;
