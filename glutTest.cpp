@@ -46,16 +46,12 @@ void render()
 	if(!generated)
 	{
 		int i = 0;
-		geometry.push_back(new Sphere(0.0f, 0.0f, -200.0f, 20.0f, 12, 40));
-		geometry[i]->setVelocity(0.0f, 0.0f, 0.0f);
+		geometry.push_back(new Sphere(0.0f, 0.0f, 0.0f, 20.0f, 12, 40));
+		geometry[i]->setVelocity(1.0f, 2.0f, 1.0f);
 		generated = true;
 	}
 	update();
-	
-	
-	
 	glutSwapBuffers();
-	glFlush();
 }
 
 void update()
@@ -67,22 +63,15 @@ void update()
 
 	//More best practices practice.
 	std::vector<Shape*>::iterator iter;
-	
-	
-	//static int counter = 0;
-
-	//if(counter == 1)
-	//{
-	//	counter = 0;
-		//std::cout << "Velocity X: " << geometry[0]->getVelX() << "   Y: " << geometry[0]->getVelY() << "   Z: " << geometry[0]->getVelZ() << std::endl;
-	//}
-	//counter++;
 
 	for(iter = geometry.begin(); iter != geometry.end(); iter++)
 	{
 		(*iter)->update(); //Update calls render.
 	}
-	geometry[0]->accelerate(0.0f, -0.1f, 0.0f);
+	
+	glTranslatef(0.0f, 0.0f, zVel);
+	glRotatef(xRot, 0.0f, 1.0f, 0.0f);
+	
 	
 	glutSwapBuffers();
 	glFlush();
@@ -112,7 +101,7 @@ void resize(GLsizei w, GLsizei h)
 	//	glOrtho(-PROJECTION_WIDTH * aspectRatio, PROJECTION_WIDTH * aspectRatio, -PROJECTION_HEIGHT, PROJECTION_HEIGHT, -PROJECTION_DEPTH, PROJECTION_DEPTH);
 	//}
 	
-	gluPerspective(45.0f, aspectRatio, 1.0f, 200.0f);
+	gluPerspective(45.0f, aspectRatio, 1.0f, 2000.0f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
@@ -230,72 +219,16 @@ void specialKeys(int key, int x, int y)
 	switch(key)
 	{
 		case GLUT_KEY_UP:
-			if(controlDown())	//handle rotations
-			{
-				if(shiftDown())	//Y/Z switch
-				{
-					zRot = 0.1f;
-				}
-				else
-				{
-					yRot = 0.1f;
-				}
-			}
-			else				//handle translations
-			{
-				if(shiftDown())
-				{
-					zVel = 0.1f;
-				}
-				else
-				{
-					yVel = 0.1f;
-				}
-			}
+			zVel = 1.0f;
 			break;
 		case GLUT_KEY_DOWN:
-			if(controlDown())	//handle rotations
-			{
-				if(shiftDown())	//Y/Z switch
-				{
-					zRot = -0.1f;
-				}
-				else
-				{
-					yRot = -0.1f;
-				}
-			}
-			else				//handle translations
-			{
-				if(shiftDown())
-				{
-					zVel = -0.1f;
-				}
-				else
-				{
-					yVel = -0.1f;
-				}
-			}
-			break;
-		case GLUT_KEY_LEFT:
-			if(controlDown())
-			{
-				xRot = -0.1f;
-			}
-			else
-			{
-				xVel = -0.1f;
-			}
+			zVel = -1.0f;
 			break;
 		case GLUT_KEY_RIGHT:
-			if(controlDown())
-			{
-				xRot = 0.1f;
-			}
-			else
-			{
-				xVel = 0.1f;
-			}
+			xRot = 1.0f;
+			break;
+		case GLUT_KEY_LEFT:
+			xRot = -1.0f;
 			break;
 		default:
 			break;
@@ -308,14 +241,10 @@ void specialKeysUp(int key, int x, int y)
 	{
 		case GLUT_KEY_UP:
 		case GLUT_KEY_DOWN:
-			yVel = 0.0f;
 			zVel = 0.0f;
-			yRot = 0.0f;
-			zRot = 0.0f;
 			break;
 		case GLUT_KEY_LEFT:
 		case GLUT_KEY_RIGHT:
-			xVel = 0.0f;
 			xRot = 0.0f;
 			break;
 		default:
