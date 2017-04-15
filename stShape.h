@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 
-#include "stVec3f.h"
+#include "STLinear/stVec3f.h"
 #include <GL/freeglut.h>
 #include <GL/gl.h>
 #include <GL/glu.h>

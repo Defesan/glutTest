@@ -36,7 +36,6 @@ public:
 	
 	void addVec3f(STVec3f* v2);
 	void subVec3f(STVec3f* v2);
-	void mulScalar(float scale);
 
 };
 

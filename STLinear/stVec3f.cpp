@@ -20,10 +20,3 @@ void STVec3f::subVec3f(STVec3f* v2)
 	this->subY(v2->getY());
 	this->subZ(v2->getZ());
 }
-
-void STVec3f::mulScalar(float scale)
-{
-	this->mulX(scale);
-	this->mulY(scale);
-	this->mulZ(scale);
-}
