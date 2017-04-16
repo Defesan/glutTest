@@ -20,3 +20,11 @@ void STVec3d::subVec3d(STVec3d* v2)
 	this->subY(v2->getY());
 	this->subZ(v2->getZ());
 }
+
+void STVec3d::mulScalar(double scale)
+{
+	this->mulX(scale);
+	this->mulY(scale);
+	this->mulZ(scale);
+
+}
