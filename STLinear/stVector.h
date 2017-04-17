@@ -1,6 +1,45 @@
 #ifndef __ST_VECTOR_H__
 #define __ST_VECTOR_H__
 
+#include <cmath>
+
+/*
+	Apparently I can occasionally use a 2D vector?
+ */
+ 
+class STVec2f
+{
+private:
+	float x;
+	float y;
+
+public:
+	STVec2f(float x, float y);
+	STVec2f() : STVec2f(0.0f, 0.0f) {};
+	
+	float getX() {return this->x;};
+	float getY() {return this->y;};
+
+	void setX(float x) {this->x = x;};
+	void setY(float y) {this->y = y;};
+	
+	void addX(float x) {this->x += x;};
+	void addY(float y) {this->y += y;};
+	
+	void subX(float x) {this->x -= x;};
+	void subY(float y) {this->y -= y;};
+	
+	void mulX(float scale) {this->x *= scale;};
+	void mulY(float scale) {this->y *= scale;};
+	
+	void addVec2f(STVec2f* v2);
+	void subVec2f(STVec2f* v2);
+	void mulScalar(float scale);
+	float dotProduct(STVec2f* v2);
+	float length() {return sqrtf(this->dotProduct(this));};
+};
+
+
 class STVec3f
 {
 private:
@@ -36,7 +75,7 @@ public:
 	void mulScalar(float scale);
 	float dotProduct(STVec3f* v2);
 	STVec3f* crossProduct(STVec3f* v2);
-	float length() {return this->dotProduct(this);};	//I'm hoping this'll work... Also hoping to find a reason for its existence.
+	float length() {return sqrtf(this->dotProduct(this));};	//I'm hoping this'll work... Also hoping to find a reason for its existence.
 };
 
 class STVec4f
@@ -80,9 +119,42 @@ public:
 	void subVec4f(STVec4f v2);
 	void mulScalar(float scale);
 	float dotProduct(STVec4f* v2);
-	STVec4f* crossProduct(STVec4f* v2);
-	float length() {return this->dotProduct(this);};
+	float length() {return sqrtf(this->dotProduct(this));};
 };
+
+
+class STVec2d
+{
+private:
+	double x;
+	double y;
+
+public:
+	STVec2d(double x, double y);
+	STVec2d() : STVec2d(0.0, 0.0) {};
+	
+	double getX() {return this->x;};
+	double getY() {return this->y;};
+
+	void setX(double x) {this->x = x;};
+	void setY(double y) {this->y = y;};
+	
+	void addX(double x) {this->x += x;};
+	void addY(double y) {this->y += y;};
+	
+	void subX(double x) {this->x -= x;};
+	void subY(double y) {this->y -= y;};
+	
+	void mulX(double scale) {this->x *= scale;};
+	void mulY(double scale) {this->y *= scale;};
+	
+	void addVec2f(STVec2f* v2);
+	void subVec2f(STVec2f* v2);
+	void mulScalar(double scale);
+	double dotProduct(STVec2f* v2);
+	double length() {return sqrt(this->dotProduct(this));};
+};
+
 
 class STVec3d
 {
@@ -119,7 +191,7 @@ public:
 	void mulScalar(double scale);
 	double dotProduct(STVec3d* v2);
 	STVec3d* crossProduct(STVec3d* v2);
-	double length() {return this->dotProduct(this);};
+	double length() {return sqrt(this->dotProduct(this));};
 };
 
 class STVec4d
@@ -163,8 +235,7 @@ public:
 	void subVec4f(STVec4f v2);
 	void mulScalar(double scale);
 	double dotProduct(STVec4d* v2);
-	STVec4d* crossProduct(STVec4d* v2);
-	double length() {return this->dotProduct(this);};
+	double length() {return sqrt(this->dotProduct(this));};
 };
 
 #endif //__ST_VECTOR_H__
