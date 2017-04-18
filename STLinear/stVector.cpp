@@ -6,8 +6,8 @@
 */
 STVec2f::STVec2f(float x, float y)
 {
-	this->x = x;
-	this->y = y;
+	this->data.push_back(x);
+	this->data.push_back(y);
 }
 
 void STVec2f::addVec2f(STVec2f* v2)
@@ -28,14 +28,33 @@ void STVec2f::mulScalar(float scale)
 	this->mulY(scale);
 }
 
+STVec2f* STVec2f::sum(STVec2f* v2)
+{
+	STVec2f* result = new STVec2f(this->getX() + v2->getX(), this->getY() + v2->getY());
+	return result; //Probably could have inlined this...
+}
+
+STVec2f* STVec2f::diff(STVec2f* v2)
+{
+	STVec2f* result = new STVec2f(this->getX() - v2->getX(), this->getY() - v2->getY());
+	return result; //Probably could have inlined this...
+}
+
 float STVec2f::dotProduct(STVec2f* v2)
 {
 	float product = 0.0f;
 	
-	product += this=>getX() * v2->getX();
-	product += this=>getY() * v2->getY();
+	product += this->getX() * v2->getX();
+	product += this->getY() * v2->getY();
 
 	return product;
+}
+
+float STVec2f::distance(STVec2f* v2)
+{
+	STVec2f* connecting = this->diff(v2);
+	return abs(connecting->length());
+
 }
 
 
@@ -45,9 +64,9 @@ float STVec2f::dotProduct(STVec2f* v2)
 */
 STVec3f::STVec3f(float x, float y, float z)
 {
-	this->x = x;
-	this->y = y;
-	this->z = z;
+	this->data.push_back(x);
+	this->data.push_back(y);
+	this->data.push_back(z);
 }
 
 void STVec3f::addVec3f(STVec3f* v2)
@@ -71,15 +90,34 @@ void STVec3f::mulScalar(float scale)
 	this->mulZ(scale);
 }
 
+STVec3f* STVec3f::sum(STVec3f* v2)
+{
+	STVec3f* result = new STVec3f(this->getX() + v2->getX(), this->getY() + v2->getY(), this->getZ() + v2->getZ());
+	return result; //Probably could have inlined this...
+}
+
+STVec3f* STVec3f::diff(STVec3f* v2)
+{
+	STVec3f* result = new STVec3f(this->getX() - v2->getX(), this->getY() - v2->getY(), this->getZ() - v2->getZ());
+	return result; //Probably could have inlined this...
+}
+
 float STVec3f::dotProduct(STVec3f* v2)
 {
 	float product = 0.0f;
 	
-	product += this=>getX() * v2->getX();
-	product += this=>getY() * v2->getY();
-	product += this=>getZ() * v2->getZ();
+	product += this->getX() * v2->getX();
+	product += this->getY() * v2->getY();
+	product += this->getZ() * v2->getZ();
 
 	return product;
+}
+
+float STVec3f::distance(STVec3f* v2)
+{
+	STVec3f* connecting = this->diff(v2);
+	return abs(connecting->length());
+
 }
 
 STVec3f* STVec3f::crossProduct(STVec3f* v2)
@@ -100,10 +138,10 @@ STVec3f* STVec3f::crossProduct(STVec3f* v2)
 
 STVec4f::STVec4f(float x, float y, float z, float w)
 {
-	this->x = x;
-	this->y = y;
-	this->z = z;
-	this->w = w;
+	this->data.push_back(x);
+	this->data.push_back(y);
+	this->data.push_back(z);
+	this->data.push_back(w);
 }
 
 void STVec4f::addVec4f(STVec4f* v2)
@@ -130,28 +168,46 @@ void STVec4f::mulScalar(float scale)
 	this->mulW(scale);
 }
 
+STVec4f* STVec4f::sum(STVec4f* v2)
+{
+	STVec4f* result = new STVec4f(this->getX() + v2->getX(), this->getY() + v2->getY(), this->getZ() + v2->getZ(), this->getW() + v2->getW());
+	return result; //Probably could have inlined this...
+}
+
+STVec4f* STVec4f::diff(STVec4f* v2)
+{
+	STVec4f* result = new STVec4f(this->getX() - v2->getX(), this->getY() - v2->getY(), this->getZ() - v2->getZ(), this->getW() - v2->getW());
+	return result; //Probably could have inlined this...
+}
+
+
 float STVec4f::dotProduct(STVec4f* v2)
 {
 	float product = 0.0f;
 	
-	product += this=>getX() * v2->getX();
-	product += this=>getY() * v2->getY();
-	product += this=>getZ() * v2->getZ();
-	product += this=>getW() * v2->getW();
+	product += this->getX() * v2->getX();
+	product += this->getY() * v2->getY();
+	product += this->getZ() * v2->getZ();
+	product += this->getW() * v2->getW();
 
 	return product;
 }
 
+float STVec4f::distance(STVec4f* v2)
+{
+	STVec4f* connecting = this->diff(v2);
+	return abs(connecting->length());
 
+}
 
 /*
 	STVec2d
 	2 element vector with double	
 */
-STVec2d::STVec2d(float x, float y)
+STVec2d::STVec2d(double x, double y)
 {
-	this->x = x;
-	this->y = y;
+	this->data.push_back(x);
+	this->data.push_back(y);
 }
 
 void STVec2d::addVec2d(STVec2d* v2)
@@ -172,14 +228,33 @@ void STVec2d::mulScalar(double scale)
 	this->mulY(scale);
 }
 
+STVec2d* STVec2d::sum(STVec2d* v2)
+{
+	STVec2d* result = new STVec2d(this->getX() + v2->getX(), this->getY() + v2->getY());
+	return result; //Probably could have inlined this...
+}
+
+STVec2d* STVec2d::diff(STVec2d* v2)
+{
+	STVec2d* result = new STVec2d(this->getX() - v2->getX(), this->getY() - v2->getY());
+	return result; //Probably could have inlined this...
+}
+
 double STVec2d::dotProduct(STVec2d* v2)
 {
 	double product = 0.0;
 	
-	product += this=>getX() * v2->getX();
-	product += this=>getY() * v2->getY();
+	product += this->getX() * v2->getX();
+	product += this->getY() * v2->getY();
 
 	return product;
+}
+
+float STVec2d::distance(STVec2d* v2)
+{
+	STVec2d* connecting = this->diff(v2);
+	return abs(connecting->length());
+
 }
 
 
@@ -191,9 +266,9 @@ double STVec2d::dotProduct(STVec2d* v2)
 
 STVec3d::STVec3d(double x, double y, double z)
 {
-	this->x = x;
-	this->y = y;
-	this->z = z;
+	this->data.push_back(x);
+	this->data.push_back(y);
+	this->data.push_back(z);
 }
 
 void STVec3d::addVec3d(STVec3d* v2)
@@ -222,11 +297,23 @@ double STVec3d::dotProduct(STVec3d* v2)
 {
 	double product = 0.0;
 	
-	product += this=>getX() * v2->getX();
-	product += this=>getY() * v2->getY();
-	product += this=>getZ() * v2->getZ();
+	product += this->getX() * v2->getX();
+	product += this->getY() * v2->getY();
+	product += this->getZ() * v2->getZ();
 
 	return product;
+}
+
+STVec3d* STVec3d::sum(STVec3d* v2)
+{
+	STVec3d* result = new STVec3d(this->getX() + v2->getX(), this->getY() + v2->getY(), this->getZ() + v2->getZ());
+	return result; //Probably could have inlined this...
+}
+
+STVec3d* STVec3d::diff(STVec3d* v2)
+{
+	STVec3d* result = new STVec3d(this->getX() - v2->getX(), this->getY() - v2->getY(), this->getZ() - v2->getZ());
+	return result; //Probably could have inlined this...
 }
 
 STVec3d* STVec3d::crossProduct(STVec3d* v2)
@@ -240,6 +327,13 @@ STVec3d* STVec3d::crossProduct(STVec3d* v2)
 	return result;
 }
 
+float STVec3d::distance(STVec3d* v2)
+{
+	STVec3d* connecting = this->diff(v2);
+	return abs(connecting->length());
+
+}
+
 
 /*
 	STVec4d
@@ -248,10 +342,10 @@ STVec3d* STVec3d::crossProduct(STVec3d* v2)
 
 STVec4d::STVec4d(double x, double y, double z, double w)
 {
-	this->x = x;
-	this->y = y;
-	this->z = z;
-	this->w = w;
+	this->data.push_back(x);
+	this->data.push_back(y);
+	this->data.push_back(z);
+	this->data.push_back(w);
 }
 
 void STVec4d::addVec4d(STVec4d* v2)
@@ -278,14 +372,33 @@ void STVec4d::mulScalar(double scale)
 	this->mulW(scale);
 }
 
+STVec4d* STVec4d::sum(STVec4d* v2)
+{
+	STVec4d* result = new STVec4d(this->getX() + v2->getX(), this->getY() + v2->getY(), this->getZ() + v2->getZ(), this->getW() + v2->getW());
+	return result; //Probably could have inlined this...
+}
+
+STVec4d* STVec4d::diff(STVec4d* v2)
+{
+	STVec4d* result = new STVec4d(this->getX() - v2->getX(), this->getY() - v2->getY(), this->getZ() - v2->getZ(), this->getW() - v2->getW());
+	return result; //Probably could have inlined this...
+}
+
 double STVec4d::dotProduct(STVec4d* v2)
 {
 	double product = 0.0;
 	
-	product += this=>getX() * v2->getX();
-	product += this=>getY() * v2->getY();
-	product += this=>getZ() * v2->getZ();
-	product += this=>getW() * v2->getW();
+	product += this->getX() * v2->getX();
+	product += this->getY() * v2->getY();
+	product += this->getZ() * v2->getZ();
+	product += this->getW() * v2->getW();
 	
 	return product;
+}
+
+float STVec4d::distance(STVec4d* v2)
+{
+	STVec4d* connecting = this->diff(v2);
+	return abs(connecting->length());
+
 }
