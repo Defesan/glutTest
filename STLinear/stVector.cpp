@@ -53,7 +53,7 @@ float STVec2f::dotProduct(STVec2f* v2)
 float STVec2f::distance(STVec2f* v2)
 {
 	STVec2f* connecting = this->diff(v2);
-	return abs(connecting->length());
+	return std::abs(connecting->length());
 
 }
 
@@ -116,7 +116,7 @@ float STVec3f::dotProduct(STVec3f* v2)
 float STVec3f::distance(STVec3f* v2)
 {
 	STVec3f* connecting = this->diff(v2);
-	return abs(connecting->length());
+	return std::abs(connecting->length());
 
 }
 
@@ -196,7 +196,7 @@ float STVec4f::dotProduct(STVec4f* v2)
 float STVec4f::distance(STVec4f* v2)
 {
 	STVec4f* connecting = this->diff(v2);
-	return abs(connecting->length());
+	return std::abs(connecting->length());
 
 }
 
@@ -253,7 +253,7 @@ double STVec2d::dotProduct(STVec2d* v2)
 float STVec2d::distance(STVec2d* v2)
 {
 	STVec2d* connecting = this->diff(v2);
-	return abs(connecting->length());
+	return std::abs(connecting->length());
 
 }
 
@@ -330,7 +330,7 @@ STVec3d* STVec3d::crossProduct(STVec3d* v2)
 float STVec3d::distance(STVec3d* v2)
 {
 	STVec3d* connecting = this->diff(v2);
-	return abs(connecting->length());
+	return std::abs(connecting->length());
 
 }
 
@@ -399,6 +399,6 @@ double STVec4d::dotProduct(STVec4d* v2)
 float STVec4d::distance(STVec4d* v2)
 {
 	STVec4d* connecting = this->diff(v2);
-	return abs(connecting->length());
+	return std::abs(connecting->length());
 
 }

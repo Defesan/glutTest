@@ -12,8 +12,8 @@ public:
 	STMatrix33f(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3);
 	STMatrix33f() : STMatrix33f(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f) {};	//In case you want to make an empty matrix easily.
 	
-	void set(int col,int row, float val) {this->data[row + (col * 3)] = val;};	
-	float get(int col, int row) {return this->data[row + (col * 3)];};
+	void set(int row,int col, float val) {this->data[row + (col * 3)] = val;};	
+	float get(int row, int col) {return this->data[row + (col * 3)];};
 	
 	STMatrix33f* mul(STMatrix33f* m2);
 	STVec3f* mulVector(STVec3f* vec);
@@ -34,8 +34,8 @@ public:
 	STMatrix44f(float x1, float y1, float z1, float w1, float x2, float y2, float z2, float w2, float x3, float y3, float z3, float w3, float x4, float y4, float z4, float w4);
 	STMatrix44f() : STMatrix44f(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f) {};	//In case you want to make an empty matrix easily.
 	
-	void set(int col,int row, float val) {this->data[row + (col * 4)] = val;};	
-	float get(int col, int row) {return this->data[row + (col * 4)];};
+	void set(int row,int col, float val) {this->data[row + (col * 4)] = val;};	
+	float get(int row, int col) {return this->data[row + (col * 4)];};
 
 	STMatrix44f* mul(STMatrix44f* m2);
 	STVec4f* mulVector(STVec4f* vec);
@@ -56,8 +56,8 @@ public:
 	STMatrix33d(double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3);
 	STMatrix33d() : STMatrix33d(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0) {};	//In case you want to make an empty matrix easily.
 	
-	void set(int col,int row, double val) {this->data[row + (col * 3)] = val;};	
-	double get(int col, int row) {return this->data[row + (col * 3)];};
+	void set(int row,int col, double val) {this->data[row + (col * 3)] = val;};	
+	double get(int row, int col) {return this->data[row + (col * 3)];};
 	
 	STMatrix33d* mul(STMatrix33d* m2);
 	STVec3d* mulVector(STVec3d* vec);
@@ -79,8 +79,8 @@ public:
 	STMatrix44d() : STMatrix44d(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0) {};	//In case you want to make an empty matrix easily.
 	
 
-	void set(int col,int row, double val) {this->data[row + (col * 4)] = val;};	
-	double get(int col, int row) {return this->data[row + (col * 4)];};
+	void set(int row,int col, double val) {this->data[row + (col * 4)] = val;};	
+	double get(int row, int col) {return this->data[row + (col * 4)];};
 	
 	STMatrix44d* mul(STMatrix44d* m2);
 	STVec4d* mulVector(STVec4d* vec);
