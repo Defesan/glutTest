@@ -3,7 +3,7 @@
 
 #include "stVector.h"
 
-//Four types of matrices, as classes: Two 3x3 and tw 4x4
+//Four types of matrices, as classes: Two 3x3 and two 4x4
 
 class STMatrix33f {
 private:
@@ -20,11 +20,7 @@ public:
 	
 	void loadIdentity();
 	void loadRotationMatrix(float angle, float x, float y, float z);
-	void loadTranslationMatrix(float x, float y, float z);
-	void loadScaleMatrix(float x, float y, float z);
-	void loadPerspectiveMatrix(float fov, float aspect, float zMin, float zMax);
-	void loadOrthoMatrix(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax);
-
+	void loadScaleMatrix(float x, float y, float z) {this->loadIdentity(); this->data[0] = x; this->data[4] = y; this->data[8] = z;};
 };
 
 class STMatrix44f {
@@ -42,11 +38,10 @@ public:
 	
 	void loadIdentity();
 	void loadRotationMatrix(float angle, float x, float y, float z);
-	void loadTranslationMatrix(float x, float y, float z);
-	void loadScaleMatrix(float x, float y, float z);
+	void loadTranslationMatrix(float x, float y, float z) {this->loadIdentity(); this->data[12] = x; this->data[13] = y; this->data[14] = z;};
+	void loadScaleMatrix(float x, float y, float z) {this->loadIdentity(); this->data[0] = x; this->data[5] = y; this->data[10] = z;};
 	void loadPerspectiveMatrix(float fov, float aspect, float zMin, float zMax);
 	void loadOrthoMatrix(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax);
-
 };
 
 class STMatrix33d {
@@ -64,11 +59,7 @@ public:
 	
 	void loadIdentity();
 	void loadRotationMatrix(double angle, double x, double y, double z);
-	void loadTranslationMatrix(double x, double y, double z);
-	void loadScaleMatrix(double x, double y, double z);
-	void loadPerspectiveMatrix(double fov, double aspect, double zMin, double zMax);
-	void loadOrthoMatrix(double xMin, double xMax, double yMin, double yMax, double zMin, double zMax);
-
+	void loadScaleMatrix(double x, double y, double z) {this->loadIdentity(); this->data[0] = x; this->data[4] = y; this->data[8] = z;};
 };
 
 class STMatrix44d {
@@ -87,11 +78,10 @@ public:
 	
 	void loadIdentity();
 	void loadRotationMatrix(double angle, double x, double y, double z);
-	void loadTranslationMatrix(double x, double y, double z);
-	void loadScaleMatrix(double x, double y, double z);
+	void loadTranslationMatrix(double x, double y, double z) {this->loadIdentity(); this->data[12] = x; this->data[13] = y; this->data[14] = z;};
+	void loadScaleMatrix(double x, double y, double z) {this->loadIdentity(); this->data[0] = x; this->data[5] = y; this->data[10] = z;};
 	void loadPerspectiveMatrix(double fov, double aspect, double zMin, double zMax);
 	void loadOrthoMatrix(double xMin, double xMax, double yMin, double yMax, double zMin, double zMax);
-
 };
 
 #endif //__ST_MATRIX_H__

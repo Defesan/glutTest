@@ -65,34 +65,37 @@ void STMatrix33f::loadIdentity()
 	}
 }
 
+//Note that, while I'd like to use degrees for this, using radians just makes sense. Otherwise, they'll have to be converted at some point, and these operations should be fast.
 void STMatrix33f::loadRotationMatrix(float angle, float x, float y, float z)
 {
-
-
-}
-
-void STMatrix33f::loadTranslationMatrix(float x, float y, float z)
-{
-
-
-}
-
-void STMatrix33f::loadScaleMatrix(float x, float y, float z)
-{
-
-
-}
-
-void STMatrix33f::loadPerspectiveMatrix(float fov, float aspect, float zMin, float zMax)
-{
-
-
-}
-
-void STMatrix33f::loadOrthoMatrix(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax)
-{
-
-
+	//This seems like a fairly obvious optimization, though how much time it really saves...
+	float mag = sqrt((x * x) + (y * y) + (z * z));	//float-overloaded sqrt functions! C and C++ never stop improving, it seems.
+	if(mag == 0.0f)
+	{
+		this->loadIdentity();
+		return;
+	}
+	
+	//Normalize our axis elements
+	x /= mag;
+	y /= mag;
+	z /= mag;
+	
+	float s = sin(angle);
+	float c = cos(angle);
+	float ci = (1.0f - c);
+	
+	this->set(0,0,((ci * x * x) + c));
+	this->set(0,1,((ci * x * y) - (z * s)));
+	this->set(0,2,((ci * x * z) + (y * s)));
+	
+	this->set(1,0,((ci * y * x) + (z * s)));
+	this->set(1,1,((ci * y * y) + c));
+	this->set(1,2,((ci * y * z) - (x * s)));
+	
+	this->set(2,0,((ci * z * x) - (y * s)));
+	this->set(2,1,((ci * z * y) + (x * s)));
+	this->set(2,2,((ci * z * z) + c));
 
 }
 
@@ -171,31 +174,76 @@ void STMatrix44f::loadIdentity()
 
 void STMatrix44f::loadRotationMatrix(float angle, float x, float y, float z)
 {
-
-
-}
-
-void STMatrix44f::loadTranslationMatrix(float x, float y, float z)
-{
-
-
-}
-
-void STMatrix44f::loadScaleMatrix(float x, float y, float z)
-{
-
+	float mag = sqrt((x * x) + (y * y) + (z * z));	//float-overloaded sqrt functions! C and C++ never stop improving, it seems.
+	if(mag == 0.0f)
+	{
+		this->loadIdentity();
+		return;
+	}
+	
+	//Normalize our axis elements
+	x /= mag;
+	y /= mag;
+	z /= mag;
+	
+	float s = sin(angle);
+	float c = cos(angle);
+	float ci = (1.0f - c);
+	
+	this->set(0,0,((ci * x * x) + c));
+	this->set(0,1,((ci * x * y) - (z * s)));
+	this->set(0,2,((ci * x * z) + (y * s)));
+	this->set(0,3,0.0f);
+	
+	this->set(1,0,((ci * y * x) + (z * s)));
+	this->set(1,1,((ci * y * y) + c));
+	this->set(1,2,((ci * y * z) - (x * s)));
+	this->set(1,3,0.0f);
+	
+	this->set(2,0,((ci * z * x) - (y * s)));
+	this->set(2,1,((ci * z * y) + (x * s)));
+	this->set(2,2,((ci * z * z) + c));
+	this->set(2,3,0.0f);
+	
+	this->set(3,0,0.0f);
+	this->set(3,1,0.0f);
+	this->set(3,2,0.0f);
+	this->set(3,3,1.0f);
 
 }
 
 void STMatrix44f::loadPerspectiveMatrix(float fov, float aspect, float zMin, float zMax)
 {
-
+	//Basically an object-oriented refactor of the same function in the glTools m3d library.
+	this->loadIdentity();
+	
+	float yMax = zMin * tan(fov * 0.5f);
+	float yMin = -yMax;
+	float xMin = yMin * aspect;
+	float xMax = -xMin;
+	
+	this->data[0] = (2.0f * zMin) / (xMax - xMin);
+	this->data[5] = (2.0f * zMin) / (yMax - yMin);
+	this->data[8] = (xMax + xMin) / (xMax - xMin);
+	this->data[9] = (yMax + yMin) / (yMax - yMin);
+	this->data[10] = -((zMax + zMin) / (zMax - zMin));
+	this->data[11] = -1.0f;
+	this->data[14] = -((2.0f * (zMax*zMin))/(zMax - zMin));
+	this->data[15] = 0.0f;
 
 }
 
 void STMatrix44f::loadOrthoMatrix(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax)
 {
-
+	//compared to the perspective matrix, this is downright straightforward!
+	this->loadIdentity();
+	
+	this->data[0] = 2.0f / (xMax - xMin);
+	this->data[5] = 2.0f / (yMax - yMin);
+	this->data[10] = -2.0f / (zMax - zMin);
+	this->data[12] = -((xMax + xMin)/(xMax - xMin));
+	this->data[13] = -((yMax + yMin)/(yMax - yMin));
+	this->data[14] = -((zMax + zMin)/(zMax - zMin));
 
 
 }
@@ -267,31 +315,33 @@ void STMatrix33d::loadIdentity()
 
 void STMatrix33d::loadRotationMatrix(double angle, double x, double y, double z)
 {
-
-
-}
-
-void STMatrix33d::loadTranslationMatrix(double x, double y, double z)
-{
-
-
-}
-
-void STMatrix33d::loadScaleMatrix(double x, double y, double z)
-{
-
-
-}
-
-void STMatrix33d::loadPerspectiveMatrix(double fov, double aspect, double zMin, double zMax)
-{
-
-
-}
-
-void STMatrix33d::loadOrthoMatrix(double xMin, double xMax, double yMin, double yMax, double zMin, double zMax)
-{
-
+	double mag = sqrt((x * x) + (y * y) + (z * z));
+	if(mag == 0.0)
+	{
+		this->loadIdentity();
+		return;
+	}
+	
+	//Normalize our axis elements
+	x /= mag;
+	y /= mag;
+	z /= mag;
+	
+	double s = sin(angle);
+	double c = cos(angle);
+	double ci = (1.0 - c);
+	
+	this->set(0,0,((ci * x * x) + c));
+	this->set(0,1,((ci * x * y) - (z * s)));
+	this->set(0,2,((ci * x * z) + (y * s)));
+	
+	this->set(1,0,((ci * y * x) + (z * s)));
+	this->set(1,1,((ci * y * y) + c));
+	this->set(1,2,((ci * y * z) - (x * s)));
+	
+	this->set(2,0,((ci * z * x) - (y * s)));
+	this->set(2,1,((ci * z * y) + (x * s)));
+	this->set(2,2,((ci * z * z) + c));
 
 }
 
@@ -370,30 +420,74 @@ void STMatrix44d::loadIdentity()
 
 void STMatrix44d::loadRotationMatrix(double angle, double x, double y, double z)
 {
-
+	double mag = sqrt((x * x) + (y * y) + (z * z));
+	if(mag == 0.0)
+	{
+		this->loadIdentity();
+		return;
+	}
+	
+	//Normalize our axis elements
+	x /= mag;
+	y /= mag;
+	z /= mag;
+	
+	double s = sin(angle);
+	double c = cos(angle);
+	double ci = (1.0f - c);
+	
+	this->set(0,0,((ci * x * x) + c));
+	this->set(0,1,((ci * x * y) - (z * s)));
+	this->set(0,2,((ci * x * z) + (y * s)));
+	this->set(0,3,0.0);
+	
+	this->set(1,0,((ci * y * x) + (z * s)));
+	this->set(1,1,((ci * y * y) + c));
+	this->set(1,2,((ci * y * z) - (x * s)));
+	this->set(1,3,0.0);
+	
+	this->set(2,0,((ci * z * x) - (y * s)));
+	this->set(2,1,((ci * z * y) + (x * s)));
+	this->set(2,2,((ci * z * z) + c));
+	this->set(2,3,0.0);
+	
+	this->set(3,0,0.0);
+	this->set(3,1,0.0);
+	this->set(3,2,0.0);
+	this->set(3,3,1.0);
 
 }
 
-void STMatrix44d::loadTranslationMatrix(double x, double y, double z)
-{
-
-
-}
-
-void STMatrix44d::loadScaleMatrix(double x, double y, double z)
-{
-
-
-}
 
 void STMatrix44d::loadPerspectiveMatrix(double fov, double aspect, double zMin, double zMax)
 {
-
+	//Basically an object-oriented refactor of the same function in the glTools m3d library.
+	this->loadIdentity();
+	
+	double yMax = zMin * tan(fov * 0.5f);
+	double yMin = -yMax;
+	double xMin = yMin * aspect;
+	double xMax = -xMin;
+	
+	this->data[0] = (2.0f * zMin) / (xMax - xMin);
+	this->data[5] = (2.0f * zMin) / (yMax - yMin);
+	this->data[8] = (xMax + xMin) / (xMax - xMin);
+	this->data[9] = (yMax + yMin) / (yMax - yMin);
+	this->data[10] = -((zMax + zMin) / (zMax - zMin));
+	this->data[11] = -1.0f;
+	this->data[14] = -((2.0f * (zMax*zMin))/(zMax - zMin));
+	this->data[15] = 0.0f;
 
 }
 
 void STMatrix44d::loadOrthoMatrix(double xMin, double xMax, double yMin, double yMax, double zMin, double zMax)
 {
-
-
+	this->loadIdentity();
+	
+	this->data[0] = 2.0f / (xMax - xMin);
+	this->data[5] = 2.0f / (yMax - yMin);
+	this->data[10] = -2.0f / (zMax - zMin);
+	this->data[12] = -((xMax + xMin)/(xMax - xMin));
+	this->data[13] = -((yMax + yMin)/(yMax - yMin));
+	this->data[14] = -((zMax + zMin)/(zMax - zMin));
 }
