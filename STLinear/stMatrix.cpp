@@ -99,6 +99,20 @@ void STMatrix33f::loadRotationMatrix(float angle, float x, float y, float z)
 
 }
 
+STMatrix33f* STMatrix33f::copyMatrix()
+{
+	STMatrix33f* copy = new STMatrix33f();
+	
+	for(int i = 0; i < 3; i++)
+	{
+		for(int j = 0; j < 3; j++)
+		{
+			copy->set(i,j,this->get(i,j));
+		}
+	}
+	return copy;
+}
+
 /*  STMatrix44f
 	4x4 column-major matrix with floats
  */
@@ -248,6 +262,20 @@ void STMatrix44f::loadOrthoMatrix(float xMin, float xMax, float yMin, float yMax
 
 }
 
+STMatrix44f* STMatrix44f::copyMatrix()
+{
+	STMatrix44f* copy = new STMatrix44f();
+	
+	for(int i = 0; i < 4; i++)
+	{
+		for(int j = 0; j < 4; j++)
+		{
+			copy->set(i,j,this->get(i,j));
+		}
+	}
+	return copy;
+}
+
 /*	STMatrix33d
 	3x3 column-major matrix with doubles
  */
@@ -343,6 +371,20 @@ void STMatrix33d::loadRotationMatrix(double angle, double x, double y, double z)
 	this->set(2,1,((ci * z * y) + (x * s)));
 	this->set(2,2,((ci * z * z) + c));
 
+}
+
+STMatrix33d* STMatrix33d::copyMatrix()
+{
+	STMatrix33d* copy = new STMatrix33d();
+	
+	for(int i = 0; i < 3; i++)
+	{
+		for(int j = 0; j < 3; j++)
+		{
+			copy->set(i,j,this->get(i,j));
+		}
+	}
+	return copy;
 }
 
 /*  STMatrix44d
@@ -491,3 +533,18 @@ void STMatrix44d::loadOrthoMatrix(double xMin, double xMax, double yMin, double 
 	this->data[13] = -((yMax + yMin)/(yMax - yMin));
 	this->data[14] = -((zMax + zMin)/(zMax - zMin));
 }
+
+STMatrix44d* STMatrix44d::copyMatrix()
+{
+	STMatrix44d* copy = new STMatrix44d();
+	
+	for(int i = 0; i < 4; i++)
+	{
+		for(int j = 0; j < 4; j++)
+		{
+			copy->set(i,j,this->get(i,j));
+		}
+	}
+	return copy;
+}
+

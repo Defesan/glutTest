@@ -21,6 +21,8 @@ public:
 	void loadIdentity();
 	void loadRotationMatrix(float angle, float x, float y, float z);
 	void loadScaleMatrix(float x, float y, float z) {this->loadIdentity(); this->data[0] = x; this->data[4] = y; this->data[8] = z;};
+	
+	STMatrix33f* copyMatrix();
 };
 
 class STMatrix44f {
@@ -42,6 +44,8 @@ public:
 	void loadScaleMatrix(float x, float y, float z) {this->loadIdentity(); this->data[0] = x; this->data[5] = y; this->data[10] = z;};
 	void loadPerspectiveMatrix(float fov, float aspect, float zMin, float zMax);
 	void loadOrthoMatrix(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax);
+	
+	STMatrix33f* copyMatrix();
 };
 
 class STMatrix33d {
@@ -60,6 +64,8 @@ public:
 	void loadIdentity();
 	void loadRotationMatrix(double angle, double x, double y, double z);
 	void loadScaleMatrix(double x, double y, double z) {this->loadIdentity(); this->data[0] = x; this->data[4] = y; this->data[8] = z;};
+	
+	STMatrix33f* copyMatrix();
 };
 
 class STMatrix44d {
@@ -82,6 +88,8 @@ public:
 	void loadScaleMatrix(double x, double y, double z) {this->loadIdentity(); this->data[0] = x; this->data[5] = y; this->data[10] = z;};
 	void loadPerspectiveMatrix(double fov, double aspect, double zMin, double zMax);
 	void loadOrthoMatrix(double xMin, double xMax, double yMin, double yMax, double zMin, double zMax);
+	
+	STMatrix33f* copyMatrix();
 };
 
 #endif //__ST_MATRIX_H__
