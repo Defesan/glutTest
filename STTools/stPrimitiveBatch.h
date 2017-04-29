@@ -7,7 +7,7 @@ class STPrimitiveBatch : public STBatch
 {
 private:
 public:
-	STPrimitiveBatch();
+	STPrimitiveBatch(GLuint numTexLayers = 4);
 	~STPrimitiveBatch();
 	
 	void begin();
@@ -15,7 +15,8 @@ public:
 	
 	void copyVertexData(std::vector<STVec3d*>);
 	void copyNormalData(std::vector<STVec3d*>);
-	
+	void copyColorData(std::vector<STVec4f*>);
+	void copyTexCoordData(std::vector<STVec2d*>, GLuint textureLayer);
 }
 
 

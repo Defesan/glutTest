@@ -22,8 +22,8 @@ protected:
 	//Also, I suspect the STL has improved in the past fifteen years in terms of performance, both memory- and time-wise.
 	std::vector<GLdouble> verts;
 	std::vector<GLdouble> norms;
-	std::vector<std::vector<GLdouble>> texcoords;
-	std::vector<GLdouble> colors;
+	std::vector<std::vector<GLdouble>> texCoords;	//Not sure about this....
+	std::vector<GLfloat> colors;	//Really doesn't need *that* much precision
 	std::vector<GLuint> indices;
 	 
 public:
