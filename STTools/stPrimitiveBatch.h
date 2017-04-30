@@ -13,10 +13,10 @@ public:
 	void begin();
 	void end();
 	
-	void copyVertexData(std::vector<STVec3d*>);
-	void copyNormalData(std::vector<STVec3d*>);
-	void copyColorData(std::vector<STVec4f*>);
-	void copyTexCoordData(std::vector<STVec2d*>, GLuint textureLayer);
+	void copyVertexData(std::vector<STVec3d*> verts);
+	void copyNormalData(std::vector<STVec3d*> norms);
+	void copyColorData(std::vector<STVec4f*> colors);
+	void copyTexCoordData(std::vector<STVec2d*> texCoords, GLuint textureLayer);
 }
 
 

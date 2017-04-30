@@ -9,6 +9,7 @@
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <vector>
+#include "../STLinear/stVector.h"
 
 enum BATCH_TYPE {TRIANGLE, PRIMITIVE};
 
@@ -20,11 +21,17 @@ protected:
 	//system expects arrays of floats or doubles, which can be grabbed from vectors, so it's easier to use the raw info.
 	//Still don't want to go the C route unless I find there's a significant performance penalty. There's a value in readability, after all.
 	//Also, I suspect the STL has improved in the past fifteen years in terms of performance, both memory- and time-wise.
-	std::vector<GLdouble> verts;
+	std::vector<GLdouble> vertData;
 	std::vector<GLdouble> norms;
 	std::vector<std::vector<GLdouble>> texCoords;	//Not sure about this....
 	std::vector<GLfloat> colors;	//Really doesn't need *that* much precision
 	std::vector<GLuint> indices;
+	
+	GLuint vertID;
+	GLuint normID;
+	GLuint colorID;
+	
+	
 	 
 public:
 	virtual void draw() = 0;

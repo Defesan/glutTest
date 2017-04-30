@@ -16,6 +16,8 @@ public:
 	STVec2f(float x, float y);
 	STVec2f() : STVec2f(0.0f, 0.0f) {};
 	
+	std::vector<float> getData {return this->data;};
+	
 	float getX() {return this->data[0];};
 	float getY() {return this->data[1];};
 
@@ -50,6 +52,8 @@ private:
 public:
 	STVec3f(float x, float y, float z);
 	STVec3f() : STVec3f(0.0f, 0.0f, 0.0f) {};
+	
+	std::vector<float> getData {return this->data;};
 	
 	float getX() {return this->data[0];};
 	float getY() {return this->data[1];};
@@ -90,6 +94,8 @@ private:
 public:
 	STVec4f(float x, float y, float z, float w);
 	STVec4f() : STVec4f(0.0f, 0.0f, 0.0f, 0.0f) {};
+	
+	std::vector<float> getData {return this->data;};
 	
 	float getX() {return this->data[0];};
 	float getY() {return this->data[1];};
@@ -136,6 +142,8 @@ public:
 	STVec2d(double x, double y);
 	STVec2d() : STVec2d(0.0, 0.0) {};
 	
+	std::vector<double> getData {return this->data;};
+	
 	double getX() {return this->data[0];};
 	double getY() {return this->data[1];};
 
@@ -170,6 +178,8 @@ private:
 public:
 	STVec3d(double x, double y, double z);
 	STVec3d() : STVec3d(0.0, 0.0, 0.0) {};
+	
+	std::vector<double> getData {return this->data;};
 	
 	double getX() {return this->data[0];};
 	double getY() {return this->data[1];};
@@ -210,6 +220,8 @@ private:
 public:
 	STVec4d(double x, double y, double z, double w);
 	STVec4d() : STVec4d(0.0, 0.0, 0.0, 0.0) {};
+	
+	std::vector<double> getData {return this->data;};
 	
 	double getX() {return this->data[0];};
 	double getY() {return this->data[1];};
