@@ -22,15 +22,16 @@ protected:
 	//Still don't want to go the C route unless I find there's a significant performance penalty. There's a value in readability, after all.
 	//Also, I suspect the STL has improved in the past fifteen years in terms of performance, both memory- and time-wise.
 	std::vector<GLdouble> vertData;
-	std::vector<GLdouble> norms;
-	std::vector<std::vector<GLdouble>> texCoords;	//Not sure about this....
-	std::vector<GLfloat> colors;	//Really doesn't need *that* much precision
-	std::vector<GLuint> indices;
+	std::vector<GLdouble> normData;
+	std::vector<std::vector<GLdouble>> texCoordData;
+	std::vector<GLfloat> colorData;	//Really doesn't need *that* much precision
+	std::vector<GLuint> indexData;
 	
 	GLuint vertID;
 	GLuint normID;
 	GLuint colorID;
-	
+	std::vector<GLuint> texIDs;
+	GLuint indexID;
 	
 	 
 public:
