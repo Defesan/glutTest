@@ -17,6 +17,8 @@ public:
 	void copyNormalData(std::vector<STVec3d*> norms);
 	void copyColorData(std::vector<STVec4f*> colors);
 	void copyTexCoordData(std::vector<STVec2d*> texCoords, GLuint textureLayer);
+	
+	void draw() override;
 }
 
 

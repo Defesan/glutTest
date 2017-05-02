@@ -3,10 +3,93 @@
 STPrimitiveBatch::STPrimitiveBatch(GLuint numTexLayers = 4)
 {
 	this->type = PRIMITIVE;
+	if(numTexLayers > 4)
+	{
+		numTexLayers = 4;	//Have to experiment with this. Someday.
+	}
 	for(GLuint i = 0; i < numTexLayers; i++)
 	{
 		this->texCoords.push_back(std::vector<STVec2d*>());
+		this->texIDs.push_back(0);
 	}
+}
+
+STPrimitiveBatch::~STPrimitiveBatch()
+{
+	//Unlike most of my vector-based classes, since we're interfacing with OpenGL directly at this level, some cleanup is required.
+	std::vector<GLuint>::iterator iter;
+	
+	if(this->vertID != 0)
+	{
+		glDeleteBuffers(1, &(this->vertID));		
+	}
+	
+	if(this->colorID != 0)
+	{
+		glDeleteBuffers(1, &(this->colorID));
+	}
+	
+	if(this->normID != 0)
+	{
+		glDeleteBuffers(1, &(this->normID));
+	}
+	
+	if(this->indexID != 0)
+	{
+		glDeleteBuffers(1, &(this->indexID));
+	}
+	
+	for(iter = this->texIDs.begin(); iter < this->texIDs.size(); iter++)
+	{
+		if(*iter != 0)
+		{
+			glDeleteBuffers(1, &(*iter));
+		}
+	}
+
+}
+
+void STPrimitiveBatch::begin()
+{
+	//Still not quite clear on how this fits. In GLBatch, it basically does the initialization.
+	//It sets the number of vertices to input(necessary because of the limitations of C arrays)
+	//it sets the number of texture layers(a maximum of 4), which I do in the initialization phase
+	//It allocates enough arrays to hold the texture coordinate data based on that, which I also do in the initialization phase,
+	//And...Well, it also binds a vertex array if the platform is OpenGL ES, which I'm not currently supporting.
+	//...So...
+	//I'm kinda done here.
+
+}
+
+void STPrimitiveBatch::end()
+{
+	//This is a bit more straightforward. Maybe I should call it 'finalize' or somesuch.
+	//Basically, given that data has been copied in and buffered, it takes the buffers and sets vertex attribute pointers to them so that GL can utilize them.
+	//Since I'm not doing 'immediate mode' for the moment, and I'm not supporting ES, that's... That's basically it.
+	
+	std::vector<GLuint>::iterator iter;
+	
+	if(vertID != 0)
+	{
+		//Bind the vertex array
+		glEnableVertexAttribArray(GLT_ATTRIBUTE_VERTEX)
+	}
+	if(normID != 0)
+	{
+		//Bind the normal array
+	}
+	if(colorID != 0)
+	{
+		//Bind the color array
+	}
+	int i = 0;
+	for(iter = this->texIDs.begin(); iter < this->texIDs.end(); iter++)
+	{
+		//Bind the i'th texture coordinate array.
+	
+	}
+	//And no index array? Not sure how this drawing is done without knowing the order...
+
 }
 
 //Alright... Let's see if we can make this as fast and painless as possible. Time for VECTOR::INSERT!!!
@@ -95,3 +178,15 @@ void STPrimitiveBatch::copyColorData(std::vector<STVec4f*> colors)
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(GLfloat) * this->colorData.size(), this->colorData.data();
 	}
 }	
+
+void STPrimitiveBatch::copyTexCoordData(std::vector<STVec2d*> texCoords, GLuint textureLayer)
+{
+
+
+
+}
+
+void STPrimitiveBatch::draw()
+{
+
+}
