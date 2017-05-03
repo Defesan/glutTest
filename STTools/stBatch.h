@@ -12,6 +12,7 @@
 #include "../STLinear/stVector.h"
 
 enum BATCH_TYPE {TRIANGLE, PRIMITIVE};
+enum 
 
 class STBatch
 {

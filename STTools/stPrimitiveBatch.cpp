@@ -72,7 +72,7 @@ void STPrimitiveBatch::end()
 	if(vertID != 0)
 	{
 		//Bind the vertex array
-		glEnableVertexAttribArray(GLT_ATTRIBUTE_VERTEX)
+		glEnableVertexAttribArray(0)
 	}
 	if(normID != 0)
 	{
@@ -89,6 +89,8 @@ void STPrimitiveBatch::end()
 	
 	}
 	//And no index array? Not sure how this drawing is done without knowing the order...
+	//Duh. I thought this was where we interfaced directly with the graphics layer, but NO!
+	//This is OpenGL 3! Not that you *can't* interface with OpenGL at this point, but everything's *supposed* to go through shaders.
 
 }
 
@@ -100,13 +102,11 @@ void STPrimitiveBatch::copyVertexData(std::vector<STVec3d*> verts)
 	//Also, hopefully, minimum memory thrashing.
 	
 	std::vector<STVec3d*>::iterator iterV = verts.begin();
-	std::vector<GLdouble>::iterator iterD = this->vertData.begin();	//We're appending any incoming vertices.
+	std::vector<GLdouble>::iterator iterD = this->vertData.end();	//We're appending any incoming vertices.
 	
 	for(iterV; iterV < verts.end(); iterV++)
 	{
-		//For each vertex in the verts vector, we need another iterator...
-		std::vector<GLdouble>::iterator iterS = *iterV->getData().begin();
-		this->vertData.insert(iterD, iterS.begin(), iterS.end());
+		this->vertData.insert(iterD, *iterV->getData()->begin(), *iterV->getData()->end());
 		iterD = this->vertData.end();
 	}
 	//That...should work. Sadly, it IS basically extra work, which means it WILL be slower, but it's probably the best the setup I made can offer.
@@ -134,9 +134,7 @@ void STPrimitiveBatch::copyNormalData(std::vector<STVec3d*> norms)
 	
 	for(iterN; iterN < norms.end(); iterN++)
 	{
-		//For each vertex in the verts vector, we need another iterator...
-		std::vector<GLdouble>::iterator iterS = *iterN->getData().begin();
-		this->normData.insert(iterD, iterS.begin(), iterS.end());
+		this->normData.insert(iterD, *iterV->getData()->begin(), *iterV->getData()->end());
 		iterD = this->normData.end();
 	}
 	
@@ -161,8 +159,7 @@ void STPrimitiveBatch::copyColorData(std::vector<STVec4f*> colors)
 
 	for(iterC; iterC < colors.end(); iterC++)
 	{
-		std::vector<GLdouble>::iterator iterS = *iterC->getData().begin();
-		this->colorData.insert(iterD, iterS.begin(), iterS.end());
+		this->colorData.insert(iterD, *iterV->getData()->begin(), *iterV->getData()->end());
 		iterD = this->colorData.end();
 	}
 	
