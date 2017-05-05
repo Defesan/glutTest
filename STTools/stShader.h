@@ -50,7 +50,7 @@ public:
 	STShaderManager();		//I think we can safely initialize the full shader library(which will be fairly small to start, but I'll keep adding to it) in the constructor.
 	~STShaderManager();
 	
-	GLuint getShader(GLuint index);	//Instead of just using the stock shaders, we'll be adding all of the added and compiled shaders to the array, so we need a more general function.
+	GLuint getShader(GLuint index) {return this->activeShaderPointers[index];};
 	GLuint getStockShader(ST_STOCK_SHADER shader) : getShader((GLuint)shader) {};	//All of the custom shaders will be added AFTER the stock shaders, so the stock shader indices are valid.
 	
 	void runShader(GLuint shaderPointer);
