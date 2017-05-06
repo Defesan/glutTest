@@ -6,6 +6,8 @@
 #include <vector>
 #include <string>
 
+#define SHADER_ERROR 0
+
 //I still haven't figured out why I'm using the 'st' prefix. Reference to my middle name, Stephan? And yes, BTW, that's how the nurse who wrote it down spelled it.
 //(Still haven't gotten over that)
 
