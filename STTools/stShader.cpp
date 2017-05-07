@@ -23,33 +23,38 @@ void STShaderManager::runShader(GLuint shaderPointer)
 
 GLuint STShaderManager::loadShaderPair(std::string vertexShaderFile, std::string fragShaderFile)
 {
-	GLuint result = 0;
+	//GLuint programHandle = 0;
+	//A utility to return the string representation of a file would be useful, but not today. STUtil is going to have to wait for another day.
+	size_t fileSize;
 	
-	return result;
+	//Load the vertex shader into a string
+	std::ifstream vertexFS(vertexShaderFile);
+	
+	vertexFS.seekg(0, vertexFS.end);
+	fileSize = vertexFS.tellg();
+	vertexFS.seekg(0, vertexFS.beg);
+	
+	std::string vertexShaderSrc(fileSize, ' ');
+	vertexFS.read(&vertexShaderSrc[0], fileSize);
+	
+	//...and the fragment shader.
+	std::ifstream fragmentFS(fragShaderFile);
+	
+	fragmentFS.seekg(0, fragmentFS.end);
+	fileSize = fragmentFS.tellg();
+	fragmentFS.seekg(0, fragmentFS.beg);
+	
+	std::string fragShaderSrc(fileSize, ' ');
+	fragmentFS.read(&fragShaderSrc[0], fileSize);
+	
+	//And...well, we've actually now reached the initial condition of the loadShaderPairSrc function, so...
+	
+	return this->loadShaderPairSrc(vertexShaderSrc, fragShaderSrc);
 }
 
 GLuint STShaderManager::loadShaderPairSrc(std::string vertexShaderSrc, std::string fragShaderSrc)
 {
 	GLuint programHandle = 0;
-	//Goal for 5-5-17.
-	//So what do I need to do to load a shader pair?
-	//I have strings(which I can get c-strings from) of the source code for both shaders.
-	//This should be the simplest -- and probably least(if ever) used -- of the functions, but it'll serve as a basis.
-	
-	//So...this is awkward. Not because I messed up, it's just that...following RSW's source code, I've made all my plans
-	//with *single string* sources in mind. TBH, I can *barely* see the usefulness of multi-stringing it, mostly because that
-	//kind of thing is so far ahead of where I'm at it's just barely visible. If you wanted to make a *run-time modifiable*
-	//shader, that would be the way to go, with each instruction being its own string. There might be other reasons, but
-	//I'm not aware of them.
-	
-	//In any case, it'll be getting one big honking string with the whole shader file, but it's expecting:
-	//1)an array of c-strings
-	//2)the number of strings in the array
-	//3)another array with the lengths of the strings in the array.
-	//And with just one string, I have to create a new GLchar pointer -- an array with ONE element -- and if I want to specify
-	//a length, I also have to create a size 1 array of GLint(s?) and pass that along as well. So...WTF, I might as well.
-	
-	//Guess you don't really have to malloc these...
 	GLchar* stringPtr[1];
 	GLint* lengthPtr[1];
 	GLuint vertShaderHandle;

@@ -5,6 +5,7 @@
 #include <GL/glew.h>
 #include <vector>
 #include <string>
+#include <fstream>
 
 #define SHADER_ERROR 0
 
