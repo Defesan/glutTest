@@ -21,6 +21,25 @@ void STShaderManager::runShader(GLuint shaderPointer)
 
 }
 
+bool STShaderManager::loadShaderSrc(std::string shaderSrc, GLuint shaderHandle)
+{
+	GLchar* stringPtr[1];
+	GLint lengthPtr[1];
+	GLenum error;
+	
+	stringPtr[0] = (GLchar*)shaderSrc.c_str();
+	lengthPtr[0] = (GLint*)shaderSrc.size();
+	
+	glShaderSource(shaderHandle, 1, (const GLchar**)stringPtr, (const GLint*)lengthPtr);
+	
+	error = glGetError();
+	if(error != GL_NO_ERROR)
+	{
+		return false;
+	}
+	return true;
+}
+
 GLuint STShaderManager::loadShaderPairSrc(std::string vertexShaderSrc, std::string fragShaderSrc)
 {
 	GLuint programHandle = 0;
@@ -36,19 +55,13 @@ GLuint STShaderManager::loadShaderPairSrc(std::string vertexShaderSrc, std::stri
 	vertShaderHandle = glCreateShader(GL_VERTEX_SHADER);
 	fragShaderHandle = glCreateShader(GL_FRAGMENT_SHADER);
 	
-	//Load the vertex shader's attributes:
-	stringPtr[0] = (GLchar*)vertexShaderSrc.c_str();
-	lengthPtr[0] = (GLint)vertexShaderSrc.size();
-	
-	//Load in the source code.
-	glShaderSource(vertShaderHandle, 1, (const GLchar**)stringPtr, (const GLint*)lengthPtr);
-	
-	//Load the fragment shader's attributes:
-	stringPtr[0] = (GLchar*)fragShaderSrc.c_str();
-	lengthPtr[0] = (GLint)fragShaderSrc.size();
-	
-	//Load in the other source code.
-	glShaderSource(fragShaderHandle, 1, (const GLchar**)stringPtr, (const GLint*)lengthPtr);
+	if(!this->loadShaderSrc(vertexShaderSrc, vertShaderHandle) || !this->loadShaderSrc(fragShaderSrc, fragShaderHandle))
+	{
+		std::cerr << "Shaders failed to load." << std::endl;
+		glDeleteShader(vertShaderHandle);
+		glDeleteShader(fragShaderHandle);
+		return SHADER_ERROR;
+	}
 	
 	//Okay, so the code is loaded. Next step:compile it.
 	glCompileShader(vertShaderHandle);
@@ -56,7 +69,7 @@ GLuint STShaderManager::loadShaderPairSrc(std::string vertexShaderSrc, std::stri
 	
 	//Check to make sure it compiled
 	glGetShaderiv(vertShaderHandle, GL_COMPILE_STATUS, &vertTest);
-	glGetShaderiv(fragShaderHandel, GL_COMPILE_STATUS, &fragTest);
+	glGetShaderiv(fragShaderHandle, GL_COMPILE_STATUS, &fragTest);
 	
 	if(vertTest == GL_FALSE || fragTest == GL_FALSE)
 	{
@@ -84,7 +97,7 @@ GLuint STShaderManager::loadShaderPairSrc(std::string vertexShaderSrc, std::stri
 		glDeleteProgram(programHandle);
 		return SHADER_ERROR	
 	}
-	
+	this->activeShaderPointers.push_back(programHandle);
 	//All is well.
 	return programHandle;
 }
@@ -111,19 +124,13 @@ GLuint STShaderManager::loadShaderPairWithAttributes(std::string vertexShaderFil
 	vertShaderHandle = glCreateShader(GL_VERTEX_SHADER);
 	fragShaderHandle = glCreateShader(GL_FRAGMENT_SHADER);
 	
-	//Load the vertex shader's attributes:
-	stringPtr[0] = (GLchar*)vertexShaderSrc.c_str();
-	lengthPtr[0] = (GLint)vertexShaderSrc.size();
-	
-	//Load in the source code.
-	glShaderSource(vertShaderHandle, 1, (const GLchar**)stringPtr, (const GLint*)lengthPtr);
-	
-	//Load the fragment shader's attributes:
-	stringPtr[0] = (GLchar*)fragShaderSrc.c_str();
-	lengthPtr[0] = (GLint)fragShaderSrc.size();
-	
-	//Load in the other source code.
-	glShaderSource(fragShaderHandle, 1, (const GLchar**)stringPtr, (const GLint*)lengthPtr);
+	if(!this->loadShaderSrc(vertexShaderSrc, vertShaderHandle) || !this->loadShaderSrc(fragShaderSrc, fragShaderHandle))
+	{
+		std::cerr << "Shaders failed to load." << std::endl;
+		glDeleteShader(vertShaderHandle);
+		glDeleteShader(fragShaderHandle);
+		return SHADER_ERROR;
+	}
 	
 	//Okay, so the code is loaded. Next step:compile it.
 	glCompileShader(vertShaderHandle);
@@ -175,7 +182,7 @@ GLuint STShaderManager::loadShaderPairWithAttributes(std::string vertexShaderFil
 		glDeleteProgram(programHandle);
 		return SHADER_ERROR	
 	}
-	
+	this->activeShaderPointers.push_back(programHandle);
 	return programHandle;
 }
 
@@ -194,19 +201,13 @@ GLuint STShaderManager::loadShaderPairSrcWithAttributes(std::string vertexShader
 	vertShaderHandle = glCreateShader(GL_VERTEX_SHADER);
 	fragShaderHandle = glCreateShader(GL_FRAGMENT_SHADER);
 	
-	//Load the vertex shader's attributes:
-	stringPtr[0] = (GLchar*)vertexShaderSrc.c_str();
-	lengthPtr[0] = (GLint)vertexShaderSrc.size();
-	
-	//Load in the source code.
-	glShaderSource(vertShaderHandle, 1, (const GLchar**)stringPtr, (const GLint*)lengthPtr);
-	
-	//Load the fragment shader's attributes:
-	stringPtr[0] = (GLchar*)fragShaderSrc.c_str();
-	lengthPtr[0] = (GLint)fragShaderSrc.size();
-	
-	//Load in the other source code.
-	glShaderSource(fragShaderHandle, 1, (const GLchar**)stringPtr, (const GLint*)lengthPtr);
+	if(!this->loadShaderSrc(vertexShaderSrc, vertShaderHandle) || !this->loadShaderSrc(fragShaderSrc, fragShaderHandle))
+	{
+		std::cerr << "Shaders failed to load." << std::endl;
+		glDeleteShader(vertShaderHandle);
+		glDeleteShader(fragShaderHandle);
+		return SHADER_ERROR;
+	}
 	
 	//Okay, so the code is loaded. Next step:compile it.
 	glCompileShader(vertShaderHandle);
@@ -258,6 +259,6 @@ GLuint STShaderManager::loadShaderPairSrcWithAttributes(std::string vertexShader
 		glDeleteProgram(programHandle);
 		return SHADER_ERROR	
 	}
-	
+	this->activeShaderPointers.push_back(programHandle);
 	return programHandle;
 }

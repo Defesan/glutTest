@@ -58,7 +58,9 @@ public:
 	GLuint getShader(GLuint index) {return this->activeShaderPointers[index];};
 	GLuint getStockShader(ST_STOCK_SHADER shader) : getShader((GLuint)shader) {};	//All of the custom shaders will be added AFTER the stock shaders, so the stock shader indices are valid.
 	
-	void runShader(GLuint shaderPointer);
+	void runShader(GLuint shaderPointer, ...);
+	
+	bool loadShaderSrc(std::string shaderSoource, GLuint shaderHandle);
 	
 	//Continuing my STL translation of the old code, we'll be using strings, not c-strings. Pretty much standard(and often best) practice in C++ now.
 	//Successfully reduced loadShaderPair to a single in-header return.
