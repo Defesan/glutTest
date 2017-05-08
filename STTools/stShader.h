@@ -7,6 +7,8 @@
 #include <string>
 #include <fstream>
 
+#include "stUtil.h"
+
 #define SHADER_ERROR 0
 
 //I still haven't figured out why I'm using the 'st' prefix. Reference to my middle name, Stephan? And yes, BTW, that's how the nurse who wrote it down spelled it.
@@ -59,7 +61,8 @@ public:
 	void runShader(GLuint shaderPointer);
 	
 	//Continuing my STL translation of the old code, we'll be using strings, not c-strings. Pretty much standard(and often best) practice in C++ now.
-	GLuint loadShaderPair(std::string vertexShaderFile, std::string fragShaderFile);
+	//Successfully reduced loadShaderPair to a single in-header return.
+	GLuint loadShaderPair(std::string vertexShaderFile, std::string fragShaderFile) {return this->loadShaderPairSrc(fileToString(vertexShaderFile), fileToString(fragShaderFile));};
 	GLuint loadShaderPairSrc(std::string vertexShaderSrc, std::string fragShaderSrc);
 	
 	GLuint loadShaderPairWithAttributes(std::string vertexShaderFile, std::string fragShaderFile, ...);
