@@ -15,10 +15,16 @@ STShaderManager::~STShaderManager()
 	}
 }
 
-void STShaderManager::runShader(GLuint shaderPointer)
+void STShaderManager::runShader(GLuint shaderPointer, ...)
 {
 	//Run the shader at shaderPointer
-
+	/*
+		This is non-trivial. See, GLShaderManager just has a big switch/case statement running through the *stock* shaders.
+		However, I want to be able to add non-stock shaders -- in point of fact, *any* shader -- to this class and run it.
+		This is going to take some hands-on work with the vararg format. The vert shader uniforms will also be a bit of a trick.
+		...Maybe the biggest trick, in fact.
+		Jeepers. In fact, there are a buttload of uniform types I have to support.
+	*/
 }
 
 bool STShaderManager::loadShaderSrc(std::string shaderSrc, GLuint shaderHandle)
