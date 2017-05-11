@@ -15,6 +15,8 @@ public:
 	void set(int row,int col, float val) {this->data[row + (col * 3)] = val;};	
 	float get(int row, int col) {return this->data[row + (col * 3)];};
 	
+	float* getData() {return this->data->data();};
+	
 	STMatrix33f* mul(STMatrix33f* m2);
 	STVec3f* mulVector(STVec3f* vec);
 	
@@ -34,6 +36,8 @@ public:
 	
 	void set(int row,int col, float val) {this->data[row + (col * 4)] = val;};	
 	float get(int row, int col) {return this->data[row + (col * 4)];};
+	
+	float* getData() {return this->data->data();};
 
 	STMatrix44f* mul(STMatrix44f* m2);
 	STVec4f* mulVector(STVec4f* vec);
@@ -45,7 +49,7 @@ public:
 	void loadPerspectiveMatrix(float fov, float aspect, float zMin, float zMax);
 	void loadOrthoMatrix(float xMin, float xMax, float yMin, float yMax, float zMin, float zMax);
 	
-	STMatrix33f* copyMatrix();
+	STMatrix44f* copyMatrix();
 };
 
 class STMatrix33d {
@@ -58,6 +62,8 @@ public:
 	void set(int row,int col, double val) {this->data[row + (col * 3)] = val;};	
 	double get(int row, int col) {return this->data[row + (col * 3)];};
 	
+	double* getData() {return this->data->data();};
+	
 	STMatrix33d* mul(STMatrix33d* m2);
 	STVec3d* mulVector(STVec3d* vec);
 	
@@ -65,7 +71,7 @@ public:
 	void loadRotationMatrix(double angle, double x, double y, double z);
 	void loadScaleMatrix(double x, double y, double z) {this->loadIdentity(); this->data[0] = x; this->data[4] = y; this->data[8] = z;};
 	
-	STMatrix33f* copyMatrix();
+	STMatrix33d* copyMatrix();
 };
 
 class STMatrix44d {
@@ -79,6 +85,8 @@ public:
 	void set(int row,int col, double val) {this->data[row + (col * 4)] = val;};	
 	double get(int row, int col) {return this->data[row + (col * 4)];};
 	
+	double* getData() {return this->data->data();};
+	
 	STMatrix44d* mul(STMatrix44d* m2);
 	STVec4d* mulVector(STVec4d* vec);
 	
@@ -88,6 +96,106 @@ public:
 	void loadScaleMatrix(double x, double y, double z) {this->loadIdentity(); this->data[0] = x; this->data[5] = y; this->data[10] = z;};
 	void loadPerspectiveMatrix(double fov, double aspect, double zMin, double zMax);
 	void loadOrthoMatrix(double xMin, double xMax, double yMin, double yMax, double zMin, double zMax);
+	
+	STMatrix44d* copyMatrix();
+};
+
+//Now, for uniform support, I need:
+//STMatrix23f
+//STMatrix24f
+//STMatrix32f
+//STMatrix34f
+//STMatrix42f
+//STMatrix43f
+//All I can say is thank goodness(sort of) that OpenGL doesn't support doubles at a shader level. On the other hand...dammit!
+//Though none of them need too much, since none of them really support any of the major matrix archetypes. They're just there in case...
+
+class STMatrix23f {
+private:
+	std::vector<float> data;
+public:
+	STMatrix23f(float x1, float y1, float z1, float x2, float y2, float z2)(float x1, float y1, float x2, float y2, float x3, float y3);
+	STMatrix23f() : STMatrix23f(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f) {};
+	
+	void set(int row,int col, double val) {this->data[row + (col * 2)] = val;};	
+	double get(int row, int col) {return this->data[row + (col * 2)];};
+	
+	double* getData() {return this->data->data();};
+
+	STMatrix23f* copyMatrix();
+};
+
+class STMatrix24f {
+private:
+	std::vector<float> data;
+public:
+	STMatrix24f(float x1, float y1, float z1, float w1, float x2, float y2, float z2, float w2);
+	STMatrix24f() : STMatrix24f(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f) {};
+	
+	void set(int row,int col, double val) {this->data[row + (col * 2)] = val;};	
+	double get(int row, int col) {return this->data[row + (col * 2)];};
+	
+	double* getData() {return this->data->data();};
+
+	STMatrix24f* copyMatrix();
+};
+
+class STMatrix32f {
+private:
+	std::vector<float> data;
+public:
+	STMatrix32f(float x1, float y1, float x2, float y2, float x3, float y3);
+	STMatrix32f() : STMatri32f(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f) {};
+	
+	void set(int row,int col, double val) {this->data[row + (col * 3)] = val;};	
+	double get(int row, int col) {return this->data[row + (col * 3)];};
+	
+	double* getData() {return this->data->data();};
+
+	STMatrix32f* copyMatrix();
+};
+
+class STMatrix34f {
+private:
+	std::vector<float> data;
+public:
+	STMatrix34f(float x1, float y1, float z1, float w1, float x2, float y2, float z2, float w2, float x3, float y3, float z3, float w3);
+	STMatrix34f() : STMatrix34f(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f) {};
+	
+	void set(int row,int col, double val) {this->data[row + (col * 3)] = val;};	
+	double get(int row, int col) {return this->data[row + (col * 3)];};
+	
+	double* getData() {return this->data->data();};
+
+	STMatrix33f* copyMatrix();
+};
+
+class STMatrix42f {
+private:
+	std::vector<float> data;
+public:
+	STMatrix42f(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4);
+	STMatrix42f() : STMatrix42f(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f) {};
+	
+	void set(int row,int col, double val) {this->data[row + (col * 4)] = val;};	
+	double get(int row, int col) {return this->data[row + (col * 4)];};
+	
+	double* getData() {return this->data->data();};
+	
+	STMatrix33f* copyMatrix();
+};
+
+class STMatrix43f {
+private:
+	std::vector<float> data;
+public:
+	STMatrix23f(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float x4, float y4, float z4);
+	STMatrix23f() : STMatrix23f(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f) {};
+	
+	void set(int row,int col, double val) {this->data[row + (col * 4)] = val;};	
+	double get(int row, int col) {return this->data[row + (col * 4)];};
+	
+	double* getData() {return this->data->data();};
 	
 	STMatrix33f* copyMatrix();
 };

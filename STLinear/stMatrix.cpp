@@ -548,3 +548,204 @@ STMatrix44d* STMatrix44d::copyMatrix()
 	return copy;
 }
 
+/* GLSL Uniform Compatibility Types */
+/*  STMatrix23f
+	2x3 column-major matrix with floats
+	Just so I get it right this time, the matrix is supposed to look like this:
+	x1 y1 z1
+	x2 y2 z2
+	
+	and the array representation looks like this:
+	x1 x2 y1 y2 z1 z2
+	
+	and since the nominal ordering is:
+	0,0 0,1 0,2
+	1,0 1,1 1,2
+	
+	and the indices are
+	0   2   4
+	1   3   5
+	
+	get(i,j) = i + 2j
+ */
+ 
+STMatrix23f::STMatrix23f(float x1, float y1, float z1, float x2, float y2, float z2)
+{
+	this->data.push_back(x1);
+	this->data.push_back(x2);
+	this->data.push_back(y1);
+	this->data.push_back(y2);
+	this->data.push_back(z1);
+	this->data.push_back(z2);
+}
+
+STMatrix23f* STMatrix23f::copyMatrix()
+{
+	STMatrix23f* copy = new STMatrix23f();
+
+	for(int i = 0; i < 2; i++)
+	{
+		for(int j = 0; j < 3; j++)
+		{
+			copy->set(i,j,this->get(i,j));
+		}
+	}
+
+	return copy;
+}
+
+/*  STMatrix24f
+ *	2x4 column-major matrix with floats
+ */
+STMatrix24f::STMatrix24f(float x1, float y1, float z1, float w1, float x2, float y2, float z2, float w2)
+{
+	this->data.push_back(x1);
+	this->data.push_back(x2);
+	this->data.push_back(y1);
+	this->data.push_back(y2);
+	this->data.push_back(z1);
+	this->data.push_back(z2);
+	this->data.push_back(w1);
+	this->data.push_back(w2);
+}
+
+STMatrix24f* STMatrix24f::copyMatrix()
+{
+	STMatrix24f* copy = new STMatrix24f();
+
+	for(int i = 0; i < 2; i++)
+	{
+		for(int j = 0; j < 4; j++)
+		{
+			copy->set(i,j,this->get(i,j));
+		}
+	}
+
+	return copy;
+}
+
+/* STMatrix32f
+ * 3x2 column-major matrix with floats
+ */
+STMatrix32f::STMatrix32f(float x1, float y1, float x2, float y2, float x3, float y3)
+{
+	this->data.push_back(x1);
+	this->data.push_back(x2);
+	this->data.push_back(x3);
+	this->data.push_back(y1);
+	this->data.push_back(y2);
+	this->data.push_back(y3);
+}
+
+STMatrix32f* STMatrix32f::copyMatrix()
+{
+	STMatrix32f* copy = new STMatrix32f();
+
+	for(int i = 0; i < 3; i++)
+	{
+		for(int j = 0; j < 2; j++)
+		{
+			copy->set(i,j,this->get(i,j));
+		}
+	}
+
+	return copy;
+}
+
+/* STMatrix34f
+ * 3x4 column-major matrix with floats
+ */
+STMatrix34f::STMatrix34f(float x1, float y1, float z1, float w1, float x2, float y2, float z2, float w2, float x3, float y3, float z3, float w3)
+{
+	this->data.push_back(x1);
+	this->data.push_back(x2);
+	this->data.push_back(x3);
+	this->data.push_back(y1);
+	this->data.push_back(y2);
+	this->data.push_back(y3);
+	this->data.push_back(z1);
+	this->data.push_back(z2);
+	this->data.push_back(z3);
+	this->data.push_back(w1);
+	this->data.push_back(w2);
+	this->data.push_back(w3);
+}
+
+STMatrix34f* STMatrix34f::copyMatrix()
+{
+	STMatrix34f* copy = new STMatrix34f();
+
+	for(int i = 0; i < 3; i++)
+	{
+		for(int j = 0; j < 4; j++)
+		{
+			copy->set(i,j,this->get(i,j));
+		}
+	}
+
+	return copy;
+}
+
+/* STMatrix42f
+ * 4x2 column-major matrix with floats
+ */
+STMatrix42f::STMatrix42f(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4)
+{
+	this->data.push_back(x1);
+	this->data.push_back(x2);
+	this->data.push_back(x3);
+	this->data.push_back(x4);
+	this->data.push_back(y1);
+	this->data.push_back(y2);
+	this->data.push_back(y3);
+	this->data.push_back(y4);
+}
+
+STMatrix42f* STMatrix42f::copyMatrix()
+{
+	STMatrix42f* copy = new STMatrix42f();
+
+	for(int i = 0; i < 4; i++)
+	{
+		for(int j = 0; j < 2; j++)
+		{
+			copy->set(i,j,this->get(i,j));
+		}
+	}
+
+	return copy;
+}
+
+/* STMatrix43f
+ * 4x3 column-major matrix with floats
+ */
+STMatrix43f::STMatrix43f(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float x4, float y4, float z4)
+{
+	this->data.push_back(x1);
+	this->data.push_back(x2);
+	this->data.push_back(x3);
+	this->data.push_back(x4);
+	this->data.push_back(y1);
+	this->data.push_back(y2);
+	this->data.push_back(y3);
+	this->data.push_back(y4);
+	this->data.push_back(z1);
+	this->data.push_back(z2);
+	this->data.push_back(z3);
+	this->data.push_back(z4);
+}
+
+STMatrix43f* STMatrix43f::copyMatrix()
+{
+	STMatrix43f* copy = new STMatrix43f();
+
+	for(int i = 0; i < 4; i++)
+	{
+		for(int j = 0; j < 3; j++)
+		{
+			copy->set(i,j,this->get(i,j));
+		}
+	}
+
+	return copy;
+}
