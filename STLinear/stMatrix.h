@@ -109,6 +109,7 @@ public:
 //STMatrix43f
 //All I can say is thank goodness(sort of) that OpenGL doesn't support doubles at a shader level. On the other hand...dammit!
 //Though none of them need too much, since none of them really support any of the major matrix archetypes. They're just there in case...
+//I'll probably add multiplication by vectors and matrices, maybe other functions later.
 
 class STMatrix23f {
 private:

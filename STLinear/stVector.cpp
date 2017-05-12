@@ -402,3 +402,72 @@ float STVec4d::distance(STVec4d* v2)
 	return std::abs(connecting->length());
 
 }
+
+// GLSL Compatibility Vectors
+
+/*	STVec2i
+ *	2-dimensional vector with ints
+ */
+
+STVec2i::STVec2i(int x, int y)
+{
+	this->data.push_back(x);
+	this->data.push_back(y);
+}
+
+
+/*	STVec3i
+ *	3-dimensional vector with ints
+ */
+
+STVec3i::STVec3i(int x, int y, int z)
+{
+	this->data.push_back(x);
+	this->data.push_back(y);
+	this->data.push_back(z);
+}
+
+/*	STVec4i
+ *	4-dimensional vector with ints
+ */
+
+STVec4i::STVec4i(int x, int y, int z, int w)
+{
+	this->data.push_back(x);
+	this->data.push_back(y);
+	this->data.push_back(z);
+	this->data.push_back(w);
+}
+
+/*	STVec2ui
+ *	2-dimensional vector with unsigned ints
+ */
+
+STVec2ui::STVec2ui(unsigned int x, unsigned int y)
+{
+	this->data.push_back(x);
+	this->data.push_back(y);
+}
+
+/*	STVec3ui
+ *	3-dimensional vector with unsigned ints
+ */
+
+STVec3ui::STVec3ui(unsigned int x, unsigned int y, unsigned int z)
+{
+	this->data.push_back(x);
+	this->data.push_back(y);
+	this->data.push_back(z);
+}
+
+/*	STVec4ui
+ *	4-dimensional vector with unsigned ints
+ */
+
+STVec4ui::STVec4ui(unsigned int x, unsigned int y, unsigned int z, unsigned int w)
+{
+	this->data.push_back(x);
+	this->data.push_back(y);
+	this->data.push_back(z);
+	this->data.push_back(w);
+}

@@ -16,7 +16,8 @@ public:
 	STVec2f(float x, float y);
 	STVec2f() : STVec2f(0.0f, 0.0f) {};
 	
-	std::vector<float> getData {return this->data;};
+	std::vector<float> getData() {return this->data;};
+	float* getDataArray() {return this->data.data();};
 	
 	float getX() {return this->data[0];};
 	float getY() {return this->data[1];};
@@ -53,7 +54,8 @@ public:
 	STVec3f(float x, float y, float z);
 	STVec3f() : STVec3f(0.0f, 0.0f, 0.0f) {};
 	
-	std::vector<float> getData {return this->data;};
+	std::vector<float> getData() {return this->data;};
+	float* getDataArray() {return this->data.data();};
 	
 	float getX() {return this->data[0];};
 	float getY() {return this->data[1];};
@@ -95,7 +97,8 @@ public:
 	STVec4f(float x, float y, float z, float w);
 	STVec4f() : STVec4f(0.0f, 0.0f, 0.0f, 0.0f) {};
 	
-	std::vector<float> getData {return this->data;};
+	std::vector<float> getData() {return this->data;};
+	float* getDataArray() {return this->data.data();};
 	
 	float getX() {return this->data[0];};
 	float getY() {return this->data[1];};
@@ -142,7 +145,8 @@ public:
 	STVec2d(double x, double y);
 	STVec2d() : STVec2d(0.0, 0.0) {};
 	
-	std::vector<double> getData {return this->data;};
+	std::vector<double> getData() {return this->data;};
+	double* getDataArray() {return this->data.data();};
 	
 	double getX() {return this->data[0];};
 	double getY() {return this->data[1];};
@@ -179,7 +183,8 @@ public:
 	STVec3d(double x, double y, double z);
 	STVec3d() : STVec3d(0.0, 0.0, 0.0) {};
 	
-	std::vector<double> getData {return this->data;};
+	std::vector<double> getData() {return this->data;};
+	double* getDataArray() {return this->data.data();};
 	
 	double getX() {return this->data[0];};
 	double getY() {return this->data[1];};
@@ -221,7 +226,8 @@ public:
 	STVec4d(double x, double y, double z, double w);
 	STVec4d() : STVec4d(0.0, 0.0, 0.0, 0.0) {};
 	
-	std::vector<double> getData {return this->data;};
+	std::vector<double> getData() {return this->data;};
+	double* getDataArray() {return this->data.data();};
 	
 	double getX() {return this->data[0];};
 	double getY() {return this->data[1];};
@@ -258,4 +264,134 @@ public:
 	float distance(STVec4d* v2);
 };
 
+
+/*	GLSL Compatibility vectors, six of them. There would be eight, but let's face it, a one-dimensional vector...is just a number.
+ */
+ 
+ 
+class STVec2i
+{
+private:
+	std::vector<int> data;
+
+public:
+	STVec2i(int x, int y);
+	STVec2i() : STVec2i(0, 0) {};
+	
+	std::vector<int> getData() {return this->data;};
+	int* getDataArray() {return this->data.data();};
+	
+	int getX() {return this->data[0];};
+	int getY() {return this->data[1];};
+	
+	void setX(int x) {this->data[0] = x;}; 
+	void setY(int y) {this->data[1] = y;};
+};
+
+class STVec3i
+{
+private:
+	std::vector<int> data;
+
+public:
+	STVec3i(int x, int y, int z);
+	STVec3i() : STVec3i(0, 0, 0) {};
+	
+	std::vector<int> getData() {return this->data;};
+	int* getDataArray() {return this->data.data();};
+	
+	int getX() {return this->data[0];};
+	int getY() {return this->data[1];};
+	int getZ() {return this->data[2];};
+	
+	void setX(int x) {this->data[0] = x;}; 
+	void setY(int y) {this->data[1] = y;};
+	void setZ(int z) {this->data[2] = z;};
+};
+
+class STVec4i
+{
+private:
+	std::vector<int> data;
+
+public:
+	STVec4i(int x, int y, int z, int w);
+	STVec4i() : STVec4i(0, 0, 0, 0) {};
+	
+	std::vector<int> getData() {return this->data;};
+	int* getDataArray() {return this->data.data();};
+	
+	int getX() {return this->data[0];};
+	int getY() {return this->data[1];};
+	int getZ() {return this->data[2];};
+	int getW() {return this->data[3];};
+	
+	void setX(int x) {this->data[0] = x;}; 
+	void setY(int y) {this->data[1] = y;};
+	void setZ(int z) {this->data[2] = z;};
+	void setW(int w) {this->data[3] = w;};
+};
+
+class STVec2ui
+{
+private:
+	std::vector<unsigned int> data;
+
+public:
+	STVec2ui(unsigned int x, unsigned int y);
+	STVec2ui() : STVec2ui(0, 0) {};
+	
+	std::vector<unsigned int> getData() {return this->data;};
+	unsigned int* getDataArray() {return this->data.data();};
+	
+	unsigned int getX() {return this->data[0];};
+	unsigned int getY() {return this->data[1];};
+	
+	void setX(unsigned int x) {this->data[0] = x;}; 
+	void setY(unsigned int y) {this->data[1] = y;};
+};
+
+class STVec3ui
+{
+private:
+	std::vector<unsigned int> data;
+
+public:
+	STVec3ui(unsigned int x, unsigned int y, unsigned int z);
+	STVec3ui() : STVec3ui(0, 0, 0) {};
+	
+	std::vector<unsigned int> getData() {return this->data;};
+	unsigned int* getDataArray() {return this->data.data();};
+	
+	unsigned int getX() {return this->data[0];};
+	unsigned int getY() {return this->data[1];};
+	unsigned int getZ() {return this->data[2];};
+	
+	void setX(unsigned int x) {this->data[0] = x;}; 
+	void setY(unsigned int y) {this->data[1] = y;};
+	void setZ(unsigned int z) {this->data[2] = z;}; 
+};
+
+class STVec4ui
+{
+private:
+	std::vector<unsigned int> data;
+
+public:
+	STVec4ui(unsigned int x, unsigned int y, unsigned int z, unsigned int w);
+	STVec4ui() : STVec4ui(0, 0, 0, 0) {};
+	
+	std::vector<unsigned int> getData() {return this->data;};
+	unsigned int* getDataArray() {return this->data.data();};
+	
+	unsigned int getX() {return this->data[0];};
+	unsigned int getY() {return this->data[1];};
+	unsigned int getZ() {return this->data[2];};
+	unsigned int getW() {return this->data[3];};
+	
+	void setX(unsigned int x) {this->data[0] = x;}; 
+	void setY(unsigned int y) {this->data[1] = y;};
+	void setZ(unsigned int z) {this->data[2] = z;};
+	void setW(unsigned int w) {this->data[3] = w;};
+};
 #endif //__ST_VECTOR_H__
