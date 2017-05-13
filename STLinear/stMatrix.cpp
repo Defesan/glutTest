@@ -549,6 +549,50 @@ STMatrix44d* STMatrix44d::copyMatrix()
 }
 
 /* GLSL Uniform Compatibility Types */
+/*  STMatrix22f
+ *	2x2 column-major matrix with floats
+ */
+
+STMatrix22f::STMatrix22f(float x1, float y1, float x2, float y2)
+{
+	this->data.push_back(x1);
+	this->data.push_back(x2);
+	this->data.push_back(y1);
+	this->data.push_back(y2);
+}
+
+void STMatrix22f::loadIdentity()
+{
+	for(int i = 0; i < 2; i++)
+	{
+		for(int j = 0; j < 2; j++)
+		{
+			if(i == j)
+			{
+				this->set(i,j,1.0f);
+			}
+			else
+			{
+				this->set(i,j,0.0f);
+			}
+		}
+	}
+}
+
+STMatrix22f* STMatrix22f::copyMatrix()
+{
+	STMatrix22f* copy = new STMatrix22f();
+	
+	for(int i = 0; i < 2; i++)
+	{
+		for(int j = 0; j < 2; j++)
+		{
+			copy->set(i,j,this->get(i,j));
+		}
+	}
+	return copy;
+}
+
 /*  STMatrix23f
 	2x3 column-major matrix with floats
 	Just so I get it right this time, the matrix is supposed to look like this:

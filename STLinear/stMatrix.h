@@ -101,6 +101,7 @@ public:
 };
 
 //Now, for uniform support, I need:
+//STMatrix22f
 //STMatrix23f
 //STMatrix24f
 //STMatrix32f
@@ -111,11 +112,27 @@ public:
 //Though none of them need too much, since none of them really support any of the major matrix archetypes. They're just there in case...
 //I'll probably add multiplication by vectors and matrices, maybe other functions later.
 
+class STMatrix22f {
+private:
+	std::vector<float> data;
+public:
+	STMatrix22f(float x1, float y1, float x2, float y2);
+	STMatrix22f() : STMatrix22f(0.0f, 0.0f, 0.0f, 0.0f) {};
+	
+	void set(int row,int col, double val) {this->data[row + (col * 2)] = val;};	
+	double get(int row, int col) {return this->data[row + (col * 2)];};
+	
+	double* getData() {return this->data->data();};
+	
+	void loadIdentity();
+	STMatrix22f* copyMatrix();
+};
+
 class STMatrix23f {
 private:
 	std::vector<float> data;
 public:
-	STMatrix23f(float x1, float y1, float z1, float x2, float y2, float z2)(float x1, float y1, float x2, float y2, float x3, float y3);
+	STMatrix23f(float x1, float y1, float z1, float x2, float y2, float z2);
 	STMatrix23f() : STMatrix23f(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f) {};
 	
 	void set(int row,int col, double val) {this->data[row + (col * 2)] = val;};	
