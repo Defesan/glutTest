@@ -448,3 +448,115 @@ STUniform::STUniform(GLint location, GLsizei count, GLboolean transpose, STMatri
 	this->transpose = transpose;
 	this->v44m = v44m;
 }
+
+
+void STUniform::apply()
+{
+	switch(this->type)
+	{
+	case ST_UNIFORM1F:
+		glUniform1f(this->location, this->vf1);
+		break;	//Yeah, that's the stuff.
+	case ST_UNIFORM2F:
+		glUniform2f(this->location, this->vf1, this->vf2);
+		break;	
+	case ST_UNIFORM3F:
+		glUniform3f(this->location, this->vf1, this->vf2, this->vf3);
+		break;	
+	case ST_UNIFORM4F:
+		glUniform4f(this->location, this->vf1, this->vf2, this->vf3, this->vf4);
+		break;	//Getting tedious yet?
+	case ST_UNIFORM1I:
+		glUniform1i(this->location, this->vi1);
+		break;
+	case ST_UNIFORM2I:
+		glUniform2i(this->location, this->vi1, this->vi2);
+		break;
+	case ST_UNIFORM3I:
+		glUniform3i(this->location, this->vi1, this->vi2, this->vi3);
+		break;
+	case ST_UNIFORM4I:
+		glUniform4i(this->location, this->vi1, this->vi2, this->vi3, this->vi4);
+		break;	//Yeah!
+	case ST_UNIFORM1UI:
+		glUniform1ui(this->location, this->vui1);
+		break;
+	case ST_UNIFORM2UI:
+		glUniform2ui(this->location, this->vui1, this->vui2);
+		break;
+	case ST_UNIFORM3UI:
+		glUniform3ui(this->location, this->vui1, this->vui2, this->vui3);
+		break;
+	case ST_UNIFORM4UI:
+		glUniform4ui(this->location, this->vui1, this->vui2, this->vui3, this->vui4);
+		break;  //MORE!
+	case ST_UNIFORM1FV:
+		glUniform1fv(this->location, this->count, (const GLfloat*)&this->vf1);
+		break;
+	case ST_UNIFORM1IV:
+		glUniform1iv(this->location, this->count, (const GLint*)&this->vi1);
+		break;
+	case ST_UNIFORM1UIV:
+		glUniform1uiv(this->location, this->count, (const GLuint*)&this->vui1);
+		break; //These guys were special.
+	case ST_UNIFORM2FV:
+		glUniform2fv(this->location, this->count, (const GLfloat*)this->v2fv->getDataArray());
+		break;
+	case ST_UNIFORM3FV:
+		glUniform3fv(this->location, this->count, (const GLfloat*)this->v3fv->getDataArray());
+		break;
+	case ST_UNIFORM4FV:
+		glUniform4fv(this->location, this->count, (const GLfloat*)this->v4fv->getDataArray());
+		break;
+	case ST_UNIFORM2IV:
+		glUniform2iv(this->location, this->count, (const GLint*)this->v2iv->getDataArray());
+		break;
+	case ST_UNIFORM3IV:
+		glUniform3iv(this->location, this->count, (const GLint*)this->v3iv->getDataArray());
+		break;
+	case ST_UNIFORM4IV:
+		glUniform4iv(this->location, this->count, (const GLint*)this->v4iv->getDataArray());
+		break;
+	case ST_UNIFORM2UIV:
+		glUniform2uiv(this->location, this->count, (const GLuint*)this->v2uiv->getDataArray());
+		break;
+	case ST_UNIFORM3UIV:
+		glUniform3uiv(this->location, this->count, (const GLuint*)this->v3uiv->getDataArray());
+		break;
+	case ST_UNIFORM4UIV:
+		glUniform4uiv(this->location, this->count, (const GLuint*)this->v4uiv->getDataArray());
+		break;	//I mean, these guys were special, too. No disrespect.
+	case ST_UNIFORMMATRIX2FV:
+		glUniformMatrix2fv(this->location, this->count, this->transpose, (const GLfloat*)this->v22m->getData());
+		break;
+	case ST_UNIFORMMATRIX2X3FV:
+		glUniformMatrix2x3fv(this->location, this->count, this->transpose, (const GLfloat*)this->v23m->getData());
+		break;
+	case ST_UNIFORMMATRIX2X4FV:
+		glUniformMatrix2x4fv(this->location, this->count, this->transpose, (const GLfloat*)this->v24m->getData());
+		break;
+	case ST_UNIFORMMATRIX3X2FV:
+		glUniformMatrix3x2fv(this->location, this->count, this->transpose, (const GLfloat*)this->v32m->getData());
+		break;
+	case ST_UNIFORMMATRIX3FV:
+		glUniformMatrix3fv(this->location, this->count, this->transpose, (const GLfloat*)this->v33m->getData());
+		break;
+	case ST_UNIFORMMATRIX3X4FV:
+		glUniformMatrix3x4fv(this->location, this->count, this->transpose, (const GLfloat*)this->v34m->getData());
+		break;
+	case ST_UNIFORMMATRIX4X2FV:
+		glUniformMatrix4x2fv(this->location, this->count, this->transpose, (const GLfloat*)this->v42m->getData());
+		break;
+	case ST_UNIFORMMATRIX4X3FV:
+		glUniformMatrix4x3fv(this->location, this->count, this->transpose, (const GLfloat*)this->v43m->getData());
+		break;
+	case ST_UNIFORMMATRIX4FV:
+		glUniformMatrix4fv(this->location, this->count, this->transpose, (const GLfloat*)this->v44m->getData());
+		break;	//And that's the last of them. Rather boring function for being such a lynchpin. Probably take a day to get working properly.
+	default:
+		std::cerr << "Unknown uniform type" << std::endl;
+		break;
+	}
+	//Hey, I think that's the bottom of the rabbithole!
+
+}

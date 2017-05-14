@@ -118,6 +118,8 @@ public:
 	//Specifically, the lowest-hanging fruit here is to add a base class to stMatrix and stVector, and give each a type enum, then switch on that.
 	//In fact, I could trim *eighteen* of those down to *two*. But... Really, this is mostly going to be copy-paste time. I'll do that later, this now.
 	
+	//But for now, the meat.
+	void apply();	//If that seems anticlimactic, head over to the .cpp file.
 
 }
 
