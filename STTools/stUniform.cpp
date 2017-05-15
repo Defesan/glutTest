@@ -3,6 +3,7 @@
 void STUniform::init()
 {
 	//Always initialize your variables, kids.
+	this->location = 0;
 	this->count = 0;
 	this->transpose = false;
 	
@@ -44,38 +45,38 @@ void STUniform::init()
 	this->m44f = nullptr;
 }
 
-STUniform::STUniform(GLint location, GLfloat vf1)
+STUniform::STUniform(std::string name, GLfloat vf1)
 {
 	this->init();
 	this->type = ST_UNIFORM1F;
-	this->location = location;	
+	this->name = name;
 	this->vf1 = vf1;
 }
 
-STUniform::STUniform(GLint location, GLfloat vf1, GLfloat vf2)
+STUniform::STUniform(std::string name, GLfloat vf1, GLfloat vf2)
 {
 	this->init();
 	this->type = ST_UNIFORM2F;
-	this->location = location;	
+	this->name = name;
 	this->vf1 = vf1;
 	this->vf2 = vf2;
 }
 
-STUniform::STUniform(GLint location, GLfloat vf1, GLfloat vf2, GLfloat vf3)
+STUniform::STUniform(std::string name, GLfloat vf1, GLfloat vf2, GLfloat vf3)
 {
 	this->init();
 	this->type = ST_UNIFORM3F;
-	this->location = location;	
+	this->name = name;
 	this->vf1 = vf1;
 	this->vf2 = vf2;
 	this->vf3 = vf3;
 }
 
-STUniform::STUniform(GLint location, GLfloat vf1, GLfloat vf2, GLfloat vf3, GLfloat vf4)
+STUniform::STUniform(std::string name, GLfloat vf1, GLfloat vf2, GLfloat vf3, GLfloat vf4)
 {
 	this->init();
 	this->type = ST_UNIFORM4F;
-	this->location = location;	
+	this->name = name;
 	this->vf1 = vf1;
 	this->vf2 = vf2;
 	this->vf3 = vf3;
@@ -83,38 +84,38 @@ STUniform::STUniform(GLint location, GLfloat vf1, GLfloat vf2, GLfloat vf3, GLfl
 }
 
 //Int batches
-STUniform::STUniform(GLint location, GLint vi1)
+STUniform::STUniform(std::string name, GLint vi1)
 {
 	this->init();
 	this->type = ST_UNIFORM1I;
-	this->location = location;	
+	this->name = name;
 	this->vi1 = vi1;
 }
 
-STUniform::STUniform(GLint location, GLint vi1, GLint vi2)
+STUniform::STUniform(std::string name, GLint vi1, GLint vi2)
 {
 	this->init();
 	this->type = ST_UNIFORM2I;
-	this->location = location;	
+	this->name = name;
 	this->vi1 = vi1;
 	this->vi2 = vi2;
 }
 
-STUniform::STUniform(GLint location, GLint vi1, GLint vi2, GLint vi3)
+STUniform::STUniform(std::string name, GLint vi1, GLint vi2, GLint vi3)
 {
 	this->init();
 	this->type = ST_UNIFORM3I;
-	this->location = location;	
+	this->name = name;
 	this->vi1 = vi1;
 	this->vi2 = vi2;
 	this->vi3 = vi3;
 }
 
-STUniform::STUniform(GLint location, GLint vi1, GLint vi2, GLint vi3, GLint vi4)
+STUniform::STUniform(std::string name, GLint vi1, GLint vi2, GLint vi3, GLint vi4)
 {
 	this->init();
 	this->type = ST_UNIFORM4I;
-	this->location = location;	
+	this->name = name;
 	this->vi1 = vi1;
 	this->vi2 = vi2;
 	this->vi3 = vi3;
@@ -123,38 +124,38 @@ STUniform::STUniform(GLint location, GLint vi1, GLint vi2, GLint vi3, GLint vi4)
 
 
 //Unsigned int batches
-STUniform::STUniform(GLint location, GLuint vui1)
+STUniform::STUniform(std::string name, GLuint vui1)
 {
 	this->init();
 	this->type = ST_UNIFORM1UI;
-	this->location = location;	
+	this->name = name;
 	this->vui1 = vui1;
 }
 
-STUniform::STUniform(GLint location, GLuint vui1, GLuint vui2)
+STUniform::STUniform(std::string name, GLuint vui1, GLuint vui2)
 {
 	this->init();
 	this->type = ST_UNIFORM2UI;
-	this->location = location;	
+	this->name = name;
 	this->vui1 = vui1;
 	this->vui2 = vui2;
 }
 
-STUniform::STUniform(GLint location, GLuint vui1, GLuint vui2, GLuint vui3)
+STUniform::STUniform(std::string name, GLuint vui1, GLuint vui2, GLuint vui3)
 {
 	this->init();
 	this->type = ST_UNIFORM3UI;
-	this->location = location;	
+	this->name = name;
 	this->vui1 = vui1;
 	this->vui2 = vui2;
 	this->vui3 = vui3;
 }
 
-STUniform::STUniform(GLint location, GLuint vui1, GLuint vui2, GLuint vui3, GLuint vui4)
+STUniform::STUniform(std::string name, GLuint vui1, GLuint vui2, GLuint vui3, GLuint vui4)
 {
 	this->init();
 	this->type = ST_UNIFORM4UI;
-	this->location = location;	
+	this->name = name;
 	this->vui1 = vui1;
 	this->vui2 = vui2;
 	this->vui3 = vui3;
@@ -163,11 +164,11 @@ STUniform::STUniform(GLint location, GLuint vui1, GLuint vui2, GLuint vui3, GLui
 
 
 //Float vectors -- these include counts.
-STUniform::STUniform(GLint location, GLsizei count, GLfloat vf1)
+STUniform::STUniform(std::string name, GLsizei count, GLfloat vf1)
 {
 	this->init();
 	this->type = ST_UNIFORM1FV;
-	this->location = location;
+	this->name = name;
 	if(count > 1)
 	{
 		count = 1;
@@ -176,11 +177,11 @@ STUniform::STUniform(GLint location, GLsizei count, GLfloat vf1)
 	this->vf1 = vf1;
 }
 
-STUniform::STUniform(GLint location, GLsizei count, STVec2f* v2fv)
+STUniform::STUniform(std::string name, GLsizei count, STVec2f* v2fv)
 {
 	this->init();
 	this->type = ST_UNIFORM2FV;
-	this->location = location;
+	this->name = name;
 	if(count > 2)
 	{
 		count = 2;
@@ -189,11 +190,11 @@ STUniform::STUniform(GLint location, GLsizei count, STVec2f* v2fv)
 	this->v2fv = v2fv;
 }
 
-STUniform::STUniform(GLint location, GLsizei count, STVec3f* v3fv)
+STUniform::STUniform(std::string name, GLsizei count, STVec3f* v3fv)
 {
 	this->init();
 	this->type = ST_UNIFORM3FV;
-	this->location = location;
+	this->name = name;
 	if(count > 3)
 	{
 		count = 3;
@@ -202,11 +203,11 @@ STUniform::STUniform(GLint location, GLsizei count, STVec3f* v3fv)
 	this->v3fv = v3fv;
 }
 
-STUniform::STUniform(GLint location, GLsizei count, STVec4f* v4fv)
+STUniform::STUniform(std::string name, GLsizei count, STVec4f* v4fv)
 {
 	this->init();
 	this->type = ST_UNIFORM4FV;
-	this->location = location;
+	this->name = name;
 	if(count > 4)
 	{
 		count = 5;
@@ -217,11 +218,11 @@ STUniform::STUniform(GLint location, GLsizei count, STVec4f* v4fv)
 
 
 //Int vectors
-STUniform::STUniform(GLint location, GLsizei count, GLint vi1)
+STUniform::STUniform(std::string name, GLsizei count, GLint vi1)
 {
 	this->init();
 	this->type = ST_UNIFORM1IV;
-	this->location = location;
+	this->name = name;
 	if(count > 1)
 	{
 		count = 1;
@@ -230,11 +231,11 @@ STUniform::STUniform(GLint location, GLsizei count, GLint vi1)
 	this->vi1 = vi1;
 }
 
-STUniform::STUniform(GLint location, GLsizei count, STVec2i* v2iv)
+STUniform::STUniform(std::string name, GLsizei count, STVec2i* v2iv)
 {
 	this->init();
 	this->type = ST_UNIFORM2IV;
-	this->location = location;
+	this->name = name;
 	if(count > 2)
 	{
 		count = 2;
@@ -243,11 +244,11 @@ STUniform::STUniform(GLint location, GLsizei count, STVec2i* v2iv)
 	this->v2iv = v2iv;
 }
 
-STUniform::STUniform(GLint location, GLsizei count, STVec3i* v3iv)
+STUniform::STUniform(std::string name, GLsizei count, STVec3i* v3iv)
 {
 	this->init();
 	this->type = ST_UNIFORM3IV;
-	this->location = location;
+	this->name = name;
 	if(count > 3)
 	{
 		count = 3;
@@ -256,11 +257,11 @@ STUniform::STUniform(GLint location, GLsizei count, STVec3i* v3iv)
 	this->v3iv = v3iv;
 }
 
-STUniform::STUniform(GLint location, GLsizei count, STVec4i* v4iv)
+STUniform::STUniform(std::string name, GLsizei count, STVec4i* v4iv)
 {
 	this->init();
 	this->type = ST_UNIFORM4IV;
-	this->location = location;
+	this->name = name;
 	if(count > 4)
 	{
 		count = 4;
@@ -270,11 +271,11 @@ STUniform::STUniform(GLint location, GLsizei count, STVec4i* v4iv)
 }
 
 //Unsigned int vectors
-STUniform::STUniform(GLint location, GLsizei count, GLuint vui1)
+STUniform::STUniform(std::string name, GLsizei count, GLuint vui1)
 {
 	this->init();
 	this->type = ST_UNIFORM1UIV;
-	this->location = location;
+	this->name = name;
 	if(count > 1)
 	{
 		count = 1;
@@ -283,11 +284,11 @@ STUniform::STUniform(GLint location, GLsizei count, GLuint vui1)
 	this->vui1 = vui1;
 }
 
-STUniform::STUniform(GLint location, GLsizei count, STVec2ui* v2uiv)
+STUniform::STUniform(std::string name, GLsizei count, STVec2ui* v2uiv)
 {
 	this->init();
 	this->type = ST_UNIFORM2UIV;
-	this->location = location;
+	this->name = name;
 	if(count > 2)
 	{
 		count = 2;
@@ -296,11 +297,11 @@ STUniform::STUniform(GLint location, GLsizei count, STVec2ui* v2uiv)
 	this->v2uiv = v2uiv;
 }
 
-STUniform::STUniform(GLint location, GLsizei count, STVec3ui* v3uiv)
+STUniform::STUniform(std::string name, GLsizei count, STVec3ui* v3uiv)
 {
 	this->init();
 	this->type = ST_UNIFORM3UIV;
-	this->location = location;
+	this->name = name;
 	if(count > 3)
 	{
 		count = 3;
@@ -309,11 +310,11 @@ STUniform::STUniform(GLint location, GLsizei count, STVec3ui* v3uiv)
 	this->v3uiv = v3uiv;
 }
 
-STUniform::STUniform(GLint location, GLsizei count, STVec4ui* v4uiv)
+STUniform::STUniform(std::string name, GLsizei count, STVec4ui* v4uiv)
 {
 	this->init();
 	this->type = ST_UNIFORM4UIV;
-	this->location = location;
+	this->name = name;
 	if(count > 4)
 	{
 		count = 4;
@@ -323,11 +324,11 @@ STUniform::STUniform(GLint location, GLsizei count, STVec4ui* v4uiv)
 }
 
 //Matrices
-STUniform::STUniform(GLint location, GLsizei count, GLboolean transpose, STMatrix22f* v22m)
+STUniform::STUniform(std::string name, GLsizei count, GLboolean transpose, STMatrix22f* v22m)
 {
 	this->init();
 	this->type = ST_UNIFORMMATRIX2FV;
-	this->location = location;
+	this->name = name;
 	if(count > 4)
 	{
 		count = 4;
@@ -337,11 +338,11 @@ STUniform::STUniform(GLint location, GLsizei count, GLboolean transpose, STMatri
 	this->v22m = v22m;
 }
 
-STUniform::STUniform(GLint location, GLsizei count, GLboolean transpose, STMatrix23f* v23m)
+STUniform::STUniform(std::string name, GLsizei count, GLboolean transpose, STMatrix23f* v23m)
 {
 	this->init();
 	this->type = ST_UNIFORMMATRIX2X3FV;
-	this->location = location;
+	this->name = name;
 	if(count > 6)
 	{
 		count = 6;
@@ -351,11 +352,11 @@ STUniform::STUniform(GLint location, GLsizei count, GLboolean transpose, STMatri
 	this->v23m = v23m;
 }
 
-STUniform::STUniform(GLint location, GLsizei count, GLboolean transpose, STMatrix24f* v24m)
+STUniform::STUniform(std::string name, GLsizei count, GLboolean transpose, STMatrix24f* v24m)
 {
 	this->init();
 	this->type = ST_UNIFORMMATRIX2X4FV;
-	this->location = location;
+	this->name = name;
 	if(count > 8)
 	{
 		count = 8;
@@ -365,11 +366,11 @@ STUniform::STUniform(GLint location, GLsizei count, GLboolean transpose, STMatri
 	this->v24m = v24m;
 }
 
-STUniform::STUniform(GLint location, GLsizei count, GLboolean transpose, STMatrix32f* v32m)
+STUniform::STUniform(std::string name, GLsizei count, GLboolean transpose, STMatrix32f* v32m)
 {
 	this->init();
 	this->type = ST_UNIFORMMATRIX3X2FV;
-	this->location = location;
+	this->name = name;
 	if(count > 6)
 	{
 		count = 6;
@@ -379,11 +380,11 @@ STUniform::STUniform(GLint location, GLsizei count, GLboolean transpose, STMatri
 	this->v32m = v32m;
 }
 
-STUniform::STUniform(GLint location, GLsizei count, GLboolean transpose, STMatrix33f* v33m)
+STUniform::STUniform(std::string name, GLsizei count, GLboolean transpose, STMatrix33f* v33m)
 {
 	this->init();
 	this->type = ST_UNIFORMMATRIX3FV;
-	this->location = location;
+	this->name = name;
 	if(count > 9)
 	{
 		count = 9;
@@ -393,11 +394,11 @@ STUniform::STUniform(GLint location, GLsizei count, GLboolean transpose, STMatri
 	this->v33m = v33m;
 }
 
-STUniform::STUniform(GLint location, GLsizei count, GLboolean transpose, STMatrix34f* v34m)
+STUniform::STUniform(std::string name, GLsizei count, GLboolean transpose, STMatrix34f* v34m)
 {
 	this->init();
 	this->type = ST_UNIFORMMATRIX3X4FV;
-	this->location = location;
+	this->name = name;
 	if(count > 12)
 	{
 		count = 12;
@@ -407,11 +408,11 @@ STUniform::STUniform(GLint location, GLsizei count, GLboolean transpose, STMatri
 	this->v34m = v34m;
 }
 
-STUniform::STUniform(GLint location, GLsizei count, GLboolean transpose, STMatrix42f* v42m)
+STUniform::STUniform(std::string name, GLsizei count, GLboolean transpose, STMatrix42f* v42m)
 {
 	this->init();
 	this->type = ST_UNIFORMMATRIX4X2FV;
-	this->location = location;
+	this->name = name;
 	if(count > 8)
 	{
 		count = 8;
@@ -421,11 +422,11 @@ STUniform::STUniform(GLint location, GLsizei count, GLboolean transpose, STMatri
 	this->v42m = v42m;
 }
 
-STUniform::STUniform(GLint location, GLsizei count, GLboolean transpose, STMatrix43f* v43m)
+STUniform::STUniform(std::string name, GLsizei count, GLboolean transpose, STMatrix43f* v43m)
 {
 	this->init();
 	this->type = ST_UNIFORMMATRIX4X3FV;
-	this->location = location;
+	this->name = name;
 	if(count > 12)
 	{
 		count = 12;
@@ -435,11 +436,11 @@ STUniform::STUniform(GLint location, GLsizei count, GLboolean transpose, STMatri
 	this->v43m = v43m;
 }
 
-STUniform::STUniform(GLint location, GLsizei count, GLboolean transpose, STMatrix44f* v44m)
+STUniform::STUniform(std::string name, GLsizei count, GLboolean transpose, STMatrix44f* v44m)
 {
 	this->init();
 	this->type = ST_UNIFORMMATRIX4FV;
-	this->location = location;
+	this->name = name;
 	if(count > 16)
 	{
 		count = 16;
@@ -450,8 +451,9 @@ STUniform::STUniform(GLint location, GLsizei count, GLboolean transpose, STMatri
 }
 
 
-void STUniform::apply()
+void STUniform::apply(GLint location)
 {
+	this->location = location;
 	switch(this->type)
 	{
 	case ST_UNIFORM1F:

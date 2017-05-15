@@ -15,8 +15,6 @@
 enum ST_SHADER_ATTRIBUTE {ST_ATTRIBUTE_VERTEX = 0, ST_ATTRIBUTE_COLOR, ST_ATTRIBUTE_NORMAL, ST_ATTRIBUTE_TEXTURE0, 
                           ST_ATTRIBUTE_TEXTURE1, ST_ATTRIBUTE_TEXTURE2, ST_ATTRIBUTE_TEXTURE3, ST_ATTRIBUTE_LAST};
 
-
-
 enum ST_STOCK_SHADER {ST_IDENTITY = 0};	//Yeah, just this one for now.
 
 class STShaderManager
@@ -36,7 +34,7 @@ public:
 	GLuint getShader(GLuint index) {return this->activeShaderPointers[index];};
 	GLuint getStockShader(ST_STOCK_SHADER shader) : getShader((GLuint)shader) {};	//All of the custom shaders will be added AFTER the stock shaders, so the stock shader indices are valid.
 	
-	void runShader(GLuint shaderPointer, ...);
+	void runShader(GLuint shaderHandle, ...);
 	
 	bool loadShaderSrc(std::string shaderSoource, GLuint shaderHandle);
 	

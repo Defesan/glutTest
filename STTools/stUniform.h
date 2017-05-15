@@ -23,6 +23,7 @@ private:
 	GLint location;
 	GLsizei count;
 	GLboolean transpose;
+	std::string name;
 	
 	GLint vi1;
 	GLint vi2;
@@ -68,58 +69,58 @@ private:
 public:
 //now to create the many, many constructors I need.
 	//float batches first.
-	STUniform(GLint location, GLfloat vf1);
-	STUniform(GLint location, GLfloat vf1, GLfloat vf2);
-	STUniform(GLint location, GLfloat vf1, GLfloat vf2, GLfloat vf3);
-	STUniform(GLint location, GLfloat vf1, GLfloat vf2, GLfloat vf3, GLfloat vf4);
+	STUniform(std::string name, GLfloat vf1);
+	STUniform(std::string name, GLfloat vf1, GLfloat vf2);
+	STUniform(std::string name, GLfloat vf1, GLfloat vf2, GLfloat vf3);
+	STUniform(std::string name, GLfloat vf1, GLfloat vf2, GLfloat vf3, GLfloat vf4);
 	
 	//Int batches
-	STUniform(GLint location, GLint vi1);
-	STUniform(GLint location, GLint vi1, GLint vi2);
-	STUniform(GLint location, GLint vi1, GLint vi2, GLint vi3);
-	STUniform(GLint location, GLint vi1, GLint vi2, GLint vi3, GLint vi4);
+	STUniform(std::string name, GLint vi1);
+	STUniform(std::string name, GLint vi1, GLint vi2);
+	STUniform(std::string name, GLint vi1, GLint vi2, GLint vi3);
+	STUniform(std::string name, GLint vi1, GLint vi2, GLint vi3, GLint vi4);
 	
 	//Unsigned int batches
-	STUniform(GLint location, GLuint vui1);
-	STUniform(GLint location, GLuint vui1, GLuint vui2);
-	STUniform(GLint location, GLuint vui1, GLuint vui2, GLuint vui3);
-	STUniform(GLint location, GLuint vui1, GLuint vui2, GLuint vui3, GLuint vui4);
+	STUniform(std::string name, GLuint vui1);
+	STUniform(std::string name, GLuint vui1, GLuint vui2);
+	STUniform(std::string name, GLuint vui1, GLuint vui2, GLuint vui3);
+	STUniform(std::string name, GLuint vui1, GLuint vui2, GLuint vui3, GLuint vui4);
 	
 	//Float vectors -- these include counts.
-	STUniform(GLint location, GLsizei count, GLfloat vf1);	//This one's special.
-	STUniform(GLint location, GLsizei count, STVec2f* v2fv);
-	STUniform(GLint location, GLsizei count, STVec3f* v3fv);
-	STUniform(GLint location, GLsizei count, STVec4f* v4fv);
+	STUniform(std::string name, GLsizei count, GLfloat vf1);	//This one's special.
+	STUniform(std::string name, GLsizei count, STVec2f* v2fv);
+	STUniform(std::string name, GLsizei count, STVec3f* v3fv);
+	STUniform(std::string name, GLsizei count, STVec4f* v4fv);
 	
 	//Int vectors
-	STUniform(GLint location, GLsizei count, GLint vi1);
-	STUniform(GLint location, GLsizei count, STVec2i* v2iv);
-	STUniform(GLint location, GLsizei count, STVec3i* v3iv);
-	STUniform(GLint location, GLsizei count, STVec4i* v4iv);
+	STUniform(std::string name, GLsizei count, GLint vi1);
+	STUniform(std::string name, GLsizei count, STVec2i* v2iv);
+	STUniform(std::string name, GLsizei count, STVec3i* v3iv);
+	STUniform(std::string name, GLsizei count, STVec4i* v4iv);
 	
 	//Unsigned int vectors
-	STUniform(GLint location, GLsizei count, GLuint vui1);
-	STUniform(GLint location, GLsizei count, STVec2ui* v2uiv);
-	STUniform(GLint location, GLsizei count, STVec3ui* v3uiv);
-	STUniform(GLint location, GLsizei count, STVec4ui* v4uiv);
+	STUniform(std::string name, GLsizei count, GLuint vui1);
+	STUniform(std::string name, GLsizei count, STVec2ui* v2uiv);
+	STUniform(std::string name, GLsizei count, STVec3ui* v3uiv);
+	STUniform(std::string name, GLsizei count, STVec4ui* v4uiv);
 	
 	//Matrices
-	STUniform(GLint location, GLsizei count, GLboolean transpose, STMatrix22f* v22m);
-	STUniform(GLint location, GLsizei count, GLboolean transpose, STMatrix23f* v23m);
-	STUniform(GLint location, GLsizei count, GLboolean transpose, STMatrix24f* v24m);
-	STUniform(GLint location, GLsizei count, GLboolean transpose, STMatrix32f* v32m);
-	STUniform(GLint location, GLsizei count, GLboolean transpose, STMatrix33f* v33m);
-	STUniform(GLint location, GLsizei count, GLboolean transpose, STMatrix34f* v34m);
-	STUniform(GLint location, GLsizei count, GLboolean transpose, STMatrix42f* v42m);
-	STUniform(GLint location, GLsizei count, GLboolean transpose, STMatrix43f* v43m);
-	STUniform(GLint location, GLsizei count, GLboolean transpose, STMatrix44f* v44m);
+	STUniform(std::string name, GLsizei count, GLboolean transpose, STMatrix22f* v22m);
+	STUniform(std::string name, GLsizei count, GLboolean transpose, STMatrix23f* v23m);
+	STUniform(std::string name, GLsizei count, GLboolean transpose, STMatrix24f* v24m);
+	STUniform(std::string name, GLsizei count, GLboolean transpose, STMatrix32f* v32m);
+	STUniform(std::string name, GLsizei count, GLboolean transpose, STMatrix33f* v33m);
+	STUniform(std::string name, GLsizei count, GLboolean transpose, STMatrix34f* v34m);
+	STUniform(std::string name, GLsizei count, GLboolean transpose, STMatrix42f* v42m);
+	STUniform(std::string name, GLsizei count, GLboolean transpose, STMatrix43f* v43m);
+	STUniform(std::string name, GLsizei count, GLboolean transpose, STMatrix44f* v44m);
 	
 	//Now, I know there are plenty of things I could do to trim that list.
 	//Specifically, the lowest-hanging fruit here is to add a base class to stMatrix and stVector, and give each a type enum, then switch on that.
 	//In fact, I could trim *eighteen* of those down to *two*. But... Really, this is mostly going to be copy-paste time. I'll do that later, this now.
 	
 	//But for now, the meat.
-	void apply();	//If that seems anticlimactic, head over to the .cpp file.
+	void apply(GLint location);	//If that seems anticlimactic, head over to the .cpp file.
 
 }
 
