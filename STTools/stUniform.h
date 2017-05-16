@@ -121,7 +121,9 @@ public:
 	
 	//But for now, the meat.
 	void apply(GLint location);	//If that seems anticlimactic, head over to the .cpp file.
-
+	
+	//Also, we need some getters.
+	std::string getName() {return this->name;};
 }
 
 

@@ -34,7 +34,7 @@ public:
 	GLuint getShader(GLuint index) {return this->activeShaderPointers[index];};
 	GLuint getStockShader(ST_STOCK_SHADER shader) : getShader((GLuint)shader) {};	//All of the custom shaders will be added AFTER the stock shaders, so the stock shader indices are valid.
 	
-	void runShader(GLuint shaderHandle, ...);
+	void runShader(GLuint shaderHandle, std::vector<STUniform*> uniforms);
 	
 	bool loadShaderSrc(std::string shaderSoource, GLuint shaderHandle);
 	

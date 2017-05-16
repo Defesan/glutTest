@@ -15,13 +15,33 @@ STShaderManager::~STShaderManager()
 	}
 }
 
-void STShaderManager::runShader(GLuint shaderHandle, ...)
+void STShaderManager::runShader(GLuint shaderIndex, std::vector<STUniform*> uniforms)
 {
-	//Run the shader at shaderPointer
-	//So, basically, I need to pass in a series of STUniforms, which contain the variable names and data.
-	//I need to set up the modelview and projection(or modelview/projection) matrix.
-	//I need to apply all of the uniforms,
-	//and run the shader.
+	//first, make sure we *have* this particular shader.
+	if(shaderIndex >= this->activeShaderPointers.size())
+	{
+		std::cerr << "Invalid Shader ID" << std::endl;
+		return;
+	}
+	
+	//Next, bind the shader. No need for a vararg, btw.
+	glUseProgram(this->activeShaderPointers[shaderIndex]);
+	
+	//Now, we have to load the uniforms.
+	std::vector<STUniform*>::iterator iter = uniforms.begin();
+	for(;iter < uniforms.size(); iter++)
+	{
+		//First, we need a handle for the uniform. This comes from the compiled shader that's been loaded by glUseProgram, and is identified by name.
+		GLint location = glGetUniformLocation(this->activeShaderPointers[shaderIndex], *iter->getName().c_str());
+		//Then we use the location to apply the uniform.
+		*iter->apply(location);
+		//Then we.....
+		//Um...
+		//(checks GLShaderManager)
+		//That's it. That is seriously everything that must be done.
+		//I think.
+		//
+	}
 }
 
 bool STShaderManager::loadShaderSrc(std::string shaderSrc, GLuint shaderHandle)
