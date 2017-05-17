@@ -72,25 +72,32 @@ void STPrimitiveBatch::end()
 	if(vertID != 0)
 	{
 		//Bind the vertex array
-		glEnableVertexAttribArray(0)
+		glEnableVertexAttribArray(ST_ATTRIBUTE_VERTEX);
+		glBindBuffer(GL_ARRAY_BUFFER, vertID);
+		glVertexAttribPointer(ST_ATTRIBUTE_VERTEX, 3, GL_FLOAT, GL_FALSE, 0, nullptr);	//Now, I'm still not 100% on why we're initializing the buffer with a null pointer here.
 	}
 	if(normID != 0)
 	{
 		//Bind the normal array
+		glEnableVertexAttribArray(ST_ATTRIBUTE_NORMAL);
+		glBindBuffer(GL_ARRAY_BUFFER, normID);
+		glVertexAttribPointer(ST_ATTRIBUTE_NORMAL, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 	}
 	if(colorID != 0)
 	{
 		//Bind the color array
+		glEnableVertexAttribArray(ST_ATTRIBUTE_COLOR);
+		glBindBuffer(GL_ARRAY_BUFFER, colorID);
+		glVertexAttribPointer(ST_ATTRIBUTE_COLOR, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
 	}
 	int i = 0;
 	for(iter = this->texIDs.begin(); iter < this->texIDs.end(); iter++)
 	{
 		//Bind the i'th texture coordinate array.
-	
+		glEnableVertexAttribArray(ST_ATTRIBUTE_TEXTURE0 + i);
+		glBindBuffer(GL_ARRAY_BUFFER, *iter);
+		glVertexAttribPointer(ST_ATTRIBUTE_TEXTURE0 + i, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
 	}
-	//And no index array? Not sure how this drawing is done without knowing the order...
-	//Duh. I thought this was where we interfaced directly with the graphics layer, but NO!
-	//This is OpenGL 3! Not that you *can't* interface with OpenGL at this point, but everything's *supposed* to go through shaders.
 
 }
 
