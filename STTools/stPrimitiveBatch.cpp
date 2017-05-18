@@ -141,7 +141,7 @@ void STPrimitiveBatch::copyNormalData(std::vector<STVec3d*> norms)
 	
 	for(iterN; iterN < norms.end(); iterN++)
 	{
-		this->normData.insert(iterD, *iterV->getData()->begin(), *iterV->getData()->end());
+		this->normData.insert(iterD, *iterN->getData()->begin(), *iterN->getData()->end());
 		iterD = this->normData.end();
 	}
 	
@@ -166,7 +166,7 @@ void STPrimitiveBatch::copyColorData(std::vector<STVec4f*> colors)
 
 	for(iterC; iterC < colors.end(); iterC++)
 	{
-		this->colorData.insert(iterD, *iterV->getData()->begin(), *iterV->getData()->end());
+		this->colorData.insert(iterD, *iterC->getData()->begin(), *iterC->getData()->end());
 		iterD = this->colorData.end();
 	}
 	
@@ -185,8 +185,32 @@ void STPrimitiveBatch::copyColorData(std::vector<STVec4f*> colors)
 
 void STPrimitiveBatch::copyTexCoordData(std::vector<STVec2d*> texCoords, GLuint textureLayer)
 {
+	if(textureLayer >= 4)
+	{
+		std::cerr << "Invalid texture layer" << std::endl;
+		return;
+	}
+	std::vector<STVec2d*>::iterator iterT = texCoords.begin();
+	std::vector<GLdouble>::iterator iterD = this->texCoordData[textureLayer].begin();
 
-
+	for(iterT; iterT < texCoords.end(); iterT++)
+	{
+		this->texCoordData[textureLayer].insert(iterD, *iterT->getData()->begin(), *iterT->getData()->end());
+		iterD = this->texCoordData.end();
+	}
+	
+	if(this->texIDs[textureLayer] == 0)
+	{	
+		glGenBuffers(1, &(this->texIDs[textureLayer]));
+		glBindBuffer(GL_ARRAY_BUFFER, this->texIDs[textureLayer]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(GLdouble) * this->texCoordData[textureLayer].size(), this->texCoordData[textureLayer].data(), GL_DYNAMIC_DRAW);
+	}
+	else
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, this->texIDs[textureLayer]);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(GLdouble) * this->texCoordData[textureLayer].size(), this->texCoordData[textureLayer].data();
+	}
+}
 
 }
 
