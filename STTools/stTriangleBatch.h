@@ -2,6 +2,7 @@
 #define __ST_TRIANGLE_BATCH_H__
 
 #include "stBatch.h"
+#include "stTriangle.h"
 
 //So... What does GLTriangleBatch do?
 //According to the description, it's basically a container form of the batch principle,
@@ -20,7 +21,9 @@
 
 class STTriangleBatch : public STBatch
 {
-private
+public:
+	STTriangleBatch();
+	void addTriangle(STTriangle* tri);
 	
 	
 };
