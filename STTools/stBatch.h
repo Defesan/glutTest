@@ -22,9 +22,9 @@ protected:
 	//system expects arrays of floats or doubles, which can be grabbed from vectors, so it's easier to use the raw info.
 	//Still don't want to go the C route unless I find there's a significant performance penalty. There's a value in readability, after all.
 	//Also, I suspect the STL has improved in the past fifteen years in terms of performance, both memory- and time-wise.
-	std::vector<GLdouble> vertData;
-	std::vector<GLdouble> normData;
-	std::vector<std::vector<GLdouble>> texCoordData;
+	std::vector<GLfloat> vertData;
+	std::vector<GLfloat> normData;
+	std::vector<std::vector<GLfloat>> texCoordData;
 	std::vector<GLfloat> colorData;	//Really doesn't need *that* much precision
 	std::vector<GLuint> indexData;
 	
