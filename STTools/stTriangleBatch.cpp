@@ -1,5 +1,28 @@
 #include "stTriangleBatch.h"
 
+STTriangleBatch::STTriangleBatch()
+{
+	this->type = TRIANGLE;
+	this->vertID = 0;
+	this->normID = 0;
+	this->colorID = 0;
+	this->indexID = 0;
+	for(int i = 0; i < 4; i++)
+	{
+		this->texIDs[i] = 0;
+	}
+}
+
+STTriangleBatch::~STTriangleBatch()
+{
+	glDeleteBuffers(1, &this->vertID);
+	glDeleteBuffers(1, &this->normID);
+	glDeleteBuffers(1, &this->colorID);
+	glDeleteBuffers(1, &this->indexID);
+	
+	glDeleteBuffers(4, this->texIDs.data());
+}
+
 void STTriangleBatch::addTriangle(STTriangle* tri)
 {
 	//Check to see if any of the verts are already in the list
@@ -51,4 +74,10 @@ void STTriangleBatch::addTriangle(STTriangle* tri)
 		}
 		//And that's it! Once again, my way works out to be a bit easier than his. Time will tell how well it performs in other respects...
 	}
+}
+
+void STTriangleBatch::finalize()
+{
+	
+	
 }

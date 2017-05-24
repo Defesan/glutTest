@@ -23,7 +23,10 @@ class STTriangleBatch : public STBatch
 {
 public:
 	STTriangleBatch();
+	~STTriangleBatch();
+	
 	void addTriangle(STTriangle* tri);
+	void finalize();	//Bind the buffers and finalize the mesh. Maybe I should also have an 'update' function...
 	
 	
 };

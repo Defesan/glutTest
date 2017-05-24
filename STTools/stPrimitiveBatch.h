@@ -10,8 +10,7 @@ public:
 	STPrimitiveBatch(GLuint numTexLayers = 4);
 	~STPrimitiveBatch();
 	
-	void begin();
-	void end();
+	void finalize();
 	
 	void copyVertexData(std::vector<STVec3d*> verts);
 	void copyNormalData(std::vector<STVec3d*> norms);

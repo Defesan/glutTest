@@ -61,9 +61,8 @@ void STPrimitiveBatch::begin()
 
 }
 
-void STPrimitiveBatch::end()
+void STPrimitiveBatch::finalize()
 {
-	//This is a bit more straightforward. Maybe I should call it 'finalize' or somesuch.
 	//Basically, given that data has been copied in and buffered, it takes the buffers and sets vertex attribute pointers to them so that GL can utilize them.
 	//Since I'm not doing 'immediate mode' for the moment, and I'm not supporting ES, that's... That's basically it.
 	
