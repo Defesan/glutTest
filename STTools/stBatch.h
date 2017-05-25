@@ -10,6 +10,7 @@
 #include <GL/glew.h>
 #include <vector>
 #include "../STLinear/stVector.h"
+#include "stShaderManager.h"
 
 enum BATCH_TYPE {TRIANGLE, PRIMITIVE};
 enum 

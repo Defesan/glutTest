@@ -21,6 +21,9 @@
 
 class STTriangleBatch : public STBatch
 {
+private:
+	GLuint vertexBufferArrayID;
+
 public:
 	STTriangleBatch();
 	~STTriangleBatch();
