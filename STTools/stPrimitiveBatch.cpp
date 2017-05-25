@@ -107,8 +107,8 @@ void STPrimitiveBatch::copyVertexData(std::vector<STVec3d*> verts)
 	//The objective is to get the data from the vector of Vec3d's into this object's vector of GLdoubles with minimum fuss.
 	//Also, hopefully, minimum memory thrashing.
 	
-	std::vector<STVec3d*>::iterator iterV = verts.begin();
-	std::vector<GLdouble>::iterator iterD = this->vertData.end();	//We're appending any incoming vertices.
+	std::vector<STVec3f*>::iterator iterV = verts.begin();
+	std::vector<GLfloat>::iterator iterD = this->vertData.end();	//We're appending any incoming vertices.
 	
 	for(iterV; iterV < verts.end(); iterV++)
 	{
@@ -124,19 +124,19 @@ void STPrimitiveBatch::copyVertexData(std::vector<STVec3d*> verts)
 		glGenBuffers(1, &(this->vertID));
 		glBindBuffer(GL_ARRAY_BUFFER, this->vertID);
 		//Oh, Hey-o, guess what I get to do that GLTools couldn't? Vectors can report their size! That's why I started using them in the first place!
-		glBufferData(GL_ARRAY_BUFFER, sizeof(GLdouble) * this->vertData.size(), this->vertData.data(), GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * this->vertData.size(), this->vertData.data(), GL_DYNAMIC_DRAW);
 	}
 	else
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, this->vertID);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(GLdouble) * this->vertData.size(), this->vertData.data());
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(GLfloat) * this->vertData.size(), this->vertData.data());
 	}
 }
 
 void STPrimitiveBatch::copyNormalData(std::vector<STVec3d*> norms)
 {
-	std::vector<STVec3d*>::iterator iterN = norms.begin();
-	std::vector<GLdouble>::iterator iterD = this->normData.begin();
+	std::vector<STVec3f*>::iterator iterN = norms.begin();
+	std::vector<GLfloat>::iterator iterD = this->normData.begin();
 	
 	for(iterN; iterN < norms.end(); iterN++)
 	{
@@ -148,12 +148,12 @@ void STPrimitiveBatch::copyNormalData(std::vector<STVec3d*> norms)
 	{
 		glGenBuffers(1, &(this->normID));
 		glBindBuffer(GL_ARRAY_BUFFER, this->normID);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(GLdouble) * this->normData.size(), this->normData.data(), GL_DYNAMIC_DRAW);	
+		glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * this->normData.size(), this->normData.data(), GL_DYNAMIC_DRAW);	
 	}	
 	else
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, this->normID);
-		GLBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(GLdouble) * this->normData.size(), this->normData.data());
+		GLBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(GLfloat) * this->normData.size(), this->normData.data());
 	}
 	
 }
@@ -189,8 +189,8 @@ void STPrimitiveBatch::copyTexCoordData(std::vector<STVec2d*> texCoords, GLuint 
 		std::cerr << "Invalid texture layer" << std::endl;
 		return;
 	}
-	std::vector<STVec2d*>::iterator iterT = texCoords.begin();
-	std::vector<GLdouble>::iterator iterD = this->texCoordData[textureLayer].begin();
+	std::vector<STVec2f*>::iterator iterT = texCoords.begin();
+	std::vector<GLfloat>::iterator iterD = this->texCoordData[textureLayer].begin();
 
 	for(iterT; iterT < texCoords.end(); iterT++)
 	{
@@ -202,12 +202,12 @@ void STPrimitiveBatch::copyTexCoordData(std::vector<STVec2d*> texCoords, GLuint 
 	{	
 		glGenBuffers(1, &(this->texIDs[textureLayer]));
 		glBindBuffer(GL_ARRAY_BUFFER, this->texIDs[textureLayer]);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(GLdouble) * this->texCoordData[textureLayer].size(), this->texCoordData[textureLayer].data(), GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * this->texCoordData[textureLayer].size(), this->texCoordData[textureLayer].data(), GL_DYNAMIC_DRAW);
 	}
 	else
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, this->texIDs[textureLayer]);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(GLdouble) * this->texCoordData[textureLayer].size(), this->texCoordData[textureLayer].data();
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(GLfloat) * this->texCoordData[textureLayer].size(), this->texCoordData[textureLayer].data();
 	}
 }
 

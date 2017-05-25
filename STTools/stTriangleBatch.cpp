@@ -64,6 +64,8 @@ void STTriangleBatch::addTriangle(STTriangle* tri)
 
 void STTriangleBatch::finalize()
 {
+	//So...looks like I need the copyData functions, and to use them here.	
+	
 	//First, create an ID and bind the vertex buffer array to it. Still figuring this part out, since I don't think it was in the other one...
 	glGenVertexArrays(1, &vertexBufferArrayID);
 	glBindVertexArray(vertexBufferArrayID);
@@ -77,5 +79,27 @@ void STTriangleBatch::finalize()
 	//..and bind them.
 	glBindBuffer(GL_ARRAY_BUFFER, this->vertID);
 	glEnableVertexAttribArray(ST_ATTRIBUTE_VERTEX);
-	glBufferData
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * this->vertData.size(), this->vertData.data(), GL_STATIC_DRAW);
+	glVertexAttribPointer(ST_ATTRIBUTE_VERTEX, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	
+	glBindBuffer(GL_ARRAY_BUFFER, this->normID);
+	glEnableVertexAttribArray(ST_ATTRIBUTE_NORMAL);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * this->normData.size(), this->normData.data(), GL_STATIC_DRAW);
+	glVertexAttribPointer(ST_ATTRIBUTE_NORMAL, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	
+	glBindBuffer(GL_ARRAY_BUFFER, this->texIDs[0]);
+	glEnableVertexAttribArray(ST_ATTRIBUTE_TEXTURE0);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * this->texData[0].size(), this->texData[0].data(), GL_STATIC_DRAW);
+	glVertexAttribPointer(ST_ATTRIBUTE_TEXTURE0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->indexID);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLint) * this->indexData.size(), this->indexData.data(), GL_STATIC_DRAW);
+	
+	glBindVertexArray(0);	//free up the vertex array binding
+}
+
+void STTriangleBatch::draw()
+{
+
+
 }
