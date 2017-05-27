@@ -35,6 +35,8 @@ protected:
 	std::vector<GLuint> texIDs;
 	GLuint indexID;
 	
+	GLuint vertexBufferArrayID;
+	
 	 
 public:
 	virtual void draw() = 0;

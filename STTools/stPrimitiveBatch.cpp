@@ -12,6 +12,13 @@ STPrimitiveBatch::STPrimitiveBatch(GLuint numTexLayers = 4)
 		this->texCoords.push_back(std::vector<STVec2d*>());
 		this->texIDs.push_back(0);
 	}
+	this->vertID = 0;
+	this->normID = 0;
+	this->indexID = 0;
+	this->colorID = 0;
+	this->vertexBufferArrayID = 0;
+	
+	glGenVertexArrays(1, &this->vertexBufferArrayID);
 }
 
 STPrimitiveBatch::~STPrimitiveBatch()
@@ -51,14 +58,7 @@ STPrimitiveBatch::~STPrimitiveBatch()
 
 void STPrimitiveBatch::begin()
 {
-	//Still not quite clear on how this fits. In GLBatch, it basically does the initialization.
-	//It sets the number of vertices to input(necessary because of the limitations of C arrays)
-	//it sets the number of texture layers(a maximum of 4), which I do in the initialization phase
-	//It allocates enough arrays to hold the texture coordinate data based on that, which I also do in the initialization phase,
-	//And...Well, it also binds a vertex array if the platform is OpenGL ES, which I'm not currently supporting.
-	//...So...
-	//I'm kinda done here.
-
+	glBindVertexArray(this->vertexBufferArrayID);
 }
 
 void STPrimitiveBatch::finalize()
@@ -67,6 +67,8 @@ void STPrimitiveBatch::finalize()
 	//Since I'm not doing 'immediate mode' for the moment, and I'm not supporting ES, that's... That's basically it.
 	
 	std::vector<GLuint>::iterator iter;
+	
+	glBindVertexArray(this->vertexBufferArrayID);
 	
 	if(vertID != 0)
 	{
@@ -97,7 +99,8 @@ void STPrimitiveBatch::finalize()
 		glBindBuffer(GL_ARRAY_BUFFER, *iter);
 		glVertexAttribPointer(ST_ATTRIBUTE_TEXTURE0 + i, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
 	}
-
+	glBindVertexArray(0);
+	
 }
 
 //Alright... Let's see if we can make this as fast and painless as possible. Time for VECTOR::INSERT!!!
@@ -215,5 +218,12 @@ void STPrimitiveBatch::copyTexCoordData(std::vector<STVec2d*> texCoords, GLuint 
 
 void STPrimitiveBatch::draw()
 {
-
+	//For some reason I was putting this off. Then I looked more closely at what *OpenGL* needs, as opposed to cross-platform OpenGL and OpenGL ES.
+	//I mean... I'm impressed. VBOs make this ridiculously simple.
+	glBindVertexArray(this->vertexBufferArrayID);
+	
+	glDrawArrays(GL_TRIANGLES, 0, (this->vertData.size() / 3));
+	
+	glBindVertexArray(0);
+	
 }

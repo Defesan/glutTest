@@ -68,7 +68,7 @@ void STTriangleBatch::finalize()
 	
 	//First, create an ID and bind the vertex buffer array to it. Still figuring this part out, since I don't think it was in the other one...
 	glGenVertexArrays(1, &vertexBufferArrayID);
-	glBindVertexArray(vertexBufferArrayID);
+	glBindVertexArray(this->vertexBufferArrayID);
 	
 	//Now create the other IDs for the attribute arrays.
 	glGenBuffers(1, &this->vertID);
@@ -100,6 +100,10 @@ void STTriangleBatch::finalize()
 
 void STTriangleBatch::draw()
 {
-
+	glBindVertexArray(this->vertexBufferArrayID);
+	
+	glDrawArrays(GL_TRIANGLES, 0, (this->vertData.size() / 3));
+	
+	glBindVertexArray(0);
 
 }
