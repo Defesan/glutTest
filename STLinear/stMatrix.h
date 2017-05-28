@@ -15,7 +15,7 @@ public:
 	void set(int row,int col, float val) {this->data[row + (col * 3)] = val;};	
 	float get(int row, int col) {return this->data[row + (col * 3)];};
 	
-	float* getData() {return this->data->data();};
+	float* getData() {return this->data.data();};
 	
 	STMatrix33f* mul(STMatrix33f* m2);
 	STVec3f* mulVector(STVec3f* vec);
@@ -37,7 +37,7 @@ public:
 	void set(int row,int col, float val) {this->data[row + (col * 4)] = val;};	
 	float get(int row, int col) {return this->data[row + (col * 4)];};
 	
-	float* getData() {return this->data->data();};
+	float* getData() {return this->data.data();};
 
 	STMatrix44f* mul(STMatrix44f* m2);
 	STVec4f* mulVector(STVec4f* vec);
@@ -62,7 +62,7 @@ public:
 	void set(int row,int col, double val) {this->data[row + (col * 3)] = val;};	
 	double get(int row, int col) {return this->data[row + (col * 3)];};
 	
-	double* getData() {return this->data->data();};
+	double* getData() {return this->data.data();};
 	
 	STMatrix33d* mul(STMatrix33d* m2);
 	STVec3d* mulVector(STVec3d* vec);
@@ -85,7 +85,7 @@ public:
 	void set(int row,int col, double val) {this->data[row + (col * 4)] = val;};	
 	double get(int row, int col) {return this->data[row + (col * 4)];};
 	
-	double* getData() {return this->data->data();};
+	double* getData() {return this->data.data();};
 	
 	STMatrix44d* mul(STMatrix44d* m2);
 	STVec4d* mulVector(STVec4d* vec);
@@ -120,9 +120,9 @@ public:
 	STMatrix22f() : STMatrix22f(0.0f, 0.0f, 0.0f, 0.0f) {};
 	
 	void set(int row,int col, double val) {this->data[row + (col * 2)] = val;};	
-	double get(int row, int col) {return this->data[row + (col * 2)];};
+	float get(int row, int col) {return this->data[row + (col * 2)];};
 	
-	double* getData() {return this->data->data();};
+	float* getData() {return this->data.data();};
 	
 	void loadIdentity();
 	STMatrix22f* copyMatrix();
@@ -136,9 +136,9 @@ public:
 	STMatrix23f() : STMatrix23f(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f) {};
 	
 	void set(int row,int col, double val) {this->data[row + (col * 2)] = val;};	
-	double get(int row, int col) {return this->data[row + (col * 2)];};
+	float get(int row, int col) {return this->data[row + (col * 2)];};
 	
-	double* getData() {return this->data->data();};
+	float* getData() {return this->data.data();};
 
 	STMatrix23f* copyMatrix();
 };
@@ -151,9 +151,9 @@ public:
 	STMatrix24f() : STMatrix24f(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f) {};
 	
 	void set(int row,int col, double val) {this->data[row + (col * 2)] = val;};	
-	double get(int row, int col) {return this->data[row + (col * 2)];};
+	float get(int row, int col) {return this->data[row + (col * 2)];};
 	
-	double* getData() {return this->data->data();};
+	float* getData() {return this->data.data();};
 
 	STMatrix24f* copyMatrix();
 };
@@ -163,12 +163,12 @@ private:
 	std::vector<float> data;
 public:
 	STMatrix32f(float x1, float y1, float x2, float y2, float x3, float y3);
-	STMatrix32f() : STMatri32f(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f) {};
+	STMatrix32f() : STMatrix32f(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f) {};
 	
 	void set(int row,int col, double val) {this->data[row + (col * 3)] = val;};	
-	double get(int row, int col) {return this->data[row + (col * 3)];};
+	float get(int row, int col) {return this->data[row + (col * 3)];};
 	
-	double* getData() {return this->data->data();};
+	float* getData() {return this->data.data();};
 
 	STMatrix32f* copyMatrix();
 };
@@ -181,11 +181,11 @@ public:
 	STMatrix34f() : STMatrix34f(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f) {};
 	
 	void set(int row,int col, double val) {this->data[row + (col * 3)] = val;};	
-	double get(int row, int col) {return this->data[row + (col * 3)];};
+	float get(int row, int col) {return this->data[row + (col * 3)];};
 	
-	double* getData() {return this->data->data();};
+	float* getData() {return this->data.data();};
 
-	STMatrix33f* copyMatrix();
+	STMatrix34f* copyMatrix();
 };
 
 class STMatrix42f {
@@ -196,26 +196,26 @@ public:
 	STMatrix42f() : STMatrix42f(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f) {};
 	
 	void set(int row,int col, double val) {this->data[row + (col * 4)] = val;};	
-	double get(int row, int col) {return this->data[row + (col * 4)];};
+	float get(int row, int col) {return this->data[row + (col * 4)];};
 	
-	double* getData() {return this->data->data();};
+	float* getData() {return this->data.data();};
 	
-	STMatrix33f* copyMatrix();
+	STMatrix42f* copyMatrix();
 };
 
 class STMatrix43f {
 private:
 	std::vector<float> data;
 public:
-	STMatrix23f(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float x4, float y4, float z4);
-	STMatrix23f() : STMatrix23f(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f) {};
+	STMatrix43f(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float x4, float y4, float z4);
+	STMatrix43f() : STMatrix43f(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f) {};
 	
 	void set(int row,int col, double val) {this->data[row + (col * 4)] = val;};	
-	double get(int row, int col) {return this->data[row + (col * 4)];};
+	float get(int row, int col) {return this->data[row + (col * 4)];};
 	
-	double* getData() {return this->data->data();};
+	float* getData() {return this->data.data();};
 	
-	STMatrix33f* copyMatrix();
+	STMatrix43f* copyMatrix();
 };
 
 #endif //__ST_MATRIX_H__

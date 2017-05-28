@@ -60,7 +60,7 @@ float STVec2f::distance(STVec2f* v2)
 bool STVec2f::closeEnough(STVec2f* v2, float delta)
 {
 	float dX = std::abs(v2->getX() - this->getX());
-	float dY = std::abd(v2->getY() - this->getY());
+	float dY = std::abs(v2->getY() - this->getY());
 	
 	if((dX < delta) && (dY < delta))
 	{
@@ -145,7 +145,7 @@ STVec3f* STVec3f::crossProduct(STVec3f* v2)
 bool STVec3f::closeEnough(STVec3f* v2, float delta)
 {
 	float dX = std::abs(v2->getX() - this->getX());
-	float dY = std::abd(v2->getY() - this->getY());
+	float dY = std::abs(v2->getY() - this->getY());
 	float dZ = std::abs(v2->getZ() - this->getZ());
 	
 	if((dX < delta) && (dY < delta) && (dZ < delta))
@@ -224,10 +224,10 @@ float STVec4f::distance(STVec4f* v2)
 
 }
 
-bool STVec3f::closeEnough(STVec3f* v2, float delta)
+bool STVec4f::closeEnough(STVec4f* v2, float delta)
 {
 	float dX = std::abs(v2->getX() - this->getX());
-	float dY = std::abd(v2->getY() - this->getY());
+	float dY = std::abs(v2->getY() - this->getY());
 	float dZ = std::abs(v2->getZ() - this->getZ());
 	float dW = std::abs(v2->getW() - this->getW());
 	

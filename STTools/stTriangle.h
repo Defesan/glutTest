@@ -4,7 +4,7 @@
 #include <vector>
 #include <iostream>
 
-#include "stVector.h"
+#include "../STLinear/stVector.h"
 
 
 class STTriangle
@@ -21,7 +21,7 @@ public:
 	STTriangle(STVec3f* vert1, STVec3f* vert2, STVec3f* vert3, STVec3f* norm1, STVec3f* norm2, STVec3f* norm3, STVec2f* tex1, STVec2f* tex2, STVec2f* tex3);
 	STTriangle(STVec3f* verts[3], STVec3f* norms[3], STVec2f* texCoords[3]);
 
-	bool containsVertex(STvec3f* vertex, STVec3f* normal, STVec2f* texCoord, float delta);
+	bool containsVertex(STVec3f* vertex, STVec3f* normal, STVec2f* texCoord, float delta);
 	
 	STVec3f* getVertex(int index);
 	STVec3f* getNormal(int index);

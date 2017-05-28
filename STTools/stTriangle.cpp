@@ -39,7 +39,7 @@ STTriangle::STTriangle(STVec3f* verts[3], STVec3f* norms[3], STVec2f* texCoords[
 	this->texCoords.push_back(texCoords[2]);
 }
 
-bool STTriangle::containsVertex(STvec3f* vertex, STVec3f* normal, STVec2f* texCoord, float delta)
+bool STTriangle::containsVertex(STVec3f* vertex, STVec3f* normal, STVec2f* texCoord, float delta)
 {
 	for(int i = 0; i < 3; i++)
 	{
@@ -48,6 +48,7 @@ bool STTriangle::containsVertex(STvec3f* vertex, STVec3f* normal, STVec2f* texCo
 			return true;
 		}
 	}
+	return false;
 }
 
 STVec3f* STTriangle::getVertex(int index)
@@ -61,7 +62,7 @@ STVec3f* STTriangle::getVertex(int index)
 	return this->verts[index];
 }
 
-STVec3f* getNormal(int index)
+STVec3f* STTriangle::getNormal(int index)
 {
 	if(index > 2 || index < 0)
 	{
@@ -71,7 +72,7 @@ STVec3f* getNormal(int index)
 	return this->norms[index];
 }
 
-STVec2f* getTexCoord(int index)
+STVec2f* STTriangle::getTexCoord(int index)
 {
 	if(index > 2 || index < 0)
 	{
