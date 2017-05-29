@@ -6,7 +6,7 @@
 class STMatrixPipeline
 {
 private:
-	STMatrixStack* modelview;
+	STMatrixStack* modelView;
 	STMatrixStack* projection;
 public:
 	STMatrixPipeline(STMatrixStack* modelView, STMatrixStack* projection);

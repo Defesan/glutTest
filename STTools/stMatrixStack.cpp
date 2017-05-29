@@ -2,16 +2,16 @@
 
 STMatrixStack::STMatrixStack(int stackDepth)
 {
-	this->lastError = 0;
+	this->lastError = ST_NO_ERROR;
 	this->stackPointer = 0;
 	this->stackDepth = stackDepth;
 
-	STMatrix44d* top = new STMatrix44d();
+	STMatrix44f* top = new STMatrix44f();
 	top->loadIdentity();
 	this->matrices.push_back(top);
 }
 
-int STMatrixStack::pushMatrix(STMatrix44d* matrix)
+int STMatrixStack::pushMatrix(STMatrix44f* matrix)
 {
 	if(this->stackPointer < this->stackDepth)
 	{
@@ -22,7 +22,7 @@ int STMatrixStack::pushMatrix(STMatrix44d* matrix)
 	{
 		this->lastError = ST_STACK_OVERFLOW;
 	}
-	return (int)this->lastError();
+	return (int)this->lastError;
 }
 
 int STMatrixStack::pushMatrix()
@@ -36,7 +36,7 @@ int STMatrixStack::pushMatrix()
 	{
 		this->lastError = ST_STACK_OVERFLOW;
 	}
-	return (int)this->lastError();
+	return (int)this->lastError;
 }
 
 int STMatrixStack::popMatrix()
@@ -53,23 +53,23 @@ int STMatrixStack::popMatrix()
 	return (int)this->lastError;
 }
 
-void STMatrixStack::scale(double x, double y, double z)
+void STMatrixStack::scale(float x, float y, float z)
 {
-	STMatrix44d* scaleMatrix = new STMatrix44d();
+	STMatrix44f* scaleMatrix = new STMatrix44f();
 	scaleMatrix->loadScaleMatrix(x,y,z);
 	this->mulMatrix(scaleMatrix);
 }
 
-void STMatrixStack::translate(double x, double y, double z)
+void STMatrixStack::translate(float x, float y, float z)
 {
-	STMatrix44d* translationMatrix = new STMatrix44d();
+	STMatrix44f* translationMatrix = new STMatrix44f();
 	translationMatrix->loadTranslationMatrix(x,y,z);
 	this->mulMatrix(translationMatrix);
 }
 
-void STMatrixStack::rotate(double angle, double x, double y, double z);
+void STMatrixStack::rotate(float angle, float x, float y, float z)
 {
-	STMatrix44d* rotationMatrix = new STMatrix44d();
+	STMatrix44f* rotationMatrix = new STMatrix44f();
 	rotationMatrix->loadRotationMatrix(angle, x, y, z);
 	this->mulMatrix(rotationMatrix);
 }
