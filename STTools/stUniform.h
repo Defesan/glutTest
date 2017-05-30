@@ -13,8 +13,8 @@
 enum ST_UNIFORM_TYPE {ST_UNIFORM1F = 0, ST_UNIFORM2F, ST_UNIFORM3F, ST_UNIFORM4F, ST_UNIFORM1I, ST_UNIFORM2I, ST_UNIFORM3I, ST_UNIFORM4I,
                       ST_UNIFORM1UI, ST_UNIFORM2UI, ST_UNIFORM3UI, ST_UNIFORM4UI, ST_UNIFORM1FV, ST_UNIFORM2FV, ST_UNIFORM3FV, ST_UNIFORM4FV,
                       ST_UNIFORM1IV, ST_UNIFORM2IV, ST_UNIFORM3IV, ST_UNIFORM4IV, ST_UNIFORM1UIV, ST_UNIFORM2UIV, ST_UNIFORM3UIV, ST_UNIFORM4UIV,
-                      ST_UNIFORMMATRIX2FV, ST_UNIFORMMATRIX3FV, ST_UNIFORMMATRIX4FV, ST_UNIFORMMATRIX2X3V, ST_UNIFORMMATRIX3X2FV, ST_UNIFORMMATRIX2X4FV,
-                      ST_UNIFORMMATRIX3X4FV, ST_UNIFORMMATRIX4X3FV}
+                      ST_UNIFORMMATRIX2FV, ST_UNIFORMMATRIX3FV, ST_UNIFORMMATRIX4FV, ST_UNIFORMMATRIX2X3FV, ST_UNIFORMMATRIX3X2FV, ST_UNIFORMMATRIX2X4FV,
+                      ST_UNIFORMMATRIX3X4FV, ST_UNIFORMMATRIX4X2FV, ST_UNIFORMMATRIX4X3FV};
 
 class STUniform
 {
@@ -87,19 +87,19 @@ public:
 	STUniform(std::string name, GLuint vui1, GLuint vui2, GLuint vui3, GLuint vui4);
 	
 	//Float vectors -- these include counts.
-	STUniform(std::string name, GLsizei count, GLfloat vf1);	//This one's special.
+	STUniform(std::string name, GLsizei count, GLfloat vf1, bool vec);	//This one's special. vec should = true, but...honestly, it's a hack for now. You can say false.
 	STUniform(std::string name, GLsizei count, STVec2f* v2fv);
 	STUniform(std::string name, GLsizei count, STVec3f* v3fv);
 	STUniform(std::string name, GLsizei count, STVec4f* v4fv);
 	
 	//Int vectors
-	STUniform(std::string name, GLsizei count, GLint vi1);
+	STUniform(std::string name, GLsizei count, GLint vi1, bool vec);
 	STUniform(std::string name, GLsizei count, STVec2i* v2iv);
 	STUniform(std::string name, GLsizei count, STVec3i* v3iv);
 	STUniform(std::string name, GLsizei count, STVec4i* v4iv);
 	
 	//Unsigned int vectors
-	STUniform(std::string name, GLsizei count, GLuint vui1);
+	STUniform(std::string name, GLsizei count, GLuint vui1, bool vec);
 	STUniform(std::string name, GLsizei count, STVec2ui* v2uiv);
 	STUniform(std::string name, GLsizei count, STVec3ui* v3uiv);
 	STUniform(std::string name, GLsizei count, STVec4ui* v4uiv);
@@ -124,7 +124,7 @@ public:
 	
 	//Also, we need some getters.
 	std::string getName() {return this->name;};
-}
+};
 
 
 #endif //__ST_UNIFORM_H__

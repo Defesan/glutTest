@@ -34,15 +34,15 @@ void STUniform::init()
 	this->v3uiv = nullptr;
 	this->v4uiv = nullptr;
 	
-	this->m22f = nullptr;
-	this->m23f = nullptr;
-	this->m24f = nullptr;
-	this->m32f = nullptr;
-	this->m33f = nullptr;
-	this->m34f = nullptr;
-	this->m42f = nullptr;
-	this->m43f = nullptr;
-	this->m44f = nullptr;
+	this->v22m = nullptr;
+	this->v23m = nullptr;
+	this->v24m = nullptr;
+	this->v32m = nullptr;
+	this->v33m = nullptr;
+	this->v34m = nullptr;
+	this->v42m = nullptr;
+	this->v43m = nullptr;
+	this->v44m = nullptr;
 }
 
 STUniform::STUniform(std::string name, GLfloat vf1)
@@ -164,7 +164,7 @@ STUniform::STUniform(std::string name, GLuint vui1, GLuint vui2, GLuint vui3, GL
 
 
 //Float vectors -- these include counts.
-STUniform::STUniform(std::string name, GLsizei count, GLfloat vf1)
+STUniform::STUniform(std::string name, GLsizei count, GLfloat vf1, bool vec)
 {
 	this->init();
 	this->type = ST_UNIFORM1FV;
@@ -218,7 +218,7 @@ STUniform::STUniform(std::string name, GLsizei count, STVec4f* v4fv)
 
 
 //Int vectors
-STUniform::STUniform(std::string name, GLsizei count, GLint vi1)
+STUniform::STUniform(std::string name, GLsizei count, GLint vi1, bool vec)
 {
 	this->init();
 	this->type = ST_UNIFORM1IV;
@@ -271,7 +271,7 @@ STUniform::STUniform(std::string name, GLsizei count, STVec4i* v4iv)
 }
 
 //Unsigned int vectors
-STUniform::STUniform(std::string name, GLsizei count, GLuint vui1)
+STUniform::STUniform(std::string name, GLsizei count, GLuint vui1, bool vec)
 {
 	this->init();
 	this->type = ST_UNIFORM1UIV;
