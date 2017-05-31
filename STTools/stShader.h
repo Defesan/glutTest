@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <cstdarg>
 
 #include "stUtil.h"
 #include "stUniform.h"
@@ -22,17 +23,13 @@ class STShaderManager
 private:
 	//What do I need in here? a vector of the 'names' of the shaders...
 	std::vector<GLuint> activeShaderPointers;
-	
-	//Okay, so I've decided on a 'set uniform' private function. It's going to take a pointer to the data it needs, the type of data,
-	//the name of the uniform, the number of elements in the array. Really starting to think a uniform *class* might also be in order.
-	void setUniform
 
 public:
 	STShaderManager();		//I think we can safely initialize the full shader library(which will be fairly small to start, but I'll keep adding to it) in the constructor.
 	~STShaderManager();
 	
 	GLuint getShader(GLuint index) {return this->activeShaderPointers[index];};
-	GLuint getStockShader(ST_STOCK_SHADER shader) : getShader((GLuint)shader) {};	//All of the custom shaders will be added AFTER the stock shaders, so the stock shader indices are valid.
+	GLuint getStockShader(ST_STOCK_SHADER shader) {return this->getShader((GLuint)shader);};	//All of the custom shaders will be added AFTER the stock shaders, so the stock shader indices are valid.
 	
 	void runShader(GLuint shaderHandle, std::vector<STUniform*> uniforms);
 	

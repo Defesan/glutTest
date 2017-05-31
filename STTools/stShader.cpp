@@ -9,7 +9,7 @@ STShaderManager::STShaderManager()
 STShaderManager::~STShaderManager()
 {
 	std::vector<GLuint>::iterator iter = this->activeShaderPointers.begin();
-	for(; iter < this->activeShaderPointers.size(); iter++)
+	for(; iter != this->activeShaderPointers.end(); iter++)
 	{
 		glDeleteProgram(*iter);
 	}
@@ -29,18 +29,12 @@ void STShaderManager::runShader(GLuint shaderIndex, std::vector<STUniform*> unif
 	
 	//Now, we have to load the uniforms.
 	std::vector<STUniform*>::iterator iter = uniforms.begin();
-	for(;iter < uniforms.size(); iter++)
+	for(;iter != uniforms.end(); iter++)
 	{
 		//First, we need a handle for the uniform. This comes from the compiled shader that's been loaded by glUseProgram, and is identified by name.
-		GLint location = glGetUniformLocation(this->activeShaderPointers[shaderIndex], *iter->getName().c_str());
+		GLint location = glGetUniformLocation(this->activeShaderPointers[shaderIndex], (*iter)->getName().c_str());
 		//Then we use the location to apply the uniform.
-		*iter->apply(location);
-		//Then we.....
-		//Um...
-		//(checks GLShaderManager)
-		//That's it. That is seriously everything that must be done.
-		//I think.
-		//
+		(*iter)->apply(location);
 	}
 }
 
@@ -51,7 +45,7 @@ bool STShaderManager::loadShaderSrc(std::string shaderSrc, GLuint shaderHandle)
 	GLenum error;
 	
 	stringPtr[0] = (GLchar*)shaderSrc.c_str();
-	lengthPtr[0] = (GLint*)shaderSrc.size();
+	lengthPtr[0] = (GLint)shaderSrc.size();
 	
 	glShaderSource(shaderHandle, 1, (const GLchar**)stringPtr, (const GLint*)lengthPtr);
 	
@@ -66,8 +60,6 @@ bool STShaderManager::loadShaderSrc(std::string shaderSrc, GLuint shaderHandle)
 GLuint STShaderManager::loadShaderPairSrc(std::string vertexShaderSrc, std::string fragShaderSrc)
 {
 	GLuint programHandle = 0;
-	GLchar* stringPtr[1];
-	GLint* lengthPtr[1];
 	GLuint vertShaderHandle;
 	GLuint fragShaderHandle;
 	GLint fragTest;
@@ -118,7 +110,7 @@ GLuint STShaderManager::loadShaderPairSrc(std::string vertexShaderSrc, std::stri
 	{
 		std::cerr << "Program link failed." << std::endl;
 		glDeleteProgram(programHandle);
-		return SHADER_ERROR	
+		return SHADER_ERROR;
 	}
 	this->activeShaderPointers.push_back(programHandle);
 	//All is well.
@@ -130,8 +122,6 @@ GLuint STShaderManager::loadShaderPairWithAttributes(std::string vertexShaderFil
 {
 	//Whee! Varargs!
 	GLuint programHandle = 0;
-	GLchar* stringPtr[1];
-	GLint* lengthPtr[1];
 	GLuint vertShaderHandle;
 	GLuint fragShaderHandle;
 	GLint fragTest;
@@ -161,7 +151,7 @@ GLuint STShaderManager::loadShaderPairWithAttributes(std::string vertexShaderFil
 	
 	//Check to make sure it compiled
 	glGetShaderiv(vertShaderHandle, GL_COMPILE_STATUS, &vertTest);
-	glGetShaderiv(fragShaderHandel, GL_COMPILE_STATUS, &fragTest);
+	glGetShaderiv(fragShaderHandle, GL_COMPILE_STATUS, &fragTest);
 	
 	if(vertTest == GL_FALSE || fragTest == GL_FALSE)
 	{
@@ -185,11 +175,11 @@ GLuint STShaderManager::loadShaderPairWithAttributes(std::string vertexShaderFil
 	
 	std::string argName;	//Each argument is paired with a name.
 	int argCount = va_arg(argumentList, int);	//This looks for the next int after the start point(fragShaderFile)
-	for(int i = 0; i < argCount, i++)			//I'll probably be testing this out off-site, as well. I DO NOT like writing so much code without a compile... Gonna take a day to get it working.
+	for(int i = 0; i < argCount; i++)			//I'll probably be testing this out off-site, as well. I DO NOT like writing so much code without a compile... Gonna take a day to get it working.
 	{
 		int index = va_arg(argumentList, int);
 		argName = va_arg(argumentList, std::string);
-		glBindAttribLocation(programHandle, index, argName);
+		glBindAttribLocation(programHandle, index, argName.c_str());
 	}
 	va_end(argumentList);	//There...not too painful.
 
@@ -203,7 +193,7 @@ GLuint STShaderManager::loadShaderPairWithAttributes(std::string vertexShaderFil
 	{
 		std::cerr << "Program link failed." << std::endl;
 		glDeleteProgram(programHandle);
-		return SHADER_ERROR	
+		return SHADER_ERROR;	
 	}
 	this->activeShaderPointers.push_back(programHandle);
 	return programHandle;
@@ -212,8 +202,6 @@ GLuint STShaderManager::loadShaderPairWithAttributes(std::string vertexShaderFil
 GLuint STShaderManager::loadShaderPairSrcWithAttributes(std::string vertexShaderSrc, std::string fragShaderSrc, ...)
 {
 	GLuint programHandle = 0;
-	GLchar* stringPtr[1];
-	GLint* lengthPtr[1];
 	GLuint vertShaderHandle;
 	GLuint fragShaderHandle;
 	GLint fragTest;
@@ -238,7 +226,7 @@ GLuint STShaderManager::loadShaderPairSrcWithAttributes(std::string vertexShader
 	
 	//Check to make sure it compiled
 	glGetShaderiv(vertShaderHandle, GL_COMPILE_STATUS, &vertTest);
-	glGetShaderiv(fragShaderHandel, GL_COMPILE_STATUS, &fragTest);
+	glGetShaderiv(fragShaderHandle, GL_COMPILE_STATUS, &fragTest);
 	
 	if(vertTest == GL_FALSE || fragTest == GL_FALSE)
 	{
@@ -258,15 +246,15 @@ GLuint STShaderManager::loadShaderPairSrcWithAttributes(std::string vertexShader
 	//First, we need a va_list.
 	va_list argumentList;
 	//Now we start it, passing the list we just created and the point to start from.
-	va_start(argumentList, fragShaderFile);
+	va_start(argumentList, fragShaderSrc);
 	
 	std::string argName;	//Each argument is paired with a name.
-	int argCount = va_arg(argumentList, int);	//This looks for the next int after the start point(fragShaderFile)
-	for(int i = 0; i < argCount, i++)			//I'll probably be testing this out off-site, as well. I DO NOT like writing so much code without a compile... Gonna take a day to get it working.
+	int argCount = va_arg(argumentList, int);	
+	for(int i = 0; i < argCount; i++)			//I mentioned not liking to code so much without a compile here. I put a comma instead of a semicolon after argCount.
 	{
 		int index = va_arg(argumentList, int);
 		argName = va_arg(argumentList, std::string);
-		glBindAttribLocation(programHandle, index, argName);
+		glBindAttribLocation(programHandle, index, argName.c_str());
 	}
 	va_end(argumentList);	//There...not too painful.
 
@@ -280,7 +268,7 @@ GLuint STShaderManager::loadShaderPairSrcWithAttributes(std::string vertexShader
 	{
 		std::cerr << "Program link failed." << std::endl;
 		glDeleteProgram(programHandle);
-		return SHADER_ERROR	
+		return SHADER_ERROR;
 	}
 	this->activeShaderPointers.push_back(programHandle);
 	return programHandle;
