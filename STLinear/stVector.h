@@ -43,6 +43,7 @@ public:
 	float length() {return sqrtf(this->dotProduct(this));};
 	float distance(STVec2f* v2);
 	bool closeEnough(STVec2f* v2, float delta);
+	bool closeEnough(float x, float y, float delta);
 };
 
 
@@ -88,6 +89,7 @@ public:
 	float length() {return sqrtf(this->dotProduct(this));};	//I'm hoping this'll work... Also hoping to find a reason for its existence.
 	float distance(STVec3f* v2);
 	bool closeEnough(STVec3f* v2, float delta);
+	bool closeEnough(float x, float y, float z, float delta);
 };
 
 class STVec4f
@@ -136,6 +138,7 @@ public:
 	float length() {return sqrtf(this->dotProduct(this));};
 	float distance(STVec4f* v2);
 	bool closeEnough(STVec4f* v2, float delta);
+	bool closeEnough(float x, float y, float z, float w, float delta);
 };
 
 

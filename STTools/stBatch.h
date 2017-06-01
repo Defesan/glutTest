@@ -10,10 +10,9 @@
 #include <GL/glew.h>
 #include <vector>
 #include "../STLinear/stVector.h"
-#include "stShaderManager.h"
+#include "stShader.h"
 
 enum BATCH_TYPE {TRIANGLE, PRIMITIVE};
-enum 
 
 class STBatch
 {

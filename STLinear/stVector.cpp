@@ -69,6 +69,18 @@ bool STVec2f::closeEnough(STVec2f* v2, float delta)
 	return false;
 }
 
+bool STVec2f::closeEnough(float x, float y, float delta)
+{
+	float dX = std::abs(x - this->getX());
+	float dY = std::abs(y - this->getY());
+	
+	if((dX < delta) && (dY < delta))
+	{
+		return true;
+	}
+	return false;
+}
+
 /*
 	STVec3f
 	3 element vector with floats	
@@ -155,6 +167,19 @@ bool STVec3f::closeEnough(STVec3f* v2, float delta)
 	return false;
 }
 
+bool STVec3f::closeEnough(float x, float y, float z, float delta)
+{
+	float dX = std::abs(x - this->getX());
+	float dY = std::abs(y - this->getY());
+	float dZ = std::abs(z - this->getZ());
+	
+	if((dX < delta) && (dY < delta) && (dZ < delta))
+	{
+		return true;
+	}
+	return false;
+}
+
 /*
 	STVec4f
 	4 element vector with floats	
@@ -230,6 +255,20 @@ bool STVec4f::closeEnough(STVec4f* v2, float delta)
 	float dY = std::abs(v2->getY() - this->getY());
 	float dZ = std::abs(v2->getZ() - this->getZ());
 	float dW = std::abs(v2->getW() - this->getW());
+	
+	if((dX < delta) && (dY < delta) && (dZ < delta) && (dW < delta))
+	{
+		return true;
+	}
+	return false;
+}
+
+bool STVec4f::closeEnough(float x, float y, float z, float w, float delta)
+{
+	float dX = std::abs(x - this->getX());
+	float dY = std::abs(y - this->getY());
+	float dZ = std::abs(z - this->getZ());
+	float dW = std::abs(w - this->getW());
 	
 	if((dX < delta) && (dY < delta) && (dZ < delta) && (dW < delta))
 	{

@@ -1,6 +1,6 @@
 #include "stPrimitiveBatch.h"
 
-STPrimitiveBatch::STPrimitiveBatch(GLuint numTexLayers = 4)
+STPrimitiveBatch::STPrimitiveBatch(GLuint numTexLayers)
 {
 	this->type = PRIMITIVE;
 	if(numTexLayers > 4)
@@ -9,7 +9,7 @@ STPrimitiveBatch::STPrimitiveBatch(GLuint numTexLayers = 4)
 	}
 	for(GLuint i = 0; i < numTexLayers; i++)
 	{
-		this->texCoords.push_back(std::vector<STVec2d*>());
+		this->texCoordData.push_back(std::vector<GLfloat>());
 		this->texIDs.push_back(0);
 	}
 	this->vertID = 0;
@@ -46,9 +46,9 @@ STPrimitiveBatch::~STPrimitiveBatch()
 		glDeleteBuffers(1, &(this->indexID));
 	}
 	
-	for(iter = this->texIDs.begin(); iter < this->texIDs.size(); iter++)
+	for(iter = this->texIDs.begin(); iter != this->texIDs.end(); iter++)
 	{
-		if(*iter != 0)
+		if((*iter) != 0)
 		{
 			glDeleteBuffers(1, &(*iter));
 		}
@@ -105,7 +105,7 @@ void STPrimitiveBatch::finalize()
 
 //Alright... Let's see if we can make this as fast and painless as possible. Time for VECTOR::INSERT!!!
 
-void STPrimitiveBatch::copyVertexData(std::vector<STVec3d*> verts)
+void STPrimitiveBatch::copyVertexData(std::vector<STVec3f*> verts)
 {
 	//The objective is to get the data from the vector of Vec3d's into this object's vector of GLdoubles with minimum fuss.
 	//Also, hopefully, minimum memory thrashing.
@@ -113,9 +113,9 @@ void STPrimitiveBatch::copyVertexData(std::vector<STVec3d*> verts)
 	std::vector<STVec3f*>::iterator iterV = verts.begin();
 	std::vector<GLfloat>::iterator iterD = this->vertData.end();	//We're appending any incoming vertices.
 	
-	for(iterV; iterV < verts.end(); iterV++)
+	for(; iterV != verts.end(); iterV++)
 	{
-		this->vertData.insert(iterD, *iterV->getData()->begin(), *iterV->getData()->end());
+		this->vertData.insert(iterD, (*iterV)->getData().begin(), (*iterV)->getData().end());
 		iterD = this->vertData.end();
 	}
 	//That...should work. Sadly, it IS basically extra work, which means it WILL be slower, but it's probably the best the setup I made can offer.
@@ -136,14 +136,14 @@ void STPrimitiveBatch::copyVertexData(std::vector<STVec3d*> verts)
 	}
 }
 
-void STPrimitiveBatch::copyNormalData(std::vector<STVec3d*> norms)
+void STPrimitiveBatch::copyNormalData(std::vector<STVec3f*> norms)
 {
 	std::vector<STVec3f*>::iterator iterN = norms.begin();
 	std::vector<GLfloat>::iterator iterD = this->normData.begin();
 	
-	for(iterN; iterN < norms.end(); iterN++)
+	for(; iterN != norms.end(); iterN++)
 	{
-		this->normData.insert(iterD, *iterN->getData()->begin(), *iterN->getData()->end());
+		this->normData.insert(iterD, (*iterN)->getData().begin(), (*iterN)->getData().end());
 		iterD = this->normData.end();
 	}
 	
@@ -156,7 +156,7 @@ void STPrimitiveBatch::copyNormalData(std::vector<STVec3d*> norms)
 	else
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, this->normID);
-		GLBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(GLfloat) * this->normData.size(), this->normData.data());
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(GLfloat) * this->normData.size(), this->normData.data());
 	}
 	
 }
@@ -166,9 +166,9 @@ void STPrimitiveBatch::copyColorData(std::vector<STVec4f*> colors)
 	std::vector<STVec4f*>::iterator iterC = colors.begin();
 	std::vector<GLfloat>::iterator iterD = this->colorData.begin();
 
-	for(iterC; iterC < colors.end(); iterC++)
+	for(; iterC != colors.end(); iterC++)
 	{
-		this->colorData.insert(iterD, *iterC->getData()->begin(), *iterC->getData()->end());
+		this->colorData.insert(iterD, (*iterC)->getData().begin(), (*iterC)->getData().end());
 		iterD = this->colorData.end();
 	}
 	
@@ -181,11 +181,11 @@ void STPrimitiveBatch::copyColorData(std::vector<STVec4f*> colors)
 	else
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, this->colorID);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(GLfloat) * this->colorData.size(), this->colorData.data();
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(GLfloat) * this->colorData.size(), this->colorData.data());
 	}
 }	
 
-void STPrimitiveBatch::copyTexCoordData(std::vector<STVec2d*> texCoords, GLuint textureLayer)
+void STPrimitiveBatch::copyTexCoordData(std::vector<STVec2f*> texCoords, GLuint textureLayer)
 {
 	if(textureLayer >= 4)
 	{
@@ -195,10 +195,10 @@ void STPrimitiveBatch::copyTexCoordData(std::vector<STVec2d*> texCoords, GLuint 
 	std::vector<STVec2f*>::iterator iterT = texCoords.begin();
 	std::vector<GLfloat>::iterator iterD = this->texCoordData[textureLayer].begin();
 
-	for(iterT; iterT < texCoords.end(); iterT++)
+	for(; iterT != texCoords.end(); iterT++)
 	{
-		this->texCoordData[textureLayer].insert(iterD, *iterT->getData()->begin(), *iterT->getData()->end());
-		iterD = this->texCoordData.end();
+		this->texCoordData[textureLayer].insert(iterD, (*iterT)->getData().begin(), (*iterT)->getData().end());
+		iterD = this->texCoordData[textureLayer].end();
 	}
 	
 	if(this->texIDs[textureLayer] == 0)
@@ -210,11 +210,10 @@ void STPrimitiveBatch::copyTexCoordData(std::vector<STVec2d*> texCoords, GLuint 
 	else
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, this->texIDs[textureLayer]);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(GLfloat) * this->texCoordData[textureLayer].size(), this->texCoordData[textureLayer].data();
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(GLfloat) * this->texCoordData[textureLayer].size(), this->texCoordData[textureLayer].data());
 	}
 }
 
-}
 
 void STPrimitiveBatch::draw()
 {

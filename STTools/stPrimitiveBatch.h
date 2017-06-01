@@ -5,20 +5,20 @@
 
 class STPrimitiveBatch : public STBatch
 {
-private:
 public:
-	STPrimitiveBatch(GLuint numTexLayers = 4);
+	STPrimitiveBatch(GLuint numTexLayers);
 	~STPrimitiveBatch();
 	
+	void begin();
 	void finalize();
 	
-	void copyVertexData(std::vector<STVec3d*> verts);
-	void copyNormalData(std::vector<STVec3d*> norms);
+	void copyVertexData(std::vector<STVec3f*> verts);
+	void copyNormalData(std::vector<STVec3f*> norms);
 	void copyColorData(std::vector<STVec4f*> colors);
-	void copyTexCoordData(std::vector<STVec2d*> texCoords, GLuint textureLayer);
+	void copyTexCoordData(std::vector<STVec2f*> texCoords, GLuint textureLayer);
 	
 	void draw() override;
-}
+};
 
 
 #endif //__ST_PRIMITIVE_BATCH_H__

@@ -36,15 +36,19 @@ void STTriangleBatch::addTriangle(STTriangle* tri)
 		std::vector<GLfloat>::iterator iterT = this->texCoordData[0].begin();
 		
 		bool match = false;
-		
-		for(; iterV < this->vertData.end(); iterV++, iterN++, iterT++)	//Probably the most complex, least intuitive for loop I've written in a while...
+		int index = 0;
+		int texIndex = 0;
+		const int delta = 0.0001f;
+
+		for(; iterV < this->vertData.end(); iterV += 3, iterN += 3, iterT += 2, index += 3, texIndex += 2) //Okay, now THIS for loop is getting ridiculous.
 		{
-			//And here we go...
-			if(*iterV->closeEnough(tri->getVertex(i)) && *iterN->closeEnough(tri->getNormal(i)) && *iterT->closeEnough(tri->getTexCoord(i)))
+			//Alright. This should work...
+			if((tri->getVertex(i)->closeEnough(this->vertData[index], this->vertData[index + 1], this->vertData[index + 2], delta)) &&
+				(tri->getNormal(i)->closeEnough(this->normData[index], this->normData[index + 1], this->normData[index + 2], delta)) &&
+				(tri->getTexCoord(i)->closeEnough(this->texCoordData[0][texIndex], this->texCoordData[0][texIndex + 1], delta)))
 			{
-				//We've found a match! Now all we have to do is add the index(and where are we, exactly?) to the index array and end this run through the loop.
-				GLuint index = iterV - this->vertData.begin();
-				this->indexData.push_back(index);
+				GLuint vertIndex = index / 3;		//This SHOULD be the index of the vertex, distilled from the index of its first element in the vertData vector.
+				this->indexData.push_back(vertIndex);
 				match = true;
 				break;
 			}
@@ -53,12 +57,19 @@ void STTriangleBatch::addTriangle(STTriangle* tri)
 		if(!match)
 		{
 			//We've got to add all the stuff.
-			this->vertData.push_back(tri->getVertex(i));
-			this->normData.push_back(tri->getNormal(i));
-			this->texCoordData[0].push_back(tri->getTexCoord(i));
+			this->vertData.push_back(tri->getVertex(i)->getX());
+			this->vertData.push_back(tri->getVertex(i)->getY());
+			this->vertData.push_back(tri->getVertex(i)->getZ());
+			
+			this->normData.push_back(tri->getNormal(i)->getX());
+			this->normData.push_back(tri->getNormal(i)->getY());
+			this->normData.push_back(tri->getNormal(i)->getZ());
+			
+			this->texCoordData[0].push_back(tri->getTexCoord(i)->getX());
+			this->texCoordData[0].push_back(tri->getTexCoord(i)->getY());
+			
 			this->indexData.push_back(this->vertData.size() - 1);
 		}
-		//And that's it! Once again, my way works out to be a bit easier than his. Time will tell how well it performs in other respects...
 	}
 }
 
@@ -89,7 +100,7 @@ void STTriangleBatch::finalize()
 	
 	glBindBuffer(GL_ARRAY_BUFFER, this->texIDs[0]);
 	glEnableVertexAttribArray(ST_ATTRIBUTE_TEXTURE0);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * this->texData[0].size(), this->texData[0].data(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * this->texCoordData[0].size(), this->texCoordData[0].data(), GL_STATIC_DRAW);
 	glVertexAttribPointer(ST_ATTRIBUTE_TEXTURE0, 2, GL_FLOAT, GL_FALSE, 0, 0);
 	
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->indexID);
